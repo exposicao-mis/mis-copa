@@ -374,7 +374,7 @@
       font-weight: 700;
       font-size: 80px;
       line-height: 1;
-      color: rgba(255,255,255,0.06);
+      color: rgba(255,255,255,0.12);
       padding: 24px 24px 0;
       letter-spacing: -0.03em;
     }
@@ -561,53 +561,48 @@
        RESPONSIVE
     ════════════════════════════════ */
     @media (max-width: 768px) {
-      /* topbar */
+
+      /* ── topbar ── */
       .topbar {
-        padding: 16px 20px;
+        padding: 14px 20px;
       }
-      .topbar-sep, .topbar-inst { display: none; }
-      .topbar-right {
-        display: flex;
-        gap: 6px;
-      }
+      .topbar-sep,
+      .topbar-inst { display: none; }
+      .topbar-right { display: flex; gap: 6px; }
       .lang-pill {
-        padding: 6px 11px;
-        font-size: 10px;
+        padding: 7px 12px;
+        font-size: 11px;
         letter-spacing: 1.5px;
       }
 
-      /* hero */
+      /* ── hero fundo ── */
+      .hero::before {
+        font-size: 52vw;
+        left: -0.02em;
+      }
+
+      /* ── hero centro ── */
       .hero-center {
-        padding: 32px 20px 24px;
+        padding: 36px 20px 28px;
         width: 100%;
         max-width: 100%;
-        box-sizing: border-box;
       }
+      .expo-tag { margin-bottom: 20px; }
+      .expo-tag-text { font-size: 9px; letter-spacing: 2px; }
+
       .hero-title {
-        font-size: clamp(36px, 11vw, 56px);
-        word-break: break-word;
-        overflow-wrap: break-word;
-        hyphens: auto;
+        font-size: 11vw;
+        line-height: 0.92;
+        letter-spacing: -0.02em;
+        max-width: 100%;
       }
       .hero-subtitle {
         font-size: 14px;
         max-width: 100%;
-      }
-      .expo-tag {
-        margin-bottom: 20px;
-      }
-      .expo-tag-text {
-        font-size: 9px;
-        letter-spacing: 2.5px;
+        margin-top: 20px;
       }
 
-      /* MIS fantasma menor para não causar overflow */
-      .hero::before {
-        font-size: clamp(140px, 55vw, 220px);
-        left: -0.02em;
-      }
-
-      /* hero bottom */
+      /* ── hero bottom ── */
       .hero-bottom {
         flex-direction: column;
         gap: 0;
@@ -618,25 +613,60 @@
         border-bottom: 1px solid rgba(255,255,255,0.07);
         padding: 14px 0;
         margin-right: 0;
-        margin-bottom: 0;
+        padding-right: 0;
       }
       .hero-bottom-item:last-child { border-bottom: none; }
 
-      /* demais seções */
+      /* ── cards de painéis — layout horizontal no mobile ── */
+      .paineis-grid {
+        grid-template-columns: 1fr;
+        gap: 3px;
+      }
+      .painel-card {
+        flex-direction: row;
+        align-items: stretch;
+        min-height: auto;
+        background: #161616;
+        border-left: 4px solid var(--magenta);
+      }
+      .card-number {
+        font-size: 52px;
+        padding: 0;
+        width: 80px;
+        min-width: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: rgba(255,255,255,0.18);
+        border-right: 1px solid rgba(255,255,255,0.06);
+      }
+      .card-body {
+        padding: 20px 20px 20px;
+        justify-content: center;
+      }
+      .card-title {
+        font-size: 16px;
+        margin-bottom: 8px;
+      }
+      .card-desc {
+        font-size: 13px;
+        margin-bottom: 16px;
+        color: rgba(255,255,255,0.5);
+      }
+      .card-cta {
+        font-size: 10px;
+        color: rgba(255,255,255,0.4);
+      }
+
+      /* ── demais seções ── */
       .sobre-section { grid-template-columns: 1fr; }
       .faixa-quote { flex-direction: column; }
     }
 
-    @media (max-width: 400px) {
-      .hero-title {
-        font-size: 34px;
-      }
-      .topbar {
-        padding: 14px 16px;
-      }
-      .hero-center {
-        padding: 28px 16px 20px;
-      }
+    @media (max-width: 380px) {
+      .hero-title { font-size: 10vw; }
+      .topbar { padding: 12px 16px; }
+      .mis-badge img { height: 38px; }
     }
   </style>
 </head>
@@ -664,19 +694,12 @@
     <div class="hero-center">
       <div class="expo-tag">
         <div class="expo-tag-line"></div>
-        <span class="expo-tag-text">Exposição Temporária · 2025–2026</span>
+        <span class="expo-tag-text"><span data-lang="pt">Exposição Temporária · 2025–2026</span><span data-lang="en" style="display:none">Temporary Exhibition · 2025–2026</span><span data-lang="es" style="display:none">Exposición Temporal · 2025–2026</span></span>
       </div>
 
-      <h1 class="hero-title">
-        ARQUITETURA
-        <span class="em-cena">em cena</span>
-      </h1>
+      <h1 class="hero-title"><span data-lang="pt">ARQUITETURA<span class="em-cena">em cena</span></span><span data-lang="en" style="display:none">ARCHITECTURE<span class="em-cena">on stage</span></span><span data-lang="es" style="display:none">ARQUITECTURA<span class="em-cena">en escena</span></span></h1>
 
-      <p class="hero-subtitle">
-        O MIS Copa antes da Imagem e do Som.<br>
-        Os bastidores, os desafios e a história invisível
-        da concepção de um museu para o Rio de Janeiro.
-      </p>
+      <p class="hero-subtitle"><span data-lang="pt">O MIS Copa antes da Imagem e do Som.<br>Os bastidores, os desafios e a história invisível da concepção de um museu para o Rio de Janeiro.</span><span data-lang="en" style="display:none">MIS Copa before Image and Sound.<br>The backstage, the challenges and the invisible story of conceiving a museum for Rio de Janeiro.</span><span data-lang="es" style="display:none">El MIS Copa antes de la Imagen y el Sonido.<br>Los bastidores, los desafíos y la historia invisible de la concepción de un museo para Río de Janeiro.</span></p>
     </div>
 
     <div class="hero-bottom">
@@ -703,7 +726,7 @@
   <!-- ════════════ FAIXA QUOTE ════════════ -->
   <div class="faixa-quote">
     <blockquote>
-      "A SORRIR<br>EU PRETENDO<br>LEVAR A VIDA"
+      <span data-lang="pt">"A SORRIR<br>EU PRETENDO<br>LEVAR A VIDA"</span><span data-lang="en" style="display:none">"SMILING<br>I INTEND<br>TO CARRY ON"</span><span data-lang="es" style="display:none">"SONRIENDO<br>PRETENDO<br>LLEVAR LA VIDA"</span>
     </blockquote>
     <cite>Arlindo Cruz</cite>
   </div>
@@ -711,8 +734,8 @@
   <!-- ════════════ PAINÉIS ════════════ -->
   <section class="paineis-section" aria-label="Painéis da exposição">
     <div class="paineis-header">
-      <h2 class="paineis-title">Acesse os<br><span>painéis</span></h2>
-      <span class="paineis-count">3 painéis disponíveis</span>
+      <h2 class="paineis-title"><span data-lang="pt">Acesse os<br><span>painéis</span></span><span data-lang="en" style="display:none">Access the<br><span>panels</span></span><span data-lang="es" style="display:none">Acceda a los<br><span>paneles</span></span></h2>
+      <span class="paineis-count"><span data-lang="pt">3 painéis disponíveis</span><span data-lang="en" style="display:none">3 panels available</span><span data-lang="es" style="display:none">3 paneles disponibles</span></span>
     </div>
 
     <div class="paineis-grid">
@@ -720,42 +743,33 @@
       <a class="painel-card" href="painel-01.html">
         <div class="card-number">01</div>
         <div class="card-body">
-          <div class="card-tag">Painel 01</div>
-          <h3 class="card-title">O MIS Copa antes da<br>Imagem e do Som</h3>
-          <p class="card-desc">A origem, o concurso e as premissas da nova sede do MIS em Copacabana.</p>
+          <div class="card-tag"><span data-lang="pt">Painel 01</span><span data-lang="en" style="display:none">Panel 01</span><span data-lang="es" style="display:none">Panel 01</span></div>
+          <h3 class="card-title"><span data-lang="pt">O MIS Copa antes da<br>Imagem e do Som</span><span data-lang="en" style="display:none">MIS Copa before<br>Image and Sound</span><span data-lang="es" style="display:none">El MIS Copa antes de<br>la Imagen y el Sonido</span></h3>
+          <p class="card-desc"><span data-lang="pt">A origem, o concurso e as premissas da nova sede do MIS em Copacabana.</span><span data-lang="en" style="display:none">The origin, the competition and the premises of the new MIS headquarters in Copacabana.</span><span data-lang="es" style="display:none">El origen, el concurso y las premisas de la nueva sede del MIS en Copacabana.</span></p>
 
-          <div class="card-cta">
-            Acessar painel
-            <div class="card-cta-arrow">→</div>
-          </div>
+          <div class="card-cta"><span data-lang="pt">Acessar painel</span><span data-lang="en" style="display:none">Open panel</span><span data-lang="es" style="display:none">Abrir panel</span><div class="card-cta-arrow">→</div></div>
         </div>
       </a>
 
       <a class="painel-card" href="painel-02.html">
         <div class="card-number">02</div>
         <div class="card-body">
-          <div class="card-tag">Painel 02</div>
-          <h3 class="card-title">O Projeto e os<br>Desafios da Obra</h3>
-          <p class="card-desc">O boulevard vertical, a curadoria da paisagem e os bastidores da construção.</p>
+          <div class="card-tag"><span data-lang="pt">Painel 02</span><span data-lang="en" style="display:none">Panel 02</span><span data-lang="es" style="display:none">Panel 02</span></div>
+          <h3 class="card-title"><span data-lang="pt">O Projeto e os<br>Desafios da Obra</span><span data-lang="en" style="display:none">The Project and the<br>Construction Challenges</span><span data-lang="es" style="display:none">El Proyecto y los<br>Desafíos de la Obra</span></h3>
+          <p class="card-desc"><span data-lang="pt">O boulevard vertical, a curadoria da paisagem e os bastidores da construção.</span><span data-lang="en" style="display:none">The vertical boulevard, the landscape curatorship and the behind-the-scenes of construction.</span><span data-lang="es" style="display:none">El bulevar vertical, la curaduría del paisaje y los bastidores de la construcción.</span></p>
 
-          <div class="card-cta">
-            Acessar painel
-            <div class="card-cta-arrow">→</div>
-          </div>
+          <div class="card-cta"><span data-lang="pt">Acessar painel</span><span data-lang="en" style="display:none">Open panel</span><span data-lang="es" style="display:none">Abrir panel</span><div class="card-cta-arrow">→</div></div>
         </div>
       </a>
 
       <a class="painel-card" href="painel-03.html">
         <div class="card-number">03</div>
         <div class="card-body">
-          <div class="card-tag">Painel 03</div>
-          <h3 class="card-title">A Concepção<br>do Museu</h3>
-          <p class="card-desc">Arquitetura, curadoria, museografia e identidade visual integradas.</p>
+          <div class="card-tag"><span data-lang="pt">Painel 03</span><span data-lang="en" style="display:none">Panel 03</span><span data-lang="es" style="display:none">Panel 03</span></div>
+          <h3 class="card-title"><span data-lang="pt">A Concepção<br>do Museu</span><span data-lang="en" style="display:none">The Museum<br>Conception</span><span data-lang="es" style="display:none">La Concepción<br>del Museo</span></h3>
+          <p class="card-desc"><span data-lang="pt">Arquitetura, curadoria, museografia e identidade visual integradas.</span><span data-lang="en" style="display:none">Architecture, curatorship, museography and visual identity integrated.</span><span data-lang="es" style="display:none">Arquitectura, curaduría, museografía e identidad visual integradas.</span></p>
 
-          <div class="card-cta">
-            Acessar painel
-            <div class="card-cta-arrow">→</div>
-          </div>
+          <div class="card-cta"><span data-lang="pt">Acessar painel</span><span data-lang="en" style="display:none">Open panel</span><span data-lang="es" style="display:none">Abrir panel</span><div class="card-cta-arrow">→</div></div>
         </div>
       </a>
 
@@ -765,13 +779,9 @@
   <!-- ════════════ SOBRE ════════════ -->
   <section class="sobre-section" aria-label="Sobre a exposição">
     <div>
-      <p class="sobre-label">Sobre a exposição</p>
-      <h2 class="sobre-title">Um museu construído a muitas mãos</h2>
-      <div class="sobre-text">
-        <p>Entregar um edifício representa um marco concreto — a certeza de que esse museu vai, de fato, existir. Mas entregar a obra, por si só, não evidencia ao público os inúmeros processos, escolhas e desafios que o tornaram possível.</p>
-        <p>É justamente desse desejo de compartilhar o que não se vê, à primeira vista, que nasce a exposição <strong>"Arquitetura em Cena: o MIS Copa antes da Imagem e do Som"</strong>.</p>
-        <p>Convidamos você a conhecer os bastidores de como o MIS foi pensado por muitas mãos e visões, desde o processo de concepção da sua arquitetura singular, até os principais desafios enfrentados ao longo de sua realização.</p>
-      </div>
+      <p class="sobre-label"><span data-lang="pt">Sobre a exposição</span><span data-lang="en" style="display:none">About the exhibition</span><span data-lang="es" style="display:none">Sobre la exposición</span></p>
+      <h2 class="sobre-title"><span data-lang="pt">Um museu construído a muitas mãos</span><span data-lang="en" style="display:none">A museum built by many hands</span><span data-lang="es" style="display:none">Un museo construido por muchas manos</span></h2>
+      <div class="sobre-text"><span data-lang="pt"><p>Entregar um edifício representa um marco concreto — a certeza de que esse museu vai, de fato, existir. Mas entregar a obra, por si só, não evidencia ao público os inúmeros processos, escolhas e desafios que o tornaram possível.</p><p>É justamente desse desejo de compartilhar o que não se vê, à primeira vista, que nasce a exposição <strong>"Arquitetura em Cena: o MIS Copa antes da Imagem e do Som"</strong>.</p><p>Convidamos você a conhecer os bastidores de como o MIS foi pensado por muitas mãos e visões, desde o processo de concepção da sua arquitetura singular, até os principais desafios enfrentados ao longo de sua realização.</p></span><span data-lang="en" style="display:none"><p>Delivering a building represents a concrete milestone — the certainty that this museum will, in fact, exist. But delivering the construction alone does not reveal to the public the countless processes, choices and challenges that made it possible.</p><p>It is precisely from this desire to share what cannot be seen at first glance that the exhibition <strong>"Architecture on Stage: MIS Copa before Image and Sound"</strong> was born.</p><p>We invite you to discover the backstage of how MIS was conceived by many hands and visions, from the process of designing its unique architecture to the main challenges faced throughout its realization.</p></span><span data-lang="es" style="display:none"><p>Entregar un edificio representa un hito concreto — la certeza de que este museo va, de hecho, a existir. Pero entregar la obra, por sí sola, no evidencia al público los innumerables procesos, elecciones y desafíos que lo hicieron posible.</p><p>Es justamente de ese deseo de compartir lo que no se ve a primera vista que nace la exposición <strong>"Arquitectura en Escena: el MIS Copa antes de la Imagen y el Sonido"</strong>.</p><p>Lo invitamos a conocer los bastidores de cómo el MIS fue pensado por muchas manos y visiones, desde el proceso de concepción de su arquitectura singular hasta los principales desafíos enfrentados a lo largo de su realización.</p></span></div>
     </div>
 
     <div class="sobre-right">
@@ -801,7 +811,7 @@
   <!-- ════════════ FOOTER ════════════ -->
   <footer>
     <div>
-      <div class="footer-expo-name">Arquitetura em Cena — O MIS Copa antes da Imagem e do Som</div>
+      <div class="footer-expo-name"><span data-lang="pt">Arquitetura em Cena — O MIS Copa antes da Imagem e do Som</span><span data-lang="en" style="display:none">Architecture on Stage — MIS Copa before Image and Sound</span><span data-lang="es" style="display:none">Arquitectura en Escena — El MIS Copa antes de la Imagen y el Sonido</span></div>
       <div class="footer-inst-name">Museu da Imagem e do Som · Fundação Roberto Marinho · Rio de Janeiro</div>
     </div>
     <div class="footer-mis"><img src="mis-logo.png" alt="MIS — Museu da Imagem e do Som" style="height:72px;width:auto;filter:invert(1) sepia(1) saturate(5) hue-rotate(290deg) brightness(0.9);" /></div>
@@ -809,11 +819,23 @@
 
   <script>
     function setLang(lang) {
-      // Redireciona para URL com parâmetro de idioma
-      // (pode ser expandido conforme a estrutura do site)
+      // Esconde todos os spans de idioma
+      document.querySelectorAll('[data-lang]').forEach(el => {
+        el.style.display = el.getAttribute('data-lang') === lang ? '' : 'none';
+      });
+      // Marca botão ativo
       document.querySelectorAll('.lang-pill').forEach(p => p.classList.remove('active'));
       document.querySelector(`[onclick="setLang('${lang}')"]`).classList.add('active');
+      // Salva preferência
+      try { localStorage.setItem('mis-lang', lang); } catch(e) {}
     }
+    // Inicializa: lê URL param ou localStorage
+    (function() {
+      const params = new URLSearchParams(window.location.search);
+      const saved = params.get('lang') || (function(){ try { return localStorage.getItem('mis-lang'); } catch(e){ return null; } })();
+      const lang = (saved && ['pt','en','es'].includes(saved)) ? saved : 'pt';
+      if (lang !== 'pt') setLang(lang);
+    })();
   </script>
 
 </body>
