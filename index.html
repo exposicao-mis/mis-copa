@@ -271,7 +271,7 @@
     .hbi-val {
       font-size: 12px;
       font-weight: 300;
-      color: rgba(255,255,255,0.45);
+      color: rgba(255,255,255,0.7);
     }
 
     /* ─────────────────────────────
@@ -375,7 +375,7 @@
       font-weight: 700;
       letter-spacing: 3px;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.2);
+      color: rgba(255,255,255,0.4);
     }
 
     .paineis-grid {
@@ -414,7 +414,7 @@
       font-weight: 700;
       font-size: 88px;
       line-height: 1;
-      color: rgba(255,255,255,0.04);
+      color: rgba(255,255,255,0.10);
       padding: 20px 20px 0;
       letter-spacing: -0.04em;
     }
@@ -448,7 +448,7 @@
     .card-desc {
       font-size: 13px;
       font-weight: 300;
-      color: rgba(255,255,255,0.4);
+      color: rgba(255,255,255,0.65);
       line-height: 1.6;
       margin-bottom: 20px;
     }
@@ -461,7 +461,7 @@
       font-weight: 700;
       letter-spacing: 2.5px;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.25);
+      color: rgba(255,255,255,0.5);
       transition: color 0.2s;
     }
 
@@ -572,49 +572,141 @@
        RESPONSIVE
     ───────────────────────────── */
     @media (max-width: 768px) {
-      /* hero: coluna única, botões de idioma abaixo do texto */
+      /* ── TOPBAR ── */
+      .topbar-expo { display: none; }
+      .topbar { height: 64px; }
+      .topbar-logo img { height: 44px; }
+
+      /* ── HERO ── */
       .hero-inner {
         grid-template-columns: 1fr;
-        gap: 32px;
+        gap: 36px;
+        padding-top: clamp(28px,5vw,48px);
       }
 
-      /* botões de idioma: coluna única, largura total */
+      .hero-title {
+        font-size: clamp(44px,12vw,80px);
+      }
+
+      .hero-subtitle {
+        font-size: 15px;
+        color: rgba(255,255,255,0.6);
+      }
+
+      /* ── BOTÕES DE IDIOMA ── */
       .hero-lang-cta {
         align-items: stretch;
         flex-direction: column;
         width: 100%;
+        gap: 10px;
+      }
+
+      .hero-lang-label {
+        color: rgba(255,255,255,0.45);
+        font-size: 10px;
       }
 
       .hero-lang-item {
         width: 100%;
         justify-content: center;
-        padding: 16px 20px;
-        font-size: 13px;
+        padding: 18px 24px;
+        font-size: 14px;
         letter-spacing: 3px;
+        border: 1px solid rgba(255,255,255,0.2);
       }
 
-      .hero-lang-item .flag { font-size: 20px; }
+      .hero-lang-item.active {
+        background: var(--magenta);
+        border-color: var(--magenta);
+      }
 
-      /* barra inferior: 2 colunas */
+      .hero-lang-item .flag { font-size: 22px; }
+
+      /* ── BARRA INFO ── */
       .hero-bar { flex-wrap: wrap; gap: 0; }
       .hero-bar-item {
         flex: 1 1 45%;
         border-right: none;
         border-bottom: 1px solid rgba(255,255,255,0.07);
-        padding: 14px 0;
+        padding: 16px 0;
         margin: 0;
       }
       .hero-bar-item:nth-last-child(-n+2) { border-bottom: none; }
+      .hbi-val { color: rgba(255,255,255,0.75); font-size: 13px; }
 
-      .sobre { grid-template-columns: 1fr; }
-      .faixa { flex-direction: column; }
-      .topbar-expo { display: none; }
+      /* ── FAIXA QUOTE ── */
+      .faixa { flex-direction: column; gap: 12px; }
+      .faixa blockquote { font-size: clamp(20px,6vw,28px); }
+
+      /* ── SOBRE ── */
+      .sobre { grid-template-columns: 1fr; padding-bottom: 40px; }
+
+      /* ── CARDS ── */
+      .paineis-grid {
+        grid-template-columns: 1fr;
+        gap: 3px;
+      }
+
+      .card {
+        min-height: auto;
+        background: #161616;
+        border-left: 4px solid var(--magenta);
+        flex-direction: row;
+        align-items: center;
+        gap: 0;
+      }
+
+      .card-num {
+        font-size: 56px;
+        color: rgba(255,255,255,0.15);
+        padding: 20px 16px;
+        min-width: 80px;
+        text-align: center;
+        flex-shrink: 0;
+        align-self: stretch;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-right: 1px solid rgba(255,255,255,0.06);
+      }
+
+      .card-body {
+        padding: 20px 20px 20px;
+        justify-content: center;
+        flex: 1;
+      }
+
+      .card-title {
+        font-size: 16px;
+        color: var(--branco);
+        margin-bottom: 6px;
+      }
+
+      .card-desc {
+        font-size: 13px;
+        color: rgba(255,255,255,0.6);
+        margin-bottom: 12px;
+        line-height: 1.5;
+      }
+
+      .card-cta {
+        font-size: 10px;
+        color: rgba(255,255,255,0.5);
+      }
+
+      .card-arrow {
+        width: 24px; height: 24px;
+        background: rgba(255,255,255,0.08);
+      }
+
+      /* ficha técnica */
+      .ficha-grid { grid-template-columns: 1fr 1fr; }
     }
 
-    /* mobile pequeno */
     @media (max-width: 400px) {
       .hero-bar-item { flex: 1 1 100%; }
-      .hero-bar-item:last-child { border-bottom: none; }
+      .hero-bar-item:nth-last-child(-n+1) { border-bottom: none; }
+      .ficha-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
