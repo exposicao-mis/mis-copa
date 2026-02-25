@@ -414,27 +414,6 @@
       margin-bottom: 24px;
     }
 
-    .card-badges {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-bottom: 20px;
-    }
-
-    .badge {
-      padding: 4px 10px;
-      font-size: 9px;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      border: 1px solid rgba(255,255,255,0.15);
-      color: rgba(255,255,255,0.45);
-    }
-
-    .badge.audio {
-      border-color: rgba(232,24,109,0.4);
-      color: var(--magenta);
-    }
 
     .card-cta {
       display: inline-flex;
@@ -582,18 +561,82 @@
        RESPONSIVE
     ════════════════════════════════ */
     @media (max-width: 768px) {
-      .topbar-right { display: none; }
-      .hero-bottom { flex-direction: column; gap: 0; }
+      /* topbar */
+      .topbar {
+        padding: 16px 20px;
+      }
+      .topbar-sep, .topbar-inst { display: none; }
+      .topbar-right {
+        display: flex;
+        gap: 6px;
+      }
+      .lang-pill {
+        padding: 6px 11px;
+        font-size: 10px;
+        letter-spacing: 1.5px;
+      }
+
+      /* hero */
+      .hero-center {
+        padding: 32px 20px 24px;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+      }
+      .hero-title {
+        font-size: clamp(36px, 11vw, 56px);
+        word-break: break-word;
+        overflow-wrap: break-word;
+        hyphens: auto;
+      }
+      .hero-subtitle {
+        font-size: 14px;
+        max-width: 100%;
+      }
+      .expo-tag {
+        margin-bottom: 20px;
+      }
+      .expo-tag-text {
+        font-size: 9px;
+        letter-spacing: 2.5px;
+      }
+
+      /* MIS fantasma menor para não causar overflow */
+      .hero::before {
+        font-size: clamp(140px, 55vw, 220px);
+        left: -0.02em;
+      }
+
+      /* hero bottom */
+      .hero-bottom {
+        flex-direction: column;
+        gap: 0;
+        padding: 0 20px;
+      }
       .hero-bottom-item {
         border-right: none;
         border-bottom: 1px solid rgba(255,255,255,0.07);
-        padding: 16px 0;
+        padding: 14px 0;
         margin-right: 0;
         margin-bottom: 0;
       }
       .hero-bottom-item:last-child { border-bottom: none; }
+
+      /* demais seções */
       .sobre-section { grid-template-columns: 1fr; }
       .faixa-quote { flex-direction: column; }
+    }
+
+    @media (max-width: 400px) {
+      .hero-title {
+        font-size: 34px;
+      }
+      .topbar {
+        padding: 14px 16px;
+      }
+      .hero-center {
+        padding: 28px 16px 20px;
+      }
     }
   </style>
 </head>
@@ -647,7 +690,7 @@
       </div>
       <div class="hero-bottom-item">
         <span class="hbi-label">Painéis</span>
-        <span class="hbi-value">3 painéis · PT · EN · ES</span>
+        <span class="hbi-value">3 painéis</span>
       </div>
       <div class="hero-bottom-item">
         <span class="hbi-label">Realização</span>
@@ -680,10 +723,7 @@
           <div class="card-tag">Painel 01</div>
           <h3 class="card-title">O MIS Copa antes da<br>Imagem e do Som</h3>
           <p class="card-desc">A origem, o concurso e as premissas da nova sede do MIS em Copacabana.</p>
-          <div class="card-badges">
-            <span class="badge audio">🔊 Áudio</span>
-            <span class="badge">PT · EN · ES</span>
-          </div>
+
           <div class="card-cta">
             Acessar painel
             <div class="card-cta-arrow">→</div>
@@ -697,10 +737,7 @@
           <div class="card-tag">Painel 02</div>
           <h3 class="card-title">O Projeto e os<br>Desafios da Obra</h3>
           <p class="card-desc">O boulevard vertical, a curadoria da paisagem e os bastidores da construção.</p>
-          <div class="card-badges">
-            <span class="badge audio">🔊 Áudio ES</span>
-            <span class="badge">PT · EN · ES</span>
-          </div>
+
           <div class="card-cta">
             Acessar painel
             <div class="card-cta-arrow">→</div>
@@ -714,9 +751,7 @@
           <div class="card-tag">Painel 03</div>
           <h3 class="card-title">A Concepção<br>do Museu</h3>
           <p class="card-desc">Arquitetura, curadoria, museografia e identidade visual integradas.</p>
-          <div class="card-badges">
-            <span class="badge">PT · EN · ES</span>
-          </div>
+
           <div class="card-cta">
             Acessar painel
             <div class="card-cta-arrow">→</div>
