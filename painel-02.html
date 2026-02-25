@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Arquitetura em Cena — MIS Copa</title>
+
+
+
+  <style>
+    /* ── BROWN STD ── */
+    @font-face {
+      font-family: 'BrownStd';
+      src: url('fonts/BrownStd-Thin.otf') format('opentype');
+      font-weight: 100; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'BrownStd';
+      src: url('fonts/BrownStd-ThinItalic.otf') format('opentype');
+      font-weight: 100; font-style: italic; font-display: swap;
+    }
+    @font-face {
+      font-family: 'BrownStd';
+      src: url('fonts/BrownStd-Light.otf') format('opentype');
+      font-weight: 300; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'BrownStd';
+      src: url('fonts/BrownStd-LightItalic.otf') format('opentype');
+      font-weight: 300; font-style: italic; font-display: swap;
+    }
+    @font-face {
+      font-family: 'BrownStd';
+      src: url('fonts/BrownStd-Regular.otf') format('opentype');
+      font-weight: 400; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'BrownStd';
+      src: url('fonts/BrownStd-Italic.otf') format('opentype');
+      font-weight: 400; font-style: italic; font-display: swap;
+    }
+    @font-face {
+      font-family: 'BrownStd';
+      src: url('fonts/BrownStd-Bold.otf') format('opentype');
+      font-weight: 700; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'BrownStd';
+      src: url('fonts/BrownStd-BoldItalic.otf') format('opentype');
+      font-weight: 700; font-style: italic; font-display: swap;
+    }
+    :root {
+      --preto: #0A0A0A;
+      --branco: #F5F5F0;
+      --magenta: #E8186D;
+      --magenta-dark: #C4155C;
+      --cinza: #C8C4BC;
+      --cinza-light: #EDEAE4;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--branco);
+      color: var(--preto);
+      font-family: 'BrownStd', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* ─── CALÇADÃO PATTERN (ondas de Burle Marx) ─── */
+    .calcadao {
+      background-image:
+        radial-gradient(ellipse 60% 40% at 20% 50%, transparent 55%, var(--preto) 56%, var(--preto) 60%, transparent 61%),
+        radial-gradient(ellipse 60% 40% at 80% 50%, transparent 55%, var(--preto) 56%, var(--preto) 60%, transparent 61%),
+        radial-gradient(ellipse 40% 60% at 50% 20%, transparent 55%, var(--preto) 56%, var(--preto) 60%, transparent 61%),
+        radial-gradient(ellipse 40% 60% at 50% 80%, transparent 55%, var(--preto) 56%, var(--preto) 60%, transparent 61%);
+      background-color: var(--branco);
+      background-size: 40px 40px;
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100svh;
+      background: var(--preto);
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      grid-template-rows: 1fr auto;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg-text {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .hero-bg-text span {
+      font-family: 'BrownStd', sans-serif;
+      font-size: clamp(120px, 22vw, 300px);
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(255,255,255,0.06);
+      line-height: 0.85;
+      letter-spacing: -0.02em;
+      white-space: nowrap;
+      user-select: none;
+    }
+
+    .hero-content {
+      grid-column: 1;
+      grid-row: 1;
+      padding: clamp(40px, 6vw, 80px);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-supertitle {
+      font-family: 'BrownStd', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--magenta);
+      margin-bottom: 24px;
+    }
+
+    .hero-title {
+      font-family: 'BrownStd', sans-serif;
+      font-size: clamp(60px, 10vw, 130px);
+      line-height: 0.9;
+      color: var(--branco);
+      letter-spacing: -0.01em;
+      margin-bottom: 8px;
+    }
+
+    .hero-title .italic {
+      font-family: 'BrownStd', sans-serif;
+      font-style: italic;
+      color: var(--magenta);
+    }
+
+    .hero-subtitle {
+      font-family: 'BrownStd', sans-serif;
+      font-size: clamp(13px, 1.8vw, 18px);
+      font-weight: 300;
+      color: rgba(245,245,240,0.55);
+      margin-top: 28px;
+      max-width: 520px;
+      line-height: 1.6;
+    }
+
+    .hero-cta {
+      margin-top: 48px;
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 28px;
+      font-family: 'BrownStd', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--magenta);
+      color: var(--branco);
+    }
+    .btn-primary:hover { background: var(--magenta-dark); }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--branco);
+      border: 1px solid rgba(255,255,255,0.25);
+    }
+    .btn-secondary:hover { border-color: var(--magenta); color: var(--magenta); }
+
+    /* ─── HERO SIDEBAR ─── */
+    .hero-sidebar {
+      grid-column: 2;
+      grid-row: 1 / 3;
+      background: var(--magenta);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 32px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-sidebar-title {
+      font-family: 'BrownStd', sans-serif;
+      font-size: 22px;
+      letter-spacing: 3px;
+      color: var(--branco);
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      transform: rotate(180deg);
+      text-transform: uppercase;
+      line-height: 1;
+      margin-bottom: 40px;
+    }
+
+    .hero-sidebar-desc {
+      font-size: 12px;
+      color: rgba(245,245,240,0.85);
+      line-height: 1.7;
+      text-align: center;
+      max-width: 220px;
+    }
+
+    .hero-sidebar-line {
+      width: 1px;
+      height: 60px;
+      background: rgba(245,245,240,0.3);
+      margin: 32px auto;
+    }
+
+    .mis-logo-area {
+      text-align: center;
+    }
+
+    .mis-logo-area .mis-sigla {
+      font-family: 'BrownStd', sans-serif;
+      font-size: 48px;
+      color: var(--branco);
+      letter-spacing: 4px;
+      line-height: 1;
+    }
+
+    .mis-logo-area .mis-name {
+      font-size: 9px;
+      font-weight: 400;
+      letter-spacing: 1.5px;
+      color: rgba(245,245,240,0.7);
+      text-transform: uppercase;
+      line-height: 1.5;
+      margin-top: 4px;
+    }
+
+    /* ─── HERO BOTTOM BAR ─── */
+    .hero-bar {
+      grid-column: 1;
+      grid-row: 2;
+      padding: 20px clamp(40px, 6vw, 80px);
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-bar-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .hero-bar-label {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--magenta);
+    }
+
+    .hero-bar-value {
+      font-size: 13px;
+      color: rgba(245,245,240,0.7);
+    }
+
+    .hero-bar-sep {
+      width: 1px;
+      height: 32px;
+      background: rgba(255,255,255,0.12);
+    }
+
+    /* ─── LANG STRIP ─── */
+    .lang-strip {
+      background: var(--preto);
+      border-top: 3px solid var(--magenta);
+      padding: 0;
+      display: flex;
+      overflow-x: auto;
+    }
+
+    .lang-btn {
+      flex: 1;
+      min-width: 100px;
+      padding: 18px 24px;
+      background: none;
+      border: none;
+      border-right: 1px solid rgba(255,255,255,0.08);
+      font-family: 'BrownStd', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: rgba(245,245,240,0.45);
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .lang-btn.active {
+      background: var(--magenta);
+      color: var(--branco);
+    }
+
+    .lang-btn:hover:not(.active) {
+      color: var(--branco);
+      background: rgba(255,255,255,0.04);
+    }
+
+    /* ─── SECTIONS ─── */
+    main { }
+
+    /* ─── AUDIO SECTION ─── */
+    .audio-section {
+      background: var(--preto);
+      padding: clamp(32px, 5vw, 60px) clamp(24px, 5vw, 80px);
+    }
+
+    .audio-inner {
+      max-width: 760px;
+      margin: 0 auto;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-left: 4px solid var(--magenta);
+      padding: 28px 32px;
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+
+    .audio-icon {
+      width: 52px;
+      height: 52px;
+      background: var(--magenta);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+
+    .audio-meta {
+      flex: 1;
+      min-width: 180px;
+    }
+
+    .audio-meta-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--magenta);
+      margin-bottom: 6px;
+    }
+
+    .audio-meta-title {
+      font-family: 'BrownStd', sans-serif;
+      font-style: italic;
+      font-size: 18px;
+      color: var(--branco);
+    }
+
+    .audio-player-wrap {
+      flex: 2;
+      min-width: 220px;
+    }
+
+    .audio-player-wrap audio {
+      width: 100%;
+      accent-color: var(--magenta);
+      filter: invert(1) hue-rotate(180deg);
+    }
+
+    .audio-soon-dark {
+      font-size: 13px;
+      color: rgba(245,245,240,0.4);
+      font-style: italic;
+    }
+
+    /* ─── PANEL CONTENT ─── */
+    .panel-content {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: clamp(40px, 6vw, 80px) clamp(24px, 5vw, 80px);
+    }
+
+    .lang-content { display: none; }
+    .lang-content.active { display: block; animation: fadeUp 0.3s ease; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .panel-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 3.5px;
+      text-transform: uppercase;
+      color: var(--magenta);
+      margin-bottom: 16px;
+    }
+
+    .panel-title {
+      font-family: 'BrownStd', sans-serif;
+      font-size: clamp(36px, 7vw, 72px);
+      line-height: 0.92;
+      letter-spacing: -0.01em;
+      color: var(--preto);
+      margin-bottom: 32px;
+    }
+
+    .panel-body {
+      font-size: clamp(15px, 1.6vw, 18px);
+      line-height: 1.8;
+      color: #2A2520;
+    }
+
+    .panel-body p + p { margin-top: 18px; }
+
+    /* ─── DIVIDER ─── */
+    .divider {
+      height: 4px;
+      background: linear-gradient(90deg, var(--magenta) 0%, var(--preto) 60%);
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    /* ─── PANEL NUMBER ─── */
+    .panel-number-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 40px;
+    }
+
+    .pnb-num {
+      font-family: 'BrownStd', sans-serif;
+      font-size: 72px;
+      line-height: 1;
+      color: var(--cinza);
+    }
+
+    .pnb-sep {
+      width: 1px;
+      height: 60px;
+      background: var(--cinza);
+    }
+
+    .pnb-info { display: flex; flex-direction: column; gap: 4px; }
+
+    .pnb-expo {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--magenta);
+    }
+
+    .pnb-total {
+      font-size: 12px;
+      color: var(--cinza);
+    }
+
+    /* ─── ACCESSIBILITY NOTE ─── */
+    .a11y-strip {
+      background: var(--cinza-light);
+      border-top: 2px solid var(--cinza);
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 16px clamp(24px, 5vw, 80px);
+      font-size: 12px;
+      color: #666058;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .a11y-strip strong { color: var(--preto); }
+
+    /* ─── NAV ─── */
+    .panel-nav {
+      background: var(--preto);
+      padding: 0 clamp(24px, 5vw, 80px);
+      display: flex;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .nav-item {
+      flex: 1;
+      padding: 28px 0;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      border-right: 1px solid rgba(255,255,255,0.06);
+      transition: background 0.2s;
+    }
+
+    .nav-item:last-child { border-right: none; justify-content: flex-end; }
+    .nav-item:hover { background: rgba(255,255,255,0.03); }
+
+    .nav-arrow {
+      width: 40px;
+      height: 40px;
+      background: rgba(255,255,255,0.06);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: var(--branco);
+      transition: background 0.2s;
+      flex-shrink: 0;
+    }
+
+    .nav-item:hover .nav-arrow { background: var(--magenta); }
+
+    .nav-text { display: flex; flex-direction: column; gap: 4px; }
+
+    .nav-label {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(245,245,240,0.3);
+    }
+
+    .nav-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: rgba(245,245,240,0.7);
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--preto);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 32px clamp(24px, 5vw, 80px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: gap;
+      gap: 20px;
+    }
+
+    .footer-left { display: flex; flex-direction: column; gap: 6px; }
+
+    .footer-expo {
+      font-family: 'BrownStd', sans-serif;
+      font-size: 16px;
+      letter-spacing: 2px;
+      color: var(--branco);
+    }
+
+    .footer-inst {
+      font-size: 11px;
+      color: rgba(245,245,240,0.35);
+      letter-spacing: 1px;
+    }
+
+    .footer-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .footer-mis {
+      font-family: 'BrownStd', sans-serif;
+      font-size: 28px;
+      letter-spacing: 4px;
+      color: var(--magenta);
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      .hero {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+        min-height: auto;
+      }
+
+      .hero-sidebar {
+        grid-column: 1;
+        grid-row: 1;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 20px 24px;
+        min-height: auto;
+      }
+
+      .hero-sidebar-title {
+        writing-mode: horizontal-tb;
+        transform: none;
+        font-size: 18px;
+        margin-bottom: 0;
+      }
+
+      .hero-content {
+        grid-row: 2;
+        padding: 40px 24px;
+      }
+
+      .hero-bar {
+        grid-row: 3;
+        padding: 20px 24px;
+        flex-wrap: wrap;
+        gap: 16px;
+      }
+
+      .hero-bar-sep { display: none; }
+
+      .audio-inner { flex-direction: column; }
+
+      .panel-nav { flex-direction: column; }
+      .nav-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); }
+      .nav-item:last-child { border-bottom: none; justify-content: flex-start; }
+
+      footer { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══════════════════════ HERO ══════════════════════ -->
+  <header class="hero">
+
+    <div class="hero-bg-text" aria-hidden="true">
+      <span>MIS</span>
+    </div>
+
+    <div class="hero-content">
+      <p class="hero-supertitle">Exposição Temporária · Fundação Roberto Marinho</p>
+
+      <h1 class="hero-title">
+        ARQUITETURA<br>
+        <span class="italic">em cena</span>
+      </h1>
+
+      <p class="hero-subtitle">
+        O MIS Copa antes da Imagem e do Som.<br>
+        Os bastidores, os desafios e a história invisível
+        da concepção de um museu para o Rio de Janeiro.
+      </p>
+
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#conteudo">▶ Acessar painel</a>
+        <a class="btn btn-secondary" href="index.html">← Página inicial</a>
+      </div>
+    </div>
+
+    <aside class="hero-sidebar" aria-label="Identificação da exposição">
+      <div class="mis-logo-area">
+        <div class="mis-sigla">MIS</div>
+        <div class="mis-name">Museu da<br>Imagem e do Som</div>
+      </div>
+      <div class="hero-sidebar-line"></div>
+      <div class="hero-sidebar-title">Arquitetura em Cena</div>
+      <div class="hero-sidebar-desc">
+        Uma exposição sobre o processo de criação do novo MIS Copa
+      </div>
+    </aside>
+
+    <div class="hero-bar" aria-label="Informações do painel">
+      <div class="hero-bar-item">
+        <span class="hero-bar-label">Exposição</span>
+        <span class="hero-bar-value">Arquitetura em Cena</span>
+      </div>
+      <div class="hero-bar-sep"></div>
+      <div class="hero-bar-item">
+        <span class="hero-bar-label">Local</span>
+        <span class="hero-bar-value">MIS Copacabana</span>
+      </div>
+      <div class="hero-bar-sep"></div>
+      <div class="hero-bar-item">
+        <span class="hero-bar-label">Painel</span>
+        <span class="hero-bar-value">02 de 03</span>
+      </div>
+    </div>
+
+  </header>
+
+  <!-- ══════════════════════ LANG + CONTENT ══════════════════════ -->
+  <div id="conteudo">
+
+    <!-- Seletor de idioma -->
+    <div class="lang-strip" role="tablist" aria-label="Selecione o idioma">
+      <button class="lang-btn active" role="tab" aria-selected="true"
+              aria-controls="lang-pt" id="btn-pt" data-lang="pt">
+        🇧🇷 Português
+      </button>
+      <button class="lang-btn" role="tab" aria-selected="false"
+              aria-controls="lang-en" id="btn-en" data-lang="en">
+        🇺🇸 English
+      </button>
+      <button class="lang-btn" role="tab" aria-selected="false"
+              aria-controls="lang-es" id="btn-es" data-lang="es">
+        🇪🇸 Español
+      </button>
+    </div>
+
+    <!-- ── ÁUDIO ── -->
+    <section class="audio-section" aria-label="Narração do painel">
+
+      <!-- PT -->
+      <div class="lang-content active" id="audio-pt">
+        <div class="audio-inner">
+          <div class="audio-icon" aria-hidden="true">🔊</div>
+          <div class="audio-meta">
+            <div class="audio-meta-label">Ouça este painel</div>
+            <div class="audio-meta-title">Narração em Português</div>
+          </div>
+          <div class="audio-player-wrap">
+            <p class="audio-soon-dark">⏳ Áudio em português em breve.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- EN -->
+      <div class="lang-content" id="audio-en">
+        <div class="audio-inner">
+          <div class="audio-icon" aria-hidden="true">🔊</div>
+          <div class="audio-meta">
+            <div class="audio-meta-label">Listen to this panel</div>
+            <div class="audio-meta-title">English Narration</div>
+          </div>
+          <div class="audio-player-wrap">
+            <p class="audio-soon-dark">⏳ English audio coming soon.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ES -->
+      <div class="lang-content" id="audio-es">
+        <div class="audio-inner">
+          <div class="audio-icon" aria-hidden="true">🔊</div>
+          <div class="audio-meta">
+            <div class="audio-meta-label">Escuche este panel</div>
+            <div class="audio-meta-title">Narración en Español</div>
+          </div>
+          <div class="audio-player-wrap">
+            <audio controls
+              src="https://archive.org/download/painel-2-esp/PAINEL2-ESP.mp3"
+              aria-label="Narración del Panel 02 en español">
+              Su navegador no soporta audio.
+            </audio>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ── TEXTO DO PAINEL ── -->
+    <section aria-label="Texto do painel">
+
+      <!-- PT -->
+      <div class="lang-content active panel-content" id="lang-pt" role="tabpanel" aria-labelledby="btn-pt">
+        <div class="panel-number-badge">
+          <span class="pnb-num">02</span>
+          <span class="pnb-sep"></span>
+          <div class="pnb-info">
+            <span class="pnb-expo">Arquitetura em Cena</span>
+            <span class="pnb-total">Painel 2 de 3</span>
+          </div>
+        </div>
+        <p class="panel-label">Português</p>
+        <h2 class="panel-title">Título do<br>Painel 02</h2>
+        <div class="panel-body">
+          <p>Insira aqui o texto do painel 02 em português. Mantenha parágrafos curtos para facilitar a leitura no celular.</p>
+          <p>Segundo parágrafo do texto em português.</p>
+        </div>
+      </div>
+
+      <!-- EN -->
+      <div class="lang-content panel-content" id="lang-en" role="tabpanel" aria-labelledby="btn-en">
+        <div class="panel-number-badge">
+          <span class="pnb-num">02</span>
+          <span class="pnb-sep"></span>
+          <div class="pnb-info">
+            <span class="pnb-expo">Architecture on Stage</span>
+            <span class="pnb-total">Panel 2 of 3</span>
+          </div>
+        </div>
+        <p class="panel-label">English</p>
+        <h2 class="panel-title">Panel 02<br>Title</h2>
+        <div class="panel-body">
+          <p>Insert the English text for panel 02 here. Keep paragraphs short for easier reading on mobile.</p>
+          <p>Second paragraph in English.</p>
+        </div>
+      </div>
+
+      <!-- ES -->
+      <div class="lang-content panel-content" id="lang-es" role="tabpanel" aria-labelledby="btn-es">
+        <div class="panel-number-badge">
+          <span class="pnb-num">02</span>
+          <span class="pnb-sep"></span>
+          <div class="pnb-info">
+            <span class="pnb-expo">Arquitectura en Escena</span>
+            <span class="pnb-total">Panel 2 de 3</span>
+          </div>
+        </div>
+        <p class="panel-label">Español</p>
+        <h2 class="panel-title">Título del<br>Panel 02</h2>
+        <div class="panel-body">
+          <p>Inserte aquí el texto del panel 02 en español. Mantenga párrafos cortos para facilitar la lectura en móvil.</p>
+          <p>Segundo párrafo en español.</p>
+        </div>
+      </div>
+
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Acessibilidade -->
+    <div class="a11y-strip" role="note">
+      <span>♿</span>
+      <span><strong>Acessibilidade:</strong> Conteúdo disponível em áudio e em três idiomas. Procure um mediador se precisar de apoio.</span>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════ NAV ══════════════════════ -->
+  <nav class="panel-nav" aria-label="Navegação entre painéis">
+    <a class="nav-item" href="painel-01.html">
+      <div class="nav-arrow">←</div>
+      <div class="nav-text">
+        <span class="nav-label">Painel anterior</span>
+        <span class="nav-name">Painel 01</span>
+      </div>
+    </a>
+    <a class="nav-item" href="painel-03.html">
+      <div class="nav-text" style="text-align:right">
+        <span class="nav-label">Próximo painel</span>
+        <span class="nav-name">Painel 03</span>
+      </div>
+      <div class="nav-arrow">→</div>
+    </a>
+  </nav>
+
+  <!-- ══════════════════════ FOOTER ══════════════════════ -->
+  <footer>
+    <div class="footer-left">
+      <div class="footer-expo">Arquitetura em Cena — O MIS Copa antes da Imagem e do Som</div>
+      <div class="footer-inst">Fundação Roberto Marinho · Museu da Imagem e do Som</div>
+    </div>
+    <div class="footer-right">
+      <div class="footer-mis">MIS</div>
+    </div>
+  </footer>
+
+  <script>
+    // ── Seletor de idioma ──
+    const langBtns = document.querySelectorAll('.lang-btn');
+
+    langBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const lang = btn.dataset.lang;
+
+        // Pausa qualquer áudio em reprodução
+        document.querySelectorAll('audio').forEach(a => a.pause());
+
+        // Atualiza botões
+        langBtns.forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-selected', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-selected', 'true');
+
+        // Atualiza conteúdos
+        document.querySelectorAll('.lang-content').forEach(el => {
+          el.classList.remove('active');
+        });
+        document.querySelectorAll(`#lang-${lang}, #audio-${lang}`).forEach(el => {
+          el.classList.add('active');
+        });
+      });
+
+      btn.addEventListener('keydown', e => {
+        const arr = [...langBtns];
+        const idx = arr.indexOf(btn);
+        if (e.key === 'ArrowRight') arr[(idx + 1) % arr.length].focus();
+        if (e.key === 'ArrowLeft')  arr[(idx - 1 + arr.length) % arr.length].focus();
+      });
+    });
+  </script>
+
+</body>
+</html>
