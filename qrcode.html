@@ -3,18 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Arquitetura em Cena — QR Code · MIS Copa</title>
+  <title>Arquitetura em Cena · MIS Copa</title>
   <style>
+    @font-face { font-family:'BrownStd'; src:url('fonts/BrownStd-Thin.otf') format('opentype'); font-weight:100; font-style:normal; font-display:swap; }
     @font-face { font-family:'BrownStd'; src:url('fonts/BrownStd-Light.otf') format('opentype'); font-weight:300; font-style:normal; font-display:swap; }
     @font-face { font-family:'BrownStd'; src:url('fonts/BrownStd-LightItalic.otf') format('opentype'); font-weight:300; font-style:italic; font-display:swap; }
+    @font-face { font-family:'BrownStd'; src:url('fonts/BrownStd-Regular.otf') format('opentype'); font-weight:400; font-style:normal; font-display:swap; }
+    @font-face { font-family:'BrownStd'; src:url('fonts/BrownStd-Italic.otf') format('opentype'); font-weight:400; font-style:italic; font-display:swap; }
     @font-face { font-family:'BrownStd'; src:url('fonts/BrownStd-Bold.otf') format('opentype'); font-weight:700; font-style:normal; font-display:swap; }
+    @font-face { font-family:'BrownStd'; src:url('fonts/BrownStd-BoldItalic.otf') format('opentype'); font-weight:700; font-style:italic; font-display:swap; }
 
     :root {
       --preto:   #0A0A0A;
       --branco:  #F5F5F0;
       --magenta: #E8186D;
-      --cinza:   #C8C4BC;
-      --cinza-bg:#EDEAE4;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -22,422 +24,399 @@
     html, body {
       height: 100%;
       font-family: 'BrownStd', sans-serif;
+      font-weight: 400;
     }
 
     body {
       background: var(--preto);
       color: var(--branco);
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
-      min-height: 100vh;
     }
 
-    /* ── TOPO ── */
-    .top-bar {
+    /* TOPBAR */
+    .topbar {
       background: var(--magenta);
-      padding: 10px 40px;
+      padding: 0 clamp(20px,4vw,56px);
+      height: 42px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       flex-shrink: 0;
     }
-
-    .top-bar-tag {
-      font-size: 10px;
+    .topbar-inst {
+      font-size: 9px;
       font-weight: 700;
-      letter-spacing: 3.5px;
+      letter-spacing: 3px;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.8);
+      color: rgba(255,255,255,0.75);
     }
-
-    .top-bar-expo {
-      font-size: 10px;
+    .topbar-local {
+      font-size: 9px;
       font-weight: 700;
-      letter-spacing: 3.5px;
+      letter-spacing: 3px;
       text-transform: uppercase;
       color: var(--branco);
     }
 
-    /* ── MAIN ── */
-    .main {
-      flex: 1;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      align-items: center;
+    /* HERO */
+    .hero {
+      position: relative;
+      height: clamp(240px, 38vh, 420px);
+      overflow: hidden;
+      flex-shrink: 0;
     }
-
-    /* ── LADO ESQUERDO — TEXTO ── */
-    .left {
-      padding: clamp(40px,6vw,80px) clamp(32px,5vw,72px);
+    .hero-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 62%;
+      filter: brightness(0.5);
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(10,10,10,0.88) 0%, rgba(10,10,10,0.35) 55%, transparent 100%);
+    }
+    .hero-content {
+      position: absolute;
+      inset: 0;
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      height: 100%;
-      border-right: 1px solid rgba(255,255,255,0.07);
-      position: relative;
+      justify-content: flex-end;
+      padding: clamp(24px,4vw,52px);
     }
-
-    /* número fantasma de fundo */
-    .left::before {
-      content: 'MIS';
-      position: absolute;
-      bottom: -0.1em;
-      left: -0.05em;
-      font-weight: 700;
-      font-size: clamp(120px,18vw,260px);
-      color: transparent;
-      -webkit-text-stroke: 1px rgba(255,255,255,0.04);
-      line-height: 1;
-      pointer-events: none;
-    }
-
-    .logo-wrap {
-      margin-bottom: 40px;
-    }
-
-    .logo-wrap img {
-      height: 52px;
-      width: auto;
-      filter: invert(1);
-    }
-
-    .tag {
+    .hero-tag {
       display: flex;
       align-items: center;
       gap: 12px;
-      margin-bottom: 20px;
+      margin-bottom: 14px;
     }
-
-    .tag-line {
-      width: 28px; height: 2px;
-      background: var(--magenta);
-      flex-shrink: 0;
-    }
-
-    .tag-text {
-      font-size: 10px;
+    .hero-tag-line { width: 28px; height: 2px; background: var(--magenta); }
+    .hero-tag-text {
+      font-size: 9px;
       font-weight: 700;
-      letter-spacing: 3.5px;
+      letter-spacing: 4px;
       text-transform: uppercase;
       color: var(--magenta);
     }
-
-    .title {
+    .hero-title {
       font-weight: 700;
-      font-size: clamp(36px,5.5vw,72px);
+      font-size: clamp(30px, 5.5vw, 62px);
       line-height: 0.92;
       letter-spacing: -0.02em;
+      text-transform: uppercase;
       color: var(--branco);
-      position: relative;
-      z-index: 1;
     }
-
-    .title em {
+    .hero-title em {
       display: block;
       font-style: italic;
-      font-weight: 300;
+      font-weight: 700;
       color: var(--magenta);
+      font-size: 0.7em;
+      letter-spacing: 0.01em;
+      text-transform: none;
+      margin-top: 4px;
     }
 
-    .subtitle {
-      margin-top: 24px;
-      font-size: clamp(13px,1.2vw,15px);
-      font-weight: 300;
+    /* CORPO */
+    .body-grid {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    /* ESQUERDA */
+    .left {
+      padding: clamp(24px,3.5vw,48px);
+      border-right: 1px solid rgba(255,255,255,0.07);
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .logo-mis {
+      height: 44px;
+      width: auto;
+      filter: invert(1);
+    }
+    .expo-descr {
+      font-size: clamp(13px,1.1vw,15px);
+      font-weight: 400;
       color: rgba(255,255,255,0.5);
-      line-height: 1.75;
-      max-width: 400px;
-      position: relative;
-      z-index: 1;
+      line-height: 1.8;
     }
-
-    .info-grid {
-      margin-top: 36px;
+    .data-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 2px;
-      max-width: 380px;
-      position: relative;
-      z-index: 1;
     }
-
-    .info-item {
-      background: rgba(255,255,255,0.04);
-      padding: 12px 16px;
-    }
-
-    .info-lbl {
+    .data-item { background: rgba(255,255,255,0.04); padding: 11px 14px; }
+    .data-lbl {
       font-size: 8px;
       font-weight: 700;
       letter-spacing: 3px;
       text-transform: uppercase;
       color: var(--magenta);
-      margin-bottom: 5px;
+      margin-bottom: 4px;
     }
-
-    .info-val {
+    .data-val {
       font-size: 12px;
-      font-weight: 300;
-      color: rgba(255,255,255,0.7);
+      font-weight: 400;
+      color: rgba(255,255,255,0.65);
       line-height: 1.4;
     }
+    .panels-list { display: flex; flex-direction: column; gap: 2px; }
+    .panel-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 11px 14px;
+      background: rgba(255,255,255,0.03);
+      border-left: 3px solid transparent;
+    }
+    .panel-num {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--magenta);
+      min-width: 22px;
+    }
+    .panel-name {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.3;
+    }
 
-    /* ── LADO DIREITO — QR ── */
+    /* DIREITA */
     .right {
-      padding: clamp(40px,6vw,80px) clamp(32px,5vw,72px);
+      padding: clamp(24px,3.5vw,48px);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 28px;
-      height: 100%;
-      position: relative;
+      gap: 20px;
     }
-
-    .qr-label-top {
+    .qr-label {
       font-size: 9px;
       font-weight: 700;
       letter-spacing: 3.5px;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.35);
+      color: rgba(255,255,255,0.28);
       text-align: center;
     }
-
-    .qr-frame {
-      background: var(--branco);
-      padding: 20px;
-      display: inline-block;
-      position: relative;
-    }
-
-    /* cantos magenta */
-    .qr-frame::before,
-    .qr-frame::after {
+    .qr-wrap { position: relative; display: inline-flex; }
+    .qr-wrap::before, .qr-wrap::after,
+    .qr-inner::before, .qr-inner::after {
       content: '';
       position: absolute;
-      width: 24px; height: 24px;
+      width: 18px;
+      height: 18px;
     }
-
-    .qr-frame::before {
-      top: -3px; left: -3px;
-      border-top: 3px solid var(--magenta);
-      border-left: 3px solid var(--magenta);
-    }
-
-    .qr-frame::after {
-      bottom: -3px; right: -3px;
-      border-bottom: 3px solid var(--magenta);
-      border-right: 3px solid var(--magenta);
-    }
-
-    .qr-inner-corners::before,
-    .qr-inner-corners::after {
-      content: '';
-      position: absolute;
-      width: 24px; height: 24px;
-    }
-
-    .qr-inner-corners::before {
-      top: -3px; right: -3px;
-      border-top: 3px solid var(--magenta);
-      border-right: 3px solid var(--magenta);
-    }
-
-    .qr-inner-corners::after {
-      bottom: -3px; left: -3px;
-      border-bottom: 3px solid var(--magenta);
-      border-left: 3px solid var(--magenta);
-    }
-
-    .qr-frame img {
+    .qr-wrap::before { top: -2px; left: -2px; border-top: 3px solid var(--magenta); border-left: 3px solid var(--magenta); }
+    .qr-wrap::after  { top: -2px; right: -2px; border-top: 3px solid var(--magenta); border-right: 3px solid var(--magenta); }
+    .qr-inner { position: relative; background: var(--branco); padding: 14px; }
+    .qr-inner::before { bottom: -2px; left: -2px; border-bottom: 3px solid var(--magenta); border-left: 3px solid var(--magenta); }
+    .qr-inner::after  { bottom: -2px; right: -2px; border-bottom: 3px solid var(--magenta); border-right: 3px solid var(--magenta); }
+    .qr-inner img {
       display: block;
-      width: clamp(180px, 22vw, 300px);
+      width: clamp(150px, 18vw, 240px);
       height: auto;
     }
-
-    .qr-caption {
-      text-align: center;
-    }
-
-    .qr-caption-main {
+    .qr-url { text-align: center; }
+    .qr-url-main {
       font-size: 13px;
       font-weight: 700;
       color: var(--branco);
-      letter-spacing: 1px;
-      margin-bottom: 6px;
+      margin-bottom: 5px;
     }
-
-    .qr-caption-sub {
-      font-size: 11px;
-      font-weight: 300;
-      color: rgba(255,255,255,0.4);
+    .qr-url-sub {
+      font-size: 10px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.3);
       letter-spacing: 0.5px;
     }
-
-    /* seta animada */
     .qr-arrow {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 6px;
-      animation: bounce 1.8s ease-in-out infinite;
-    }
-
-    .qr-arrow-icon {
-      font-size: 20px;
+      gap: 4px;
+      animation: pulse 2s ease-in-out infinite;
       color: var(--magenta);
     }
-
-    .qr-arrow-text {
-      font-size: 9px;
+    .qr-arrow-txt {
+      font-size: 8px;
       font-weight: 700;
-      letter-spacing: 3px;
+      letter-spacing: 4px;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.3);
+      color: rgba(255,255,255,0.22);
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: translateY(0); }
+      50%       { opacity: 0.55; transform: translateY(6px); }
     }
 
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(6px); }
+    /* FAIXA cobogó */
+    .cobogo-strip {
+      height: 70px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .cobogo-strip img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 35%;
+      filter: brightness(0.55) saturate(0.5);
     }
 
-    /* ── FOOTER ── */
+    /* FOOTER */
     footer {
       border-top: 1px solid rgba(255,255,255,0.07);
-      padding: 16px clamp(20px,4vw,64px);
+      padding: 13px clamp(20px,4vw,56px);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      flex-shrink: 0;
       flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .footer-left {
-      font-size: 11px;
-      font-weight: 300;
-      color: rgba(255,255,255,0.25);
-    }
-
-    .footer-right {
-      display: flex;
       gap: 6px;
+      flex-shrink: 0;
     }
-
-    .footer-dot {
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.1);
+    .footer-txt {
+      font-size: 10px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.22);
     }
-
-    .footer-dot.active {
-      background: var(--magenta);
+    .footer-langs { display: flex; gap: 8px; }
+    .footer-lang {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: rgba(255,255,255,0.18);
     }
+    .footer-lang.active { color: var(--magenta); }
 
-    /* ── PRINT ── */
-    @media print {
-      body { background: white; color: black; }
-      .top-bar { background: black; }
-      .left::before { display: none; }
-    }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 860px) {
-      .main { grid-template-columns: 1fr; }
+    /* RESPONSIVE */
+    @media (max-width: 680px) {
+      .body-grid { grid-template-columns: 1fr; }
       .left {
         border-right: none;
         border-bottom: 1px solid rgba(255,255,255,0.07);
-        padding: 40px 24px 32px;
+        padding: 24px 20px;
       }
-      .left::before { display: none; }
-      .right { padding: 36px 24px 40px; }
-      .top-bar { padding: 10px 24px; }
-      footer { padding: 14px 24px; }
-      .info-grid { max-width: 100%; }
+      .right { padding: 24px 20px 32px; }
+      .hero-title { font-size: clamp(26px, 8vw, 40px); }
+      .topbar-inst { display: none; }
+    }
+
+    @media print {
+      body { background: white; color: black; }
+      .topbar { background: black; -webkit-print-color-adjust: exact; }
     }
   </style>
 </head>
 <body>
 
-  <!-- TOPO -->
-  <div class="top-bar">
-    <span class="top-bar-tag">Exposição Temporária · Fundação Roberto Marinho</span>
-    <span class="top-bar-expo">MIS Copacabana</span>
+  <div class="topbar">
+    <span class="topbar-inst">Fundação Roberto Marinho · Exposição Temporária</span>
+    <span class="topbar-local">MIS Copacabana</span>
   </div>
 
-  <!-- MAIN -->
-  <div class="main">
-
-    <!-- ESQUERDO -->
-    <div class="left">
-      <div class="logo-wrap">
-        <img src="mis-logo.png" alt="MIS — Museu da Imagem e do Som" />
+  <div class="hero">
+    <img class="hero-img" src="img-mis-fachada.jpeg" alt="MIS Copa — render da fachada com Copacabana" />
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-tag">
+        <div class="hero-tag-line"></div>
+        <span class="hero-tag-text">Arquitetura em Cena</span>
       </div>
-
-      <div class="tag">
-        <div class="tag-line"></div>
-        <span class="tag-text">Arquitetura em Cena</span>
-      </div>
-
-      <h1 class="title">
-        O MIS COPA
-        <em>antes da imagem</em>
-        e do som
+      <h1 class="hero-title">
+        O MIS Copa
+        <em>antes da imagem e do som</em>
       </h1>
+    </div>
+  </div>
 
-      <p class="subtitle">
-        Escaneie o QR code ao lado e explore a exposição no seu celular — disponível em Português, English e Español.
+  <div class="body-grid">
+
+    <div class="left">
+      <img class="logo-mis" src="mis-logo.png" alt="MIS — Museu da Imagem e do Som" />
+
+      <p class="expo-descr">
+        Os bastidores da concepção e construção do novo MIS — da arquitetura ao projeto museográfico. Disponível em três idiomas.
       </p>
 
-      <div class="info-grid">
-        <div class="info-item">
-          <div class="info-lbl">Acervo</div>
-          <div class="info-val">3 painéis</div>
+      <div class="data-grid">
+        <div class="data-item">
+          <div class="data-lbl">Painéis</div>
+          <div class="data-val">3 módulos</div>
         </div>
-        <div class="info-item">
-          <div class="info-lbl">Idiomas</div>
-          <div class="info-val">PT · EN · ES</div>
+        <div class="data-item">
+          <div class="data-lbl">Idiomas</div>
+          <div class="data-val">PT · EN · ES</div>
         </div>
-        <div class="info-item">
-          <div class="info-lbl">Local</div>
-          <div class="info-val">MIS Copacabana</div>
+        <div class="data-item">
+          <div class="data-lbl">Local</div>
+          <div class="data-val">MIS Copacabana</div>
         </div>
-        <div class="info-item">
-          <div class="info-lbl">Realização</div>
-          <div class="info-val">Fund. Roberto Marinho</div>
+        <div class="data-item">
+          <div class="data-lbl">Realização</div>
+          <div class="data-val">Fund. Roberto Marinho</div>
+        </div>
+      </div>
+
+      <div class="panels-list">
+        <div class="panel-item">
+          <span class="panel-num">01</span>
+          <span class="panel-name">O MIS Copa antes da Imagem e do Som</span>
+        </div>
+        <div class="panel-item">
+          <span class="panel-num">02</span>
+          <span class="panel-name">O Projeto e os Desafios da Obra</span>
+        </div>
+        <div class="panel-item">
+          <span class="panel-num">03</span>
+          <span class="panel-name">A Concepção do Museu</span>
         </div>
       </div>
     </div>
 
-    <!-- DIREITO -->
     <div class="right">
-      <div class="qr-label-top">Aponte a câmera do celular</div>
+      <div class="qr-label">Aponte a câmera do celular</div>
 
-      <div class="qr-frame">
-        <div class="qr-inner-corners">
-          <img src="qrcode-mis.jpeg" alt="QR Code — Arquitetura em Cena · MIS Copa" />
+      <div class="qr-wrap">
+        <div class="qr-inner">
+          <img src="qrcode-mis.jpeg" alt="QR Code — Arquitetura em Cena" />
         </div>
       </div>
 
-      <div class="qr-caption">
-        <div class="qr-caption-main">exposicao-mis.github.io/mis-copa</div>
-        <div class="qr-caption-sub">Acesso gratuito · Sem necessidade de app</div>
+      <div class="qr-url">
+        <div class="qr-url-main">exposicao-mis.github.io/mis-copa</div>
+        <div class="qr-url-sub">Acesso gratuito · Sem instalação</div>
       </div>
 
       <div class="qr-arrow">
-        <span class="qr-arrow-icon">↓</span>
-        <span class="qr-arrow-text">Escaneie</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/>
+        </svg>
+        <span class="qr-arrow-txt">Escaneie</span>
       </div>
     </div>
 
   </div>
 
-  <!-- FOOTER -->
+  <div class="cobogo-strip">
+    <img src="img-mis-cobogo.jpeg" alt="Cobogó do MIS — 22 mil tubos de alumínio mapeando a paisagem" />
+  </div>
+
   <footer>
-    <span class="footer-left">Museu da Imagem e do Som · Rio de Janeiro · 2025</span>
-    <div class="footer-right">
-      <div class="footer-dot active"></div>
-      <div class="footer-dot"></div>
-      <div class="footer-dot"></div>
+    <span class="footer-txt">Museu da Imagem e do Som · Rio de Janeiro · 2025–2026</span>
+    <div class="footer-langs">
+      <span class="footer-lang active">PT</span>
+      <span class="footer-lang">EN</span>
+      <span class="footer-lang">ES</span>
     </div>
   </footer>
 
