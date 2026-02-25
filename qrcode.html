@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Arquitetura em Cena — QR Code · MIS Copa</title>
+  <style>
+    @font-face { font-family:'BrownStd'; src:url('fonts/BrownStd-Light.otf') format('opentype'); font-weight:300; font-style:normal; font-display:swap; }
+    @font-face { font-family:'BrownStd'; src:url('fonts/BrownStd-LightItalic.otf') format('opentype'); font-weight:300; font-style:italic; font-display:swap; }
+    @font-face { font-family:'BrownStd'; src:url('fonts/BrownStd-Bold.otf') format('opentype'); font-weight:700; font-style:normal; font-display:swap; }
+
+    :root {
+      --preto:   #0A0A0A;
+      --branco:  #F5F5F0;
+      --magenta: #E8186D;
+      --cinza:   #C8C4BC;
+      --cinza-bg:#EDEAE4;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      height: 100%;
+      font-family: 'BrownStd', sans-serif;
+    }
+
+    body {
+      background: var(--preto);
+      color: var(--branco);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* ── TOPO ── */
+    .top-bar {
+      background: var(--magenta);
+      padding: 10px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+
+    .top-bar-tag {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 3.5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.8);
+    }
+
+    .top-bar-expo {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 3.5px;
+      text-transform: uppercase;
+      color: var(--branco);
+    }
+
+    /* ── MAIN ── */
+    .main {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+    }
+
+    /* ── LADO ESQUERDO — TEXTO ── */
+    .left {
+      padding: clamp(40px,6vw,80px) clamp(32px,5vw,72px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      height: 100%;
+      border-right: 1px solid rgba(255,255,255,0.07);
+      position: relative;
+    }
+
+    /* número fantasma de fundo */
+    .left::before {
+      content: 'MIS';
+      position: absolute;
+      bottom: -0.1em;
+      left: -0.05em;
+      font-weight: 700;
+      font-size: clamp(120px,18vw,260px);
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(255,255,255,0.04);
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .logo-wrap {
+      margin-bottom: 40px;
+    }
+
+    .logo-wrap img {
+      height: 52px;
+      width: auto;
+      filter: invert(1);
+    }
+
+    .tag {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .tag-line {
+      width: 28px; height: 2px;
+      background: var(--magenta);
+      flex-shrink: 0;
+    }
+
+    .tag-text {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 3.5px;
+      text-transform: uppercase;
+      color: var(--magenta);
+    }
+
+    .title {
+      font-weight: 700;
+      font-size: clamp(36px,5.5vw,72px);
+      line-height: 0.92;
+      letter-spacing: -0.02em;
+      color: var(--branco);
+      position: relative;
+      z-index: 1;
+    }
+
+    .title em {
+      display: block;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--magenta);
+    }
+
+    .subtitle {
+      margin-top: 24px;
+      font-size: clamp(13px,1.2vw,15px);
+      font-weight: 300;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.75;
+      max-width: 400px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .info-grid {
+      margin-top: 36px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      max-width: 380px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .info-item {
+      background: rgba(255,255,255,0.04);
+      padding: 12px 16px;
+    }
+
+    .info-lbl {
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--magenta);
+      margin-bottom: 5px;
+    }
+
+    .info-val {
+      font-size: 12px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.4;
+    }
+
+    /* ── LADO DIREITO — QR ── */
+    .right {
+      padding: clamp(40px,6vw,80px) clamp(32px,5vw,72px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 28px;
+      height: 100%;
+      position: relative;
+    }
+
+    .qr-label-top {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 3.5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      text-align: center;
+    }
+
+    .qr-frame {
+      background: var(--branco);
+      padding: 20px;
+      display: inline-block;
+      position: relative;
+    }
+
+    /* cantos magenta */
+    .qr-frame::before,
+    .qr-frame::after {
+      content: '';
+      position: absolute;
+      width: 24px; height: 24px;
+    }
+
+    .qr-frame::before {
+      top: -3px; left: -3px;
+      border-top: 3px solid var(--magenta);
+      border-left: 3px solid var(--magenta);
+    }
+
+    .qr-frame::after {
+      bottom: -3px; right: -3px;
+      border-bottom: 3px solid var(--magenta);
+      border-right: 3px solid var(--magenta);
+    }
+
+    .qr-inner-corners::before,
+    .qr-inner-corners::after {
+      content: '';
+      position: absolute;
+      width: 24px; height: 24px;
+    }
+
+    .qr-inner-corners::before {
+      top: -3px; right: -3px;
+      border-top: 3px solid var(--magenta);
+      border-right: 3px solid var(--magenta);
+    }
+
+    .qr-inner-corners::after {
+      bottom: -3px; left: -3px;
+      border-bottom: 3px solid var(--magenta);
+      border-left: 3px solid var(--magenta);
+    }
+
+    .qr-frame img {
+      display: block;
+      width: clamp(180px, 22vw, 300px);
+      height: auto;
+    }
+
+    .qr-caption {
+      text-align: center;
+    }
+
+    .qr-caption-main {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--branco);
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+
+    .qr-caption-sub {
+      font-size: 11px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 0.5px;
+    }
+
+    /* seta animada */
+    .qr-arrow {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      animation: bounce 1.8s ease-in-out infinite;
+    }
+
+    .qr-arrow-icon {
+      font-size: 20px;
+      color: var(--magenta);
+    }
+
+    .qr-arrow-text {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(6px); }
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid rgba(255,255,255,0.07);
+      padding: 16px clamp(20px,4vw,64px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .footer-left {
+      font-size: 11px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.25);
+    }
+
+    .footer-right {
+      display: flex;
+      gap: 6px;
+    }
+
+    .footer-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.1);
+    }
+
+    .footer-dot.active {
+      background: var(--magenta);
+    }
+
+    /* ── PRINT ── */
+    @media print {
+      body { background: white; color: black; }
+      .top-bar { background: black; }
+      .left::before { display: none; }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 860px) {
+      .main { grid-template-columns: 1fr; }
+      .left {
+        border-right: none;
+        border-bottom: 1px solid rgba(255,255,255,0.07);
+        padding: 40px 24px 32px;
+      }
+      .left::before { display: none; }
+      .right { padding: 36px 24px 40px; }
+      .top-bar { padding: 10px 24px; }
+      footer { padding: 14px 24px; }
+      .info-grid { max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOPO -->
+  <div class="top-bar">
+    <span class="top-bar-tag">Exposição Temporária · Fundação Roberto Marinho</span>
+    <span class="top-bar-expo">MIS Copacabana</span>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <!-- ESQUERDO -->
+    <div class="left">
+      <div class="logo-wrap">
+        <img src="mis-logo.png" alt="MIS — Museu da Imagem e do Som" />
+      </div>
+
+      <div class="tag">
+        <div class="tag-line"></div>
+        <span class="tag-text">Arquitetura em Cena</span>
+      </div>
+
+      <h1 class="title">
+        O MIS COPA
+        <em>antes da imagem</em>
+        e do som
+      </h1>
+
+      <p class="subtitle">
+        Escaneie o QR code ao lado e explore a exposição no seu celular — disponível em Português, English e Español.
+      </p>
+
+      <div class="info-grid">
+        <div class="info-item">
+          <div class="info-lbl">Acervo</div>
+          <div class="info-val">3 painéis</div>
+        </div>
+        <div class="info-item">
+          <div class="info-lbl">Idiomas</div>
+          <div class="info-val">PT · EN · ES</div>
+        </div>
+        <div class="info-item">
+          <div class="info-lbl">Local</div>
+          <div class="info-val">MIS Copacabana</div>
+        </div>
+        <div class="info-item">
+          <div class="info-lbl">Realização</div>
+          <div class="info-val">Fund. Roberto Marinho</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DIREITO -->
+    <div class="right">
+      <div class="qr-label-top">Aponte a câmera do celular</div>
+
+      <div class="qr-frame">
+        <div class="qr-inner-corners">
+          <img src="qrcode-mis.jpeg" alt="QR Code — Arquitetura em Cena · MIS Copa" />
+        </div>
+      </div>
+
+      <div class="qr-caption">
+        <div class="qr-caption-main">exposicao-mis.github.io/mis-copa</div>
+        <div class="qr-caption-sub">Acesso gratuito · Sem necessidade de app</div>
+      </div>
+
+      <div class="qr-arrow">
+        <span class="qr-arrow-icon">↓</span>
+        <span class="qr-arrow-text">Escaneie</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-left">Museu da Imagem e do Som · Rio de Janeiro · 2025</span>
+    <div class="footer-right">
+      <div class="footer-dot active"></div>
+      <div class="footer-dot"></div>
+      <div class="footer-dot"></div>
+    </div>
+  </footer>
+
+</body>
+</html>
