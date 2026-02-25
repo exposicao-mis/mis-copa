@@ -572,13 +572,49 @@
        RESPONSIVE
     ───────────────────────────── */
     @media (max-width: 768px) {
-      .hero-inner { grid-template-columns: 1fr; }
-      .hero-lang-cta { align-items: flex-start; flex-direction: row; flex-wrap: wrap; }
+      /* hero: coluna única, botões de idioma abaixo do texto */
+      .hero-inner {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
+      /* botões de idioma: coluna única, largura total */
+      .hero-lang-cta {
+        align-items: stretch;
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .hero-lang-item {
+        width: 100%;
+        justify-content: center;
+        padding: 16px 20px;
+        font-size: 13px;
+        letter-spacing: 3px;
+      }
+
+      .hero-lang-item .flag { font-size: 20px; }
+
+      /* barra inferior: 2 colunas */
       .hero-bar { flex-wrap: wrap; gap: 0; }
-      .hero-bar-item { flex: 1 1 45%; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.07); padding: 14px 0; margin: 0; }
+      .hero-bar-item {
+        flex: 1 1 45%;
+        border-right: none;
+        border-bottom: 1px solid rgba(255,255,255,0.07);
+        padding: 14px 0;
+        margin: 0;
+      }
+      .hero-bar-item:nth-last-child(-n+2) { border-bottom: none; }
+
       .sobre { grid-template-columns: 1fr; }
       .faixa { flex-direction: column; }
       .topbar-expo { display: none; }
+    }
+
+    /* mobile pequeno */
+    @media (max-width: 400px) {
+      .hero-bar-item { flex: 1 1 100%; }
+      .hero-bar-item:last-child { border-bottom: none; }
     }
   </style>
 </head>

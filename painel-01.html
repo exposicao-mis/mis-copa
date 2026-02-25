@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Painel 01 — Arquitetura em Cena · MIS Copa</title>
+
+  <style>
+    @font-face { font-family:'BrownStd'; src:url('fonts/BrownStd-Thin.otf') format('opentype'); font-weight:100; font-style:normal; font-display:swap; }
+    @font-face { font-family:'BrownStd'; src:url('fonts/BrownStd-Light.otf') format('opentype'); font-weight:300; font-style:normal; font-display:swap; }
+    @font-face { font-family:'BrownStd'; src:url('fonts/BrownStd-LightItalic.otf') format('opentype'); font-weight:300; font-style:italic; font-display:swap; }
+    @font-face { font-family:'BrownStd'; src:url('fonts/BrownStd-Regular.otf') format('opentype'); font-weight:400; font-style:normal; font-display:swap; }
+    @font-face { font-family:'BrownStd'; src:url('fonts/BrownStd-Italic.otf') format('opentype'); font-weight:400; font-style:italic; font-display:swap; }
+    @font-face { font-family:'BrownStd'; src:url('fonts/BrownStd-Bold.otf') format('opentype'); font-weight:700; font-style:normal; font-display:swap; }
+    @font-face { font-family:'BrownStd'; src:url('fonts/BrownStd-BoldItalic.otf') format('opentype'); font-weight:700; font-style:italic; font-display:swap; }
+
+    :root {
+      --preto:   #0A0A0A;
+      --branco:  #F5F5F0;
+      --magenta: #E8186D;
+      --cinza:   #C8C4BC;
+      --cinza-bg:#EDEAE4;
+    }
+
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    html { scroll-behavior:smooth; }
+
+    body {
+      background: var(--cinza-bg);
+      color: var(--preto);
+      font-family: 'BrownStd', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* ── TOPBAR ── */
+    .topbar {
+      position: fixed;
+      top:0; left:0; right:0;
+      z-index: 100;
+      background: var(--preto);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 clamp(20px,4vw,64px);
+    }
+
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .topbar-logo img {
+      height: 56px;
+      width: auto;
+      filter: invert(1);
+      display: block;
+    }
+
+    .topbar-sep {
+      width: 1px;
+      height: 32px;
+      background: rgba(255,255,255,0.12);
+    }
+
+    .topbar-back {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      transition: color 0.2s;
+    }
+
+    .topbar-back:hover { color: var(--magenta); }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .panel-badge {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.25);
+    }
+
+    .lang-selector {
+      display: flex;
+      gap: 2px;
+    }
+
+    .lang-btn {
+      padding: 7px 14px;
+      font-family: 'BrownStd', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      background: none;
+      border: none;
+      color: rgba(255,255,255,0.3);
+      cursor: pointer;
+      transition: all 0.2s;
+      position: relative;
+    }
+
+    .lang-btn::after {
+      content:'';
+      position:absolute;
+      bottom:0; left:0; right:0;
+      height:2px;
+      background: var(--magenta);
+      transform: scaleX(0);
+      transition: transform 0.2s;
+    }
+
+    .lang-btn.active { color: var(--branco); }
+    .lang-btn.active::after { transform: scaleX(1); }
+    .lang-btn:hover:not(.active) { color: rgba(255,255,255,0.6); }
+
+    /* ── HERO DO PAINEL ── */
+    .panel-hero {
+      background: var(--preto);
+      padding-top: 80px;
+      min-height: 52vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .panel-hero::before {
+      content: '01';
+      position: absolute;
+      right: -0.05em;
+      bottom: -0.15em;
+      font-weight: 700;
+      font-size: clamp(180px,28vw,380px);
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(255,255,255,0.04);
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .panel-hero-inner {
+      padding: clamp(32px,5vw,64px) clamp(20px,4vw,64px) clamp(28px,4vw,52px);
+      position: relative;
+      z-index: 2;
+    }
+
+    .panel-tag {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .panel-tag-line {
+      width: 32px; height: 2px;
+      background: var(--magenta);
+      flex-shrink: 0;
+    }
+
+    .panel-tag-text {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 3.5px;
+      text-transform: uppercase;
+      color: var(--magenta);
+    }
+
+    .panel-title {
+      font-weight: 700;
+      font-size: clamp(32px,6vw,72px);
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+      color: var(--branco);
+      max-width: 800px;
+    }
+
+    /* faixa magenta sob o hero */
+    .panel-hero-bar {
+      background: var(--magenta);
+      padding: 14px clamp(20px,4vw,64px);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .panel-hero-bar span {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.75);
+    }
+
+    .panel-hero-bar strong {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--branco);
+    }
+
+    /* ── CONTEÚDO ── */
+    .panel-body {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: clamp(40px,6vw,80px) clamp(20px,4vw,64px);
+    }
+
+    /* blocos de seção */
+    .section-block {
+      margin-bottom: clamp(40px,6vw,72px);
+    }
+
+    .section-label {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 3.5px;
+      text-transform: uppercase;
+      color: var(--magenta);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--cinza);
+    }
+
+    .section-title {
+      font-weight: 700;
+      font-size: clamp(22px,3vw,32px);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      color: var(--preto);
+      margin-bottom: 18px;
+    }
+
+    .section-text {
+      font-size: clamp(15px,1.4vw,17px);
+      font-weight: 300;
+      color: #2A2520;
+      line-height: 1.85;
+    }
+
+    .section-text p + p { margin-top: 14px; }
+
+    /* destaque em caixa */
+    .highlight-box {
+      background: var(--preto);
+      padding: 28px 32px;
+      margin: 28px 0;
+      border-left: 4px solid var(--magenta);
+    }
+
+    .highlight-box p {
+      font-size: clamp(14px,1.3vw,16px);
+      font-weight: 300;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.8;
+    }
+
+    .highlight-box strong {
+      color: var(--branco);
+      font-weight: 700;
+    }
+
+    /* lista de itens */
+    .item-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      margin-top: 20px;
+    }
+
+    .item-list-row {
+      background: var(--branco);
+      padding: 16px 20px;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .item-list-row-num {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--magenta);
+      letter-spacing: 1px;
+      min-width: 24px;
+      margin-top: 2px;
+    }
+
+    .item-list-row-text {
+      font-size: 14px;
+      font-weight: 300;
+      color: #2A2520;
+      line-height: 1.7;
+    }
+
+    .item-list-row-text strong {
+      font-weight: 700;
+      color: var(--preto);
+    }
+
+    /* divisor */
+    .divider {
+      height: 1px;
+      background: var(--cinza);
+      margin: clamp(32px,4vw,56px) 0;
+    }
+
+    /* ── NAV ENTRE PAINÉIS ── */
+    .panel-nav {
+      background: var(--preto);
+      display: flex;
+    }
+
+    .nav-link {
+      flex: 1;
+      padding: 28px clamp(20px,4vw,64px);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      border-right: 1px solid rgba(255,255,255,0.06);
+      transition: background 0.2s;
+    }
+
+    .nav-link:last-child { border-right: none; justify-content: flex-end; }
+    .nav-link:hover { background: rgba(255,255,255,0.03); }
+    .nav-link.disabled { opacity: 0.2; pointer-events: none; }
+
+    .nav-arrow {
+      width: 40px; height: 40px;
+      background: rgba(255,255,255,0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: var(--branco);
+      flex-shrink: 0;
+      transition: background 0.2s;
+    }
+
+    .nav-link:hover .nav-arrow { background: var(--magenta); }
+
+    .nav-text { display: flex; flex-direction: column; gap: 4px; }
+    .nav-text-right { text-align: right; }
+
+    .nav-lbl {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.25);
+    }
+
+    .nav-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.6);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--preto);
+      border-top: 3px solid var(--magenta);
+      padding: 32px clamp(20px,4vw,64px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-name {
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--branco);
+      margin-bottom: 4px;
+    }
+
+    .footer-inst {
+      font-size: 11px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.25);
+    }
+
+    .footer-logo img {
+      height: 48px;
+      width: auto;
+      filter: invert(1) sepia(1) saturate(5) hue-rotate(293deg) brightness(0.85);
+    }
+
+    /* ── IDIOMA ── */
+    .lc { display: none; }
+    .lc.active { display: block; }
+
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(8px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    .lc.active { animation: fadeUp 0.3s ease; }
+
+    @media (max-width:600px) {
+      .panel-nav { flex-direction: column; }
+      .nav-link { border-right:none; border-bottom:1px solid rgba(255,255,255,0.06); }
+      .nav-link:last-child { border-bottom:none; justify-content:flex-start; }
+      .topbar-sep, .panel-badge { display:none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOPBAR -->
+  <nav class="topbar">
+    <div class="topbar-left">
+      <a class="topbar-logo" href="index.html">
+        <img src="mis-logo.png" alt="MIS" />
+      </a>
+      <div class="topbar-sep"></div>
+      <a class="topbar-back" href="index.html">← <span class="lc active" data-lang="pt" style="display:inline">Início</span><span class="lc" data-lang="en" style="display:none">Home</span><span class="lc" data-lang="es" style="display:none">Inicio</span></a>
+    </div>
+    <div class="topbar-right">
+      <span class="panel-badge">01 / 03</span>
+      <div class="lang-selector">
+        <button class="lang-btn active" data-lang="pt">PT</button>
+        <button class="lang-btn" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="es">ES</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="panel-hero">
+    <div class="panel-hero-inner">
+      <div class="panel-tag">
+        <div class="panel-tag-line"></div>
+        <span class="panel-tag-text lc active" data-lang="pt">Painel 01 · Arquitetura em Cena</span>
+        <span class="panel-tag-text lc" data-lang="en">Panel 01 · Architecture on Stage</span>
+        <span class="panel-tag-text lc" data-lang="es">Panel 01 · Arquitectura en Escena</span>
+      </div>
+      <h1 class="panel-title">
+        <span class="lc active" data-lang="pt">O MIS Copa antes da<br>Imagem e do Som</span>
+        <span class="lc" data-lang="en">The MIS Copa before<br>Image and Sound</span>
+        <span class="lc" data-lang="es">El MIS Copa antes de<br>la Imagen y el Sonido</span>
+      </h1>
+    </div>
+    <div class="panel-hero-bar">
+      <span class="lc active" data-lang="pt">Exposição Temporária ·</span>
+      <span class="lc" data-lang="en">Temporary Exhibition ·</span>
+      <span class="lc" data-lang="es">Exposición Temporal ·</span>
+      <strong>Fundação Roberto Marinho · MIS Copacabana</strong>
+    </div>
+  </div>
+
+  <!-- CONTEÚDO -->
+  <main class="panel-body">
+
+    <!-- ══ PORTUGUÊS ══ -->
+    <div class="lc active" data-lang="pt">
+
+      <div class="section-block">
+        <div class="section-label">A Instituição</div>
+        <h2 class="section-title">O Guardião da Alma Carioca</h2>
+        <div class="section-text">
+          <p>O Museu da Imagem e do Som do Rio de Janeiro (MIS), pioneiro do gênero no Brasil, foi fundado em 1965, em comemoração ao IV Centenário da cidade. Desde então, o MIS serviu de referência para a criação de instituições semelhantes por todo o país.</p>
+          <p>O MIS é a instituição da Secretaria de Cultura e Economia Criativa do Estado do Rio de Janeiro que tem como legado conservar um acervo museológico composto por registros da vida carioca e documentos da sua produção cultural. Além disso, o MIS promove a coleta de depoimentos para a posteridade de personalidades da nossa história.</p>
+          <p>Por todos esses motivos, o MIS é o museu da <strong>identidade carioca</strong>, que reverencia a cultura vibrante do seu povo.</p>
+        </div>
+      </div>
+
+      <div class="section-block">
+        <div class="section-label">O Acervo</div>
+        <h2 class="section-title">Imagens, Sons e Depoimentos para a Posteridade</h2>
+        <div class="section-text">
+          <p>O acervo do MIS representa um dos panoramas mais expressivos da cultura urbana brasileira. Ele é composto por registros de áudio, filmes, fotografias e coleções de personalidades que moldaram a identidade nacional.</p>
+        </div>
+        <div class="item-list">
+          <div class="item-list-row">
+            <span class="item-list-row-num">—</span>
+            <span class="item-list-row-text"><strong>Registros Fotográficos:</strong> as coleções de Augusto Malta e Guilherme Santos, que retratam as transformações urbanísticas do Rio nos séculos XIX e XX.</span>
+          </div>
+          <div class="item-list-row">
+            <span class="item-list-row-num">—</span>
+            <span class="item-list-row-text"><strong>A Era do Rádio e da Música:</strong> a coleção de Henrique Foréis Domingues, o Almirante, recordação mais marcante da época de ouro da Rádio Nacional.</span>
+          </div>
+          <div class="item-list-row">
+            <span class="item-list-row-num">—</span>
+            <span class="item-list-row-text"><strong>Instrumentos Musicais:</strong> raridades como o piano de Ernesto Nazareth, a bateria do Perrone, o saxofone do Pixinguinha e o violão de Dorival Caymmi.</span>
+          </div>
+          <div class="item-list-row">
+            <span class="item-list-row-num">—</span>
+            <span class="item-list-row-text"><strong>Carmen Miranda:</strong> parte da coleção dedicada à Pequena Notável será apresentada na nova sede do MIS.</span>
+          </div>
+          <div class="item-list-row">
+            <span class="item-list-row-num">—</span>
+            <span class="item-list-row-text"><strong>Depoimentos para a Posteridade:</strong> desde 1966, o MIS reúne mais de mil e cem depoimentos de artistas, intelectuais e personagens do país.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="section-block">
+        <div class="section-label">A Nova Sede</div>
+        <h2 class="section-title">A Necessidade de Uma Nova Sede</h2>
+        <div class="section-text">
+          <p>Apesar de sua riqueza cultural e histórica, as coleções do MIS, por muito tempo, foram pouco conhecidas pela população em geral, sendo utilizadas majoritariamente por pesquisadores.</p>
+          <p>Em 2008, o Governo do Estado do Rio de Janeiro convidou a Fundação Roberto Marinho para conceber a nova sede para o MIS, por sua experiência comprovada na realização de museus com uma nova tipologia no país — como o Museu da Língua Portuguesa, o Museu do Futebol e o Museu do Amanhã.</p>
+          <p>O maior objetivo era disponibilizar ao grande público, de forma atraente, esse precioso acervo. O sonho era ainda maior: que essa nova sede pudesse se transformar em um marco arquitetônico da cidade. Por isso, foi escolhido um dos endereços mais simbólicos do país — a praia de Copacabana.</p>
+        </div>
+        <div class="highlight-box">
+          <p>O resultado é um complexo de duas sedes: <strong>em Copacabana</strong>, a vitrine do acervo e da identidade carioca; <strong>na Lapa</strong>, a "casa" do acervo, com sua reserva técnica qualificada e acessível para estudos e pesquisas.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ══ ENGLISH ══ -->
+    <div class="lc" data-lang="en">
+
+      <div class="section-block">
+        <div class="section-label">The Institution</div>
+        <h2 class="section-title">Guardian of the Carioca Soul</h2>
+        <div class="section-text">
+          <p>The Museum of Image and Sound of Rio de Janeiro (MIS), a pioneer of its kind in Brazil, was founded in 1965 to commemorate the city's IV Centennial. Since then, MIS has served as a reference for the creation of similar institutions throughout the country.</p>
+          <p>MIS is the institution of the Rio de Janeiro State Secretariat of Culture and Creative Economy, whose legacy is to preserve a museological collection composed of records of carioca life and documents of its cultural production. MIS also promotes the collection of testimonies from notable personalities of our history.</p>
+          <p>For all these reasons, MIS is the museum of <strong>carioca identity</strong>, paying tribute to the vibrant culture of its people.</p>
+        </div>
+      </div>
+
+      <div class="section-block">
+        <div class="section-label">The Collection</div>
+        <h2 class="section-title">Images, Sounds and Testimonies for Posterity</h2>
+        <div class="section-text">
+          <p>The MIS collection represents one of the most expressive panoramas of Brazilian urban culture. It is composed of audio recordings, films, photographs and collections from personalities who shaped the national identity.</p>
+        </div>
+        <div class="item-list">
+          <div class="item-list-row">
+            <span class="item-list-row-num">—</span>
+            <span class="item-list-row-text"><strong>Photographic Records:</strong> the collections of Augusto Malta and Guilherme Santos, portraying Rio's urban transformations in the 19th and 20th centuries.</span>
+          </div>
+          <div class="item-list-row">
+            <span class="item-list-row-num">—</span>
+            <span class="item-list-row-text"><strong>The Radio and Music Era:</strong> the collection of Henrique Foréis Domingues (Almirante), the most memorable record of Rádio Nacional's golden age.</span>
+          </div>
+          <div class="item-list-row">
+            <span class="item-list-row-num">—</span>
+            <span class="item-list-row-text"><strong>Musical Instruments:</strong> rarities such as Ernesto Nazareth's piano, Perrone's drum kit, Pixinguinha's saxophone and Dorival Caymmi's guitar.</span>
+          </div>
+          <div class="item-list-row">
+            <span class="item-list-row-num">—</span>
+            <span class="item-list-row-text"><strong>Carmen Miranda:</strong> part of the collection dedicated to the Little Notable will be presented at MIS's new headquarters.</span>
+          </div>
+          <div class="item-list-row">
+            <span class="item-list-row-num">—</span>
+            <span class="item-list-row-text"><strong>Testimonies for Posterity:</strong> since 1966, MIS has gathered over 1,100 testimonies from artists, intellectuals and notable figures.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="section-block">
+        <div class="section-label">The New Headquarters</div>
+        <h2 class="section-title">The Need for a New Home</h2>
+        <div class="section-text">
+          <p>Despite its cultural and historical richness, the MIS collections were for a long time little known to the general public, being used mainly by researchers.</p>
+          <p>In 2008, the Rio de Janeiro State Government invited Fundação Roberto Marinho to design the new MIS headquarters, given its proven experience in creating museums with a new typology — such as the Museum of the Portuguese Language, the Football Museum and the Museum of Tomorrow.</p>
+          <p>The main goal was to make this precious collection attractively available to the general public. The dream was even bigger: that this new headquarters could become an architectural landmark of the city — which is why one of the most symbolic addresses in the country was chosen: Copacabana beach.</p>
+        </div>
+        <div class="highlight-box">
+          <p>The result is a complex of two venues: <strong>in Copacabana</strong>, the showcase of the collection and carioca identity; <strong>in Lapa</strong>, the "home" of the collection, with its qualified and accessible technical reserve for in-depth studies and research.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ══ ESPAÑOL ══ -->
+    <div class="lc" data-lang="es">
+
+      <div class="section-block">
+        <div class="section-label">La Institución</div>
+        <h2 class="section-title">El Guardián del Alma Carioca</h2>
+        <div class="section-text">
+          <p>El Museo de la Imagen y del Sonido de Río de Janeiro (MIS), pionero en su género en Brasil, fue fundado en 1965 para conmemorar el IV Centenario de la ciudad. Desde entonces, el MIS ha servido de referencia para la creación de instituciones similares en todo el país.</p>
+          <p>El MIS es la institución de la Secretaría de Cultura y Economía Creativa del Estado de Río de Janeiro cuyo legado es conservar una colección museológica compuesta por registros de la vida carioca y documentos de su producción cultural.</p>
+          <p>Por todos estos motivos, el MIS es el museo de la <strong>identidad carioca</strong>, que reverencia la vibrante cultura de su pueblo.</p>
+        </div>
+      </div>
+
+      <div class="section-block">
+        <div class="section-label">La Colección</div>
+        <h2 class="section-title">Imágenes, Sonidos y Testimonios para la Posteridad</h2>
+        <div class="section-text">
+          <p>La colección del MIS representa uno de los panoramas más expresivos de la cultura urbana brasileña. Está compuesta por grabaciones de audio, películas, fotografías y colecciones de personalidades que moldearon la identidad nacional.</p>
+        </div>
+        <div class="item-list">
+          <div class="item-list-row">
+            <span class="item-list-row-num">—</span>
+            <span class="item-list-row-text"><strong>Registros Fotográficos:</strong> las colecciones de Augusto Malta y Guilherme Santos, que retratan las transformaciones urbanísticas de Río en los siglos XIX y XX.</span>
+          </div>
+          <div class="item-list-row">
+            <span class="item-list-row-num">—</span>
+            <span class="item-list-row-text"><strong>La Era de la Radio y la Música:</strong> la colección de Henrique Foréis Domingues (Almirante), el recuerdo más notable de la época dorada de la Rádio Nacional.</span>
+          </div>
+          <div class="item-list-row">
+            <span class="item-list-row-num">—</span>
+            <span class="item-list-row-text"><strong>Instrumentos Musicales:</strong> raridades como el piano de Ernesto Nazareth, la batería de Perrone, el saxofón de Pixinguinha y la guitarra de Dorival Caymmi.</span>
+          </div>
+          <div class="item-list-row">
+            <span class="item-list-row-num">—</span>
+            <span class="item-list-row-text"><strong>Carmen Miranda:</strong> parte de la colección dedicada a la Pequeña Notable será presentada en la nueva sede del MIS.</span>
+          </div>
+          <div class="item-list-row">
+            <span class="item-list-row-num">—</span>
+            <span class="item-list-row-text"><strong>Testimonios para la Posteridad:</strong> desde 1966, el MIS reúne más de mil cien testimonios de artistas, intelectuales y personajes del país.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="section-block">
+        <div class="section-label">La Nueva Sede</div>
+        <h2 class="section-title">La Necesidad de una Nueva Sede</h2>
+        <div class="section-text">
+          <p>A pesar de su riqueza cultural e histórica, las colecciones del MIS fueron durante mucho tiempo poco conocidas por el público en general, siendo utilizadas principalmente por investigadores.</p>
+          <p>En 2008, el Gobierno del Estado de Río de Janeiro invitó a la Fundação Roberto Marinho a concebir la nueva sede del MIS, por su experiencia comprobada en la realización de museos con una nueva tipología — como el Museo de la Lengua Portuguesa, el Museo del Fútbol y el Museo del Mañana.</p>
+          <p>El objetivo principal era poner a disposición del gran público, de forma atractiva, esta preciosa colección. El sueño era aún mayor: que esta nueva sede pudiera convertirse en un hito arquitectónico de la ciudad — razón por la que se eligió una de las direcciones más simbólicas del país: la playa de Copacabana.</p>
+        </div>
+        <div class="highlight-box">
+          <p>El resultado es un complejo de dos sedes: <strong>en Copacabana</strong>, el escaparate de la colección y de la identidad carioca; <strong>en Lapa</strong>, la "casa" de la colección, con su reserva técnica calificada y accesible para estudios e investigaciones.</p>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- NAV -->
+  <nav class="panel-nav">
+    <a class="nav-link disabled" href="#">
+      <div class="nav-arrow">←</div>
+      <div class="nav-text">
+        <span class="nav-lbl"><span class="lc active" data-lang="pt" style="display:inline">Anterior</span><span class="lc" data-lang="en" style="display:none">Previous</span><span class="lc" data-lang="es" style="display:none">Anterior</span></span>
+        <span class="nav-name">—</span>
+      </div>
+    </a>
+    <a class="nav-link" id="nav-next" href="painel-02.html">
+      <div class="nav-text nav-text-right">
+        <span class="nav-lbl"><span class="lc active" data-lang="pt" style="display:inline">Próximo</span><span class="lc" data-lang="en" style="display:none">Next</span><span class="lc" data-lang="es" style="display:none">Siguiente</span></span>
+        <span class="nav-name"><span class="lc active" data-lang="pt" style="display:inline">Painel 02</span><span class="lc" data-lang="en" style="display:none">Panel 02</span><span class="lc" data-lang="es" style="display:none">Panel 02</span></span>
+      </div>
+      <div class="nav-arrow">→</div>
+    </a>
+  </nav>
+
+  <!-- FOOTER -->
+  <footer>
+    <div>
+      <div class="footer-name">Arquitetura em Cena — O MIS Copa antes da Imagem e do Som</div>
+      <div class="footer-inst">Museu da Imagem e do Som · Fundação Roberto Marinho · Rio de Janeiro</div>
+    </div>
+    <div class="footer-logo">
+      <img src="mis-logo.png" alt="MIS" />
+    </div>
+  </footer>
+
+  <script>
+    // Lê idioma da URL (?lang=en) ou do localStorage
+    function getLang() {
+      const p = new URLSearchParams(window.location.search);
+      const url = p.get('lang');
+      if (url && ['pt','en','es'].includes(url)) return url;
+      return localStorage.getItem('mis-lang') || 'pt';
+    }
+
+    function setLang(lang) {
+      localStorage.setItem('mis-lang', lang);
+
+      document.querySelectorAll('.lang-btn').forEach(b => {
+        b.classList.toggle('active', b.dataset.lang === lang);
+      });
+
+      document.querySelectorAll('.lc').forEach(el => {
+        const show = el.dataset.lang === lang;
+        const inline = el.tagName === 'SPAN' || el.classList.contains('panel-tag-text');
+        el.style.display = show ? (inline ? 'inline' : 'block') : 'none';
+        el.classList.toggle('active', show);
+      });
+
+      // atualiza link do próximo painel
+      const next = document.getElementById('nav-next');
+      if (next) next.href = `painel-02.html?lang=${lang}`;
+
+      // lang do html
+      document.documentElement.lang = lang === 'pt' ? 'pt-BR' : lang === 'en' ? 'en' : 'es';
+    }
+
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.addEventListener('click', () => setLang(btn.dataset.lang));
+    });
+
+    setLang(getLang());
+  </script>
+
+</body>
+</html>
