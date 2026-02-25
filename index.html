@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Arquitetura em Cena — MIS Copa</title>
+
+  <style>
+    /* ── BROWN STD (substituir pelos caminhos reais depois) ── */
+    @font-face {
+      font-family: 'BrownStd';
+      src: url('fonts/BrownStd-Regular.woff2') format('woff2');
+      font-weight: 400; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'BrownStd';
+      src: url('fonts/BrownStd-Light.woff2') format('woff2');
+      font-weight: 300; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'BrownStd';
+      src: url('fonts/BrownStd-Bold.woff2') format('woff2');
+      font-weight: 700; font-style: normal; font-display: swap;
+    }
+
+    :root {
+      --preto:   #0A0A0A;
+      --branco:  #F5F5F0;
+      --magenta: #E8186D;
+      --magenta-dark: #C4155C;
+      --cinza:   #C8C4BC;
+      --cinza-bg:#EDEAE4;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--preto);
+      color: var(--branco);
+      font-family: 'BrownStd', sans-serif;
+      font-weight: 400;
+      overflow-x: hidden;
+    }
+
+    /* ════════════════════════════════
+       HERO
+    ════════════════════════════════ */
+    .hero {
+      min-height: 100svh;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* fundo: grande "MIS" fantasma */
+    .hero::before {
+      content: 'MIS';
+      position: absolute;
+      bottom: -0.15em;
+      left: -0.05em;
+      font-family: 'BrownStd', sans-serif;
+      font-weight: 700;
+      font-size: clamp(260px, 40vw, 560px);
+      color: transparent;
+      -webkit-text-stroke: 1.5px rgba(255,255,255,0.05);
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    /* barra topo */
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px clamp(24px, 5vw, 72px);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      position: relative;
+      z-index: 2;
+    }
+
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .mis-badge img { height: 48px; width: auto; filter: invert(1); display: block; }
+    .mis-badge {
+      font-family: 'BrownStd', sans-serif;
+      font-weight: 700;
+      font-size: 28px;
+      letter-spacing: 6px;
+      color: var(--magenta);
+    }
+
+    .topbar-sep {
+      width: 1px;
+      height: 28px;
+      background: rgba(255,255,255,0.15);
+    }
+
+    .topbar-inst {
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      line-height: 1.5;
+    }
+
+    .topbar-right {
+      display: flex;
+      gap: 8px;
+    }
+
+    .lang-pill {
+      padding: 7px 14px;
+      font-family: 'BrownStd', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      border: 1px solid rgba(255,255,255,0.15);
+      background: none;
+      color: rgba(255,255,255,0.45);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .lang-pill.active,
+    .lang-pill:hover {
+      background: var(--magenta);
+      border-color: var(--magenta);
+      color: var(--branco);
+    }
+
+    /* centro do hero */
+    .hero-center {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: clamp(40px, 6vw, 80px) clamp(24px, 5vw, 72px);
+      position: relative;
+      z-index: 2;
+      max-width: 900px;
+    }
+
+    .expo-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+
+    .expo-tag-line {
+      width: 40px;
+      height: 2px;
+      background: var(--magenta);
+    }
+
+    .expo-tag-text {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3.5px;
+      text-transform: uppercase;
+      color: var(--magenta);
+    }
+
+    .hero-title {
+      font-family: 'BrownStd', sans-serif;
+      font-weight: 700;
+      font-size: clamp(52px, 9vw, 120px);
+      line-height: 0.92;
+      letter-spacing: -0.02em;
+      color: var(--branco);
+      margin-bottom: 12px;
+    }
+
+    .hero-title .em-cena {
+      color: var(--magenta);
+      font-weight: 300;
+      font-style: italic;
+      display: block;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(14px, 1.6vw, 18px);
+      font-weight: 300;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.7;
+      max-width: 560px;
+      margin-top: 28px;
+    }
+
+    /* barra inferior do hero */
+    .hero-bottom {
+      border-top: 1px solid rgba(255,255,255,0.07);
+      padding: 0 clamp(24px, 5vw, 72px);
+      display: flex;
+      align-items: stretch;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-bottom-item {
+      flex: 1;
+      padding: 24px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      border-right: 1px solid rgba(255,255,255,0.07);
+      padding-right: 32px;
+      margin-right: 32px;
+    }
+
+    .hero-bottom-item:last-child {
+      border-right: none;
+      margin-right: 0;
+    }
+
+    .hbi-label {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--magenta);
+    }
+
+    .hbi-value {
+      font-size: 13px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.55);
+    }
+
+    /* ════════════════════════════════
+       FAIXA MAGENTA — "A SORRIR..."
+    ════════════════════════════════ */
+    .faixa-quote {
+      background: var(--magenta);
+      padding: 28px clamp(24px, 5vw, 72px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .faixa-quote blockquote {
+      font-family: 'BrownStd', sans-serif;
+      font-weight: 700;
+      font-size: clamp(20px, 3.5vw, 36px);
+      line-height: 1.1;
+      color: var(--branco);
+      letter-spacing: -0.01em;
+    }
+
+    .faixa-quote cite {
+      font-size: 12px;
+      font-weight: 400;
+      font-style: normal;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.65);
+      white-space: nowrap;
+    }
+
+    /* ════════════════════════════════
+       PAINÉIS — GRADE
+    ════════════════════════════════ */
+    .paineis-section {
+      background: var(--cinza-bg);
+      padding: clamp(48px, 7vw, 96px) clamp(24px, 5vw, 72px);
+    }
+
+    .paineis-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 48px;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .paineis-title {
+      font-family: 'BrownStd', sans-serif;
+      font-weight: 700;
+      font-size: clamp(28px, 4vw, 48px);
+      color: var(--preto);
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+
+    .paineis-title span {
+      color: var(--magenta);
+    }
+
+    .paineis-count {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--cinza);
+    }
+
+    .paineis-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2px;
+    }
+
+    .painel-card {
+      background: var(--preto);
+      display: flex;
+      flex-direction: column;
+      text-decoration: none;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.25s ease;
+      min-height: 320px;
+    }
+
+    .painel-card:hover {
+      transform: translateY(-4px);
+      z-index: 1;
+    }
+
+    .painel-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--magenta);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+
+    .painel-card:hover::after {
+      transform: scaleX(1);
+    }
+
+    .card-number {
+      font-family: 'BrownStd', sans-serif;
+      font-weight: 700;
+      font-size: 80px;
+      line-height: 1;
+      color: rgba(255,255,255,0.06);
+      padding: 24px 24px 0;
+      letter-spacing: -0.03em;
+    }
+
+    .card-body {
+      padding: 16px 24px 32px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    .card-tag {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--magenta);
+      margin-bottom: 10px;
+    }
+
+    .card-title {
+      font-family: 'BrownStd', sans-serif;
+      font-weight: 700;
+      font-size: clamp(20px, 2.5vw, 28px);
+      line-height: 1.1;
+      color: var(--branco);
+      letter-spacing: -0.01em;
+      margin-bottom: 12px;
+    }
+
+    .card-desc {
+      font-size: 13px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    .card-badges {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .badge {
+      padding: 4px 10px;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      border: 1px solid rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.45);
+    }
+
+    .badge.audio {
+      border-color: rgba(232,24,109,0.4);
+      color: var(--magenta);
+    }
+
+    .card-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      transition: color 0.2s;
+    }
+
+    .painel-card:hover .card-cta {
+      color: var(--magenta);
+    }
+
+    .card-cta-arrow {
+      width: 28px;
+      height: 28px;
+      border: 1px solid rgba(255,255,255,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      transition: all 0.2s;
+    }
+
+    .painel-card:hover .card-cta-arrow {
+      background: var(--magenta);
+      border-color: var(--magenta);
+      color: var(--branco);
+    }
+
+    /* ════════════════════════════════
+       SOBRE A EXPOSIÇÃO
+    ════════════════════════════════ */
+    .sobre-section {
+      background: var(--branco);
+      padding: clamp(48px, 7vw, 96px) clamp(24px, 5vw, 72px);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(40px, 6vw, 80px);
+      align-items: start;
+    }
+
+    .sobre-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 3.5px;
+      text-transform: uppercase;
+      color: var(--magenta);
+      margin-bottom: 20px;
+    }
+
+    .sobre-title {
+      font-family: 'BrownStd', sans-serif;
+      font-weight: 700;
+      font-size: clamp(28px, 4vw, 52px);
+      color: var(--preto);
+      line-height: 1;
+      letter-spacing: -0.02em;
+      margin-bottom: 28px;
+    }
+
+    .sobre-text {
+      font-size: clamp(14px, 1.4vw, 16px);
+      font-weight: 300;
+      color: #3A3530;
+      line-height: 1.8;
+    }
+
+    .sobre-text p + p { margin-top: 16px; }
+
+    .sobre-right {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      margin-top: 8px;
+    }
+
+    .info-item {
+      background: var(--preto);
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .info-item-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--magenta);
+    }
+
+    .info-item-value {
+      font-size: 13px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.6);
+      text-align: right;
+    }
+
+    /* ════════════════════════════════
+       FOOTER
+    ════════════════════════════════ */
+    footer {
+      background: var(--preto);
+      border-top: 3px solid var(--magenta);
+      padding: 40px clamp(24px, 5vw, 72px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+
+    .footer-expo-name {
+      font-family: 'BrownStd', sans-serif;
+      font-weight: 700;
+      font-size: clamp(14px, 2vw, 20px);
+      letter-spacing: -0.01em;
+      color: var(--branco);
+      margin-bottom: 6px;
+    }
+
+    .footer-inst-name {
+      font-size: 11px;
+      font-weight: 300;
+      letter-spacing: 1.5px;
+      color: rgba(255,255,255,0.3);
+    }
+
+    .footer-mis { display:flex; align-items:center; } .footer-mis-old {
+      font-family: 'BrownStd', sans-serif;
+      font-weight: 700;
+      font-size: 40px;
+      letter-spacing: 8px;
+      color: var(--magenta);
+    }
+
+    /* ════════════════════════════════
+       RESPONSIVE
+    ════════════════════════════════ */
+    @media (max-width: 768px) {
+      .topbar-right { display: none; }
+      .hero-bottom { flex-direction: column; gap: 0; }
+      .hero-bottom-item {
+        border-right: none;
+        border-bottom: 1px solid rgba(255,255,255,0.07);
+        padding: 16px 0;
+        margin-right: 0;
+        margin-bottom: 0;
+      }
+      .hero-bottom-item:last-child { border-bottom: none; }
+      .sobre-section { grid-template-columns: 1fr; }
+      .faixa-quote { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ════════════ HERO ════════════ -->
+  <header class="hero">
+
+    <div class="topbar">
+      <div class="topbar-left">
+        <div class="mis-badge"><img src="mis-logo.png" alt="MIS — Museu da Imagem e do Som" /></div>
+        <div class="topbar-sep"></div>
+        <div class="topbar-inst">
+          Museu da Imagem e do Som<br>
+          Fundação Roberto Marinho
+        </div>
+      </div>
+      <div class="topbar-right">
+        <button class="lang-pill active" onclick="setLang('pt')">PT</button>
+        <button class="lang-pill" onclick="setLang('en')">EN</button>
+        <button class="lang-pill" onclick="setLang('es')">ES</button>
+      </div>
+    </div>
+
+    <div class="hero-center">
+      <div class="expo-tag">
+        <div class="expo-tag-line"></div>
+        <span class="expo-tag-text">Exposição Temporária · 2025–2026</span>
+      </div>
+
+      <h1 class="hero-title">
+        ARQUITETURA
+        <span class="em-cena">em cena</span>
+      </h1>
+
+      <p class="hero-subtitle">
+        O MIS Copa antes da Imagem e do Som.<br>
+        Os bastidores, os desafios e a história invisível
+        da concepção de um museu para o Rio de Janeiro.
+      </p>
+    </div>
+
+    <div class="hero-bottom">
+      <div class="hero-bottom-item">
+        <span class="hbi-label">Exposição</span>
+        <span class="hbi-value">Arquitetura em Cena</span>
+      </div>
+      <div class="hero-bottom-item">
+        <span class="hbi-label">Local</span>
+        <span class="hbi-value">MIS Copacabana · Rio de Janeiro</span>
+      </div>
+      <div class="hero-bottom-item">
+        <span class="hbi-label">Painéis</span>
+        <span class="hbi-value">3 painéis · PT · EN · ES</span>
+      </div>
+      <div class="hero-bottom-item">
+        <span class="hbi-label">Realização</span>
+        <span class="hbi-value">Fundação Roberto Marinho</span>
+      </div>
+    </div>
+
+  </header>
+
+  <!-- ════════════ FAIXA QUOTE ════════════ -->
+  <div class="faixa-quote">
+    <blockquote>
+      "A SORRIR<br>EU PRETENDO<br>LEVAR A VIDA"
+    </blockquote>
+    <cite>Arlindo Cruz</cite>
+  </div>
+
+  <!-- ════════════ PAINÉIS ════════════ -->
+  <section class="paineis-section" aria-label="Painéis da exposição">
+    <div class="paineis-header">
+      <h2 class="paineis-title">Acesse os<br><span>painéis</span></h2>
+      <span class="paineis-count">3 painéis disponíveis</span>
+    </div>
+
+    <div class="paineis-grid">
+
+      <a class="painel-card" href="painel-01.html">
+        <div class="card-number">01</div>
+        <div class="card-body">
+          <div class="card-tag">Painel 01</div>
+          <h3 class="card-title">O MIS Copa antes da<br>Imagem e do Som</h3>
+          <p class="card-desc">A origem, o concurso e as premissas da nova sede do MIS em Copacabana.</p>
+          <div class="card-badges">
+            <span class="badge audio">🔊 Áudio</span>
+            <span class="badge">PT · EN · ES</span>
+          </div>
+          <div class="card-cta">
+            Acessar painel
+            <div class="card-cta-arrow">→</div>
+          </div>
+        </div>
+      </a>
+
+      <a class="painel-card" href="painel-02.html">
+        <div class="card-number">02</div>
+        <div class="card-body">
+          <div class="card-tag">Painel 02</div>
+          <h3 class="card-title">O Projeto e os<br>Desafios da Obra</h3>
+          <p class="card-desc">O boulevard vertical, a curadoria da paisagem e os bastidores da construção.</p>
+          <div class="card-badges">
+            <span class="badge audio">🔊 Áudio ES</span>
+            <span class="badge">PT · EN · ES</span>
+          </div>
+          <div class="card-cta">
+            Acessar painel
+            <div class="card-cta-arrow">→</div>
+          </div>
+        </div>
+      </a>
+
+      <a class="painel-card" href="painel-03.html">
+        <div class="card-number">03</div>
+        <div class="card-body">
+          <div class="card-tag">Painel 03</div>
+          <h3 class="card-title">A Concepção<br>do Museu</h3>
+          <p class="card-desc">Arquitetura, curadoria, museografia e identidade visual integradas.</p>
+          <div class="card-badges">
+            <span class="badge">PT · EN · ES</span>
+          </div>
+          <div class="card-cta">
+            Acessar painel
+            <div class="card-cta-arrow">→</div>
+          </div>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ════════════ SOBRE ════════════ -->
+  <section class="sobre-section" aria-label="Sobre a exposição">
+    <div>
+      <p class="sobre-label">Sobre a exposição</p>
+      <h2 class="sobre-title">Um museu construído a muitas mãos</h2>
+      <div class="sobre-text">
+        <p>Entregar um edifício representa um marco concreto — a certeza de que esse museu vai, de fato, existir. Mas entregar a obra, por si só, não evidencia ao público os inúmeros processos, escolhas e desafios que o tornaram possível.</p>
+        <p>É justamente desse desejo de compartilhar o que não se vê, à primeira vista, que nasce a exposição <strong>"Arquitetura em Cena: o MIS Copa antes da Imagem e do Som"</strong>.</p>
+        <p>Convidamos você a conhecer os bastidores de como o MIS foi pensado por muitas mãos e visões, desde o processo de concepção da sua arquitetura singular, até os principais desafios enfrentados ao longo de sua realização.</p>
+      </div>
+    </div>
+
+    <div class="sobre-right">
+      <div class="info-item">
+        <span class="info-item-label">Curadoria</span>
+        <span class="info-item-value">Ana Paula Pontes<br>Larissa Graça</span>
+      </div>
+      <div class="info-item">
+        <span class="info-item-label">Museografia</span>
+        <span class="info-item-value">Metrópole Arquitetura</span>
+      </div>
+      <div class="info-item">
+        <span class="info-item-label">Comunicação Visual</span>
+        <span class="info-item-value">ps.2 arquitetura + design<br>Flávia Nalon · Fábio Prata</span>
+      </div>
+      <div class="info-item">
+        <span class="info-item-label">Arquitetura</span>
+        <span class="info-item-value">Diller Scofidio + Renfro<br>Índio da Costa AUDT</span>
+      </div>
+      <div class="info-item">
+        <span class="info-item-label">Realização</span>
+        <span class="info-item-value">Fundação Roberto Marinho<br>Secretaria de Cultura — RJ</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════ FOOTER ════════════ -->
+  <footer>
+    <div>
+      <div class="footer-expo-name">Arquitetura em Cena — O MIS Copa antes da Imagem e do Som</div>
+      <div class="footer-inst-name">Museu da Imagem e do Som · Fundação Roberto Marinho · Rio de Janeiro</div>
+    </div>
+    <div class="footer-mis"><img src="mis-logo.png" alt="MIS — Museu da Imagem e do Som" style="height:72px;width:auto;filter:invert(1) sepia(1) saturate(5) hue-rotate(290deg) brightness(0.9);" /></div>
+  </footer>
+
+  <script>
+    function setLang(lang) {
+      // Redireciona para URL com parâmetro de idioma
+      // (pode ser expandido conforme a estrutura do site)
+      document.querySelectorAll('.lang-pill').forEach(p => p.classList.remove('active'));
+      document.querySelector(`[onclick="setLang('${lang}')"]`).classList.add('active');
+    }
+  </script>
+
+</body>
+</html>
