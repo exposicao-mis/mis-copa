@@ -77,12 +77,14 @@
     }
     .hero-title {
       font-weight:700;
-      font-size:clamp(54px,12vw,168px);
+      font-size:clamp(38px,12vw,168px);
       line-height:.88;
       letter-spacing:-.04em;
       color:var(--preto);
       position:relative;z-index:1;
       max-width:14ch;
+      word-break:break-word;
+      overflow-wrap:break-word;
     }
     .hero-title em {
       display:block;
@@ -274,6 +276,13 @@
       .hero-bar{grid-template-columns:1fr 1fr}
       .painel-card{min-height:auto}
       .topbar{padding:0 20px}
+      .hero{padding:40px 20px 0}
+      .hero-title{font-size:clamp(36px,10vw,60px);max-width:100%;width:100%}
+      .hero-bg-word{font-size:clamp(140px,55vw,220px)}
+      .hero-subtitle{font-size:14px}
+    }
+    @media(max-width:400px){
+      .hero-title{font-size:34px}
     }
   </style>
 </head>
