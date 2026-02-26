@@ -26,7 +26,7 @@
     html { scroll-behavior:smooth; }
 
     body {
-      background: var(--cinza-bg);
+      background: var(--cinza-claro);
       color: var(--preto);
       font-family: 'BrownStd', sans-serif;
       font-weight: 400;
@@ -258,7 +258,7 @@
     .section-text {
       font-size: clamp(15px,1.4vw,17px);
       font-weight: 400;
-      color: #1A1510;
+      color: var(--preto);
       line-height: 1.85;
     }
 
@@ -266,21 +266,21 @@
 
     /* destaque em caixa */
     .highlight-box {
-      background: var(--preto);
+      background: var(--cinza-medio);
       padding: 28px 32px;
       margin: 28px 0;
-      border-left: 4px solid var(--magenta);
+      border-left: 4px solid var(--ciano);
     }
 
     .highlight-box p {
       font-size: clamp(14px,1.3vw,16px);
       font-weight: 400;
-      color: rgba(255,255,255,0.92);
+      color: var(--preto);
       line-height: 1.8;
     }
 
     .highlight-box strong {
-      color: var(--branco);
+      color: var(--preto);
       font-weight: 700;
     }
 
@@ -312,7 +312,7 @@
     .item-list-row-text {
       font-size: 14px;
       font-weight: 400;
-      color: #1A1510;
+      color: var(--preto);
       line-height: 1.7;
     }
 
@@ -330,7 +330,8 @@
 
     /* ── NAV ENTRE PAINÉIS ── */
     .panel-nav {
-      background: var(--preto);
+      background: var(--cinza-medio);
+      border-top: 1px solid var(--cinza-borda);
       display: flex;
     }
 
@@ -346,7 +347,7 @@
     }
 
     .nav-link:last-child { border-right: none; justify-content: flex-end; }
-    .nav-link:hover { background: rgba(255,255,255,0.03); }
+    .nav-link:hover { background: var(--cinza-claro); }
     .nav-link.disabled { opacity: 0.2; pointer-events: none; }
 
     .nav-arrow {
@@ -361,7 +362,7 @@
       transition: background 0.2s;
     }
 
-    .nav-link:hover .nav-arrow { background: var(--magenta); }
+    .nav-link:hover .nav-arrow { background: var(--ciano); color: var(--branco); }
 
     .nav-text { display: flex; flex-direction: column; gap: 4px; }
     .nav-text-right { text-align: right; }
@@ -382,8 +383,8 @@
 
     /* ── FOOTER ── */
     footer {
-      background: var(--preto);
-      border-top: 3px solid var(--magenta);
+      background: var(--cinza-medio);
+      border-top: 3px solid var(--ciano);
       padding: 32px clamp(20px,4vw,64px);
       display: flex;
       align-items: center;
@@ -395,20 +396,20 @@
     .footer-name {
       font-weight: 700;
       font-size: 14px;
-      color: var(--branco);
+      color: var(--preto);
       margin-bottom: 4px;
     }
 
     .footer-inst {
       font-size: 11px;
       font-weight: 400;
-      color: rgba(255,255,255,0.25);
+      color: var(--cinza);
     }
 
     .footer-logo img {
       height: 48px;
       width: auto;
-      filter: invert(1) sepia(1) saturate(5) hue-rotate(293deg) brightness(0.85);
+      /* sem filtro — fundo claro */
     }
 
     /* ── IDIOMA ── */
