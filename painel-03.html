@@ -1,396 +1,299 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Painel 03 — Arquitetura em Cena · MIS Copa</title>
-  <style>
-    @font-face { font-family:'BrownStd'; src:url('fonts/BrownStd-Thin.otf') format('opentype'); font-weight:100; font-style:normal; font-display:swap; }
-    @font-face { font-family:'BrownStd'; src:url('fonts/BrownStd-Light.otf') format('opentype'); font-weight:300; font-style:normal; font-display:swap; }
-    @font-face { font-family:'BrownStd'; src:url('fonts/BrownStd-LightItalic.otf') format('opentype'); font-weight:300; font-style:italic; font-display:swap; }
-    @font-face { font-family:'BrownStd'; src:url('fonts/BrownStd-Regular.otf') format('opentype'); font-weight:400; font-style:normal; font-display:swap; }
-    @font-face { font-family:'BrownStd'; src:url('fonts/BrownStd-Italic.otf') format('opentype'); font-weight:400; font-style:italic; font-display:swap; }
-    @font-face { font-family:'BrownStd'; src:url('fonts/BrownStd-Bold.otf') format('opentype'); font-weight:700; font-style:normal; font-display:swap; }
-    @font-face { font-family:'BrownStd'; src:url('fonts/BrownStd-BoldItalic.otf') format('opentype'); font-weight:700; font-style:italic; font-display:swap; }
-
-    :root { --preto:#0A0A0A; --branco:#F5F5F0; --magenta:#E8186D; --ciano:#00aeef; --cinza-claro:#f1f2f2; --cinza-medio:#eaebec; --cinza:#6c6e70; --cinza-borda:#dbdcde; --cinza:#C8C4BC; --cinza-bg:#EDEAE4; }
-    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
-    html { scroll-behavior:smooth; }
-    body { background:var(--cinza-bg); color:var(--preto); font-family:'BrownStd',sans-serif; font-weight:300; overflow-x:hidden; }
-
-    .topbar { position:fixed; top:0; left:0; right:0; z-index:100; background:var(--preto); border-bottom:1px solid rgba(255,255,255,0.08); height:80px; display:flex; align-items:center; justify-content:space-between; padding:0 clamp(20px,4vw,64px); }
-    .topbar-left { display:flex; align-items:center; gap:20px; }
-    .topbar-logo img { height:56px; width:auto; filter:invert(1); display:block; }
-    .topbar-sep { width:1px; height:32px; background:rgba(255,255,255,0.12); }
-    .topbar-back { display:flex; align-items:center; gap:8px; text-decoration:none; font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.35); transition:color 0.2s; }
-    .topbar-back:hover { color:var(--magenta); }
-    .topbar-right { display:flex; align-items:center; gap:16px; }
-    .panel-badge { font-size:10px; font-weight:700; letter-spacing:2.5px; text-transform:uppercase; color:rgba(255,255,255,0.45); }
-    .lang-selector { display:flex; gap:2px; }
-    .lang-btn { padding:7px 14px; font-family:'BrownStd',sans-serif; font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; background:none; border:none; color:var(--cinza); cursor:pointer; transition:all 0.2s; position:relative; }
-    .lang-btn::after { content:''; position:absolute; bottom:0; left:0; right:0; height:2px; background:var(--magenta); transform:scaleX(0); transition:transform 0.2s; }
-    .lang-btn.active { color:var(--branco); }
-    .lang-btn.active::after { transform:scaleX(1); }
-    .lang-btn:hover:not(.active) { color:var(--preto); }
-
-    .panel-hero { background:var(--preto); padding-top:80px; min-height:52vh; display:flex; flex-direction:column; justify-content:flex-end; position:relative; overflow:hidden; }
-    .panel-hero::before { content:'03'; position:absolute; right:-0.05em; bottom:-0.15em; font-weight:700; font-size:clamp(180px,28vw,380px); color:transparent; -webkit-text-stroke:1px rgba(255,255,255,0.04); line-height:1; pointer-events:none; }
-    .panel-hero-inner { padding:clamp(32px,5vw,64px) clamp(20px,4vw,64px) clamp(28px,4vw,52px); position:relative; z-index:2; }
-    .panel-tag { display:flex; align-items:center; gap:14px; margin-bottom:20px; }
-    .panel-tag-line { width:32px; height:2px; background:var(--magenta); flex-shrink:0; }
-    .panel-tag-text { font-size:10px; font-weight:700; letter-spacing:3.5px; text-transform:uppercase; color:var(--magenta); }
-    .panel-title { font-weight:700; font-size:clamp(32px,6vw,72px); line-height:0.95; letter-spacing:-0.02em; color:var(--branco); max-width:800px; }
-    .panel-hero-bar { background:var(--magenta); padding:14px clamp(20px,4vw,64px); display:flex; align-items:center; gap:8px; }
-    .panel-hero-bar span { font-size:10px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--preto); }
-    .panel-hero-bar strong { font-size:10px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--branco); }
-
-    .panel-body { max-width:860px; margin:0 auto; padding:clamp(40px,6vw,80px) clamp(20px,4vw,64px); }
-    .section-block { margin-bottom:clamp(40px,6vw,72px); }
-    .section-label { font-size:9px; font-weight:700; letter-spacing:3.5px; text-transform:uppercase; color:var(--magenta); margin-bottom:14px; display:flex; align-items:center; gap:12px; }
-    .section-label::after { content:''; flex:1; height:1px; background:var(--cinza); }
-    .section-title { font-weight:700; font-size:clamp(22px,3vw,32px); line-height:1.05; letter-spacing:-0.02em; color:var(--preto); margin-bottom:18px; }
-    .section-text { font-size:clamp(15px,1.4vw,17px); font-weight:400; color:#1A1510; line-height:1.85; }
-    .section-text p + p { margin-top:14px; }
-    .highlight-box { background:var(--cinza-medio); padding:28px 32px; margin:28px 0; border-left:4px solid var(--ciano); }
-    .highlight-box p { font-size:clamp(14px,1.3vw,16px); font-weight:400; color:var(--preto); line-height:1.8; }
-    .highlight-box strong { color:var(--branco); font-weight:700; }
-    .item-list { display:flex; flex-direction:column; gap:2px; margin-top:20px; }
-    .item-list-row { background:var(--branco); padding:16px 20px; display:flex; gap:16px; align-items:flex-start; }
-    .item-list-row-num { font-size:11px; font-weight:700; color:var(--magenta); min-width:24px; margin-top:2px; }
-    .item-list-row-text { font-size:14px; font-weight:400; color:#1A1510; line-height:1.7; }
-    .item-list-row-text strong { font-weight:700; color:var(--preto); }
-    .divider { height:1px; background:var(--cinza); margin:clamp(32px,4vw,56px) 0; }
-
-    /* andares do museu */
-    .floors-grid { display:flex; flex-direction:column; gap:2px; margin-top:20px; }
-    .floor-row { background:var(--branco); padding:16px 20px; display:grid; grid-template-columns:48px 1fr; gap:16px; align-items:start; }
-    .floor-num { font-size:24px; font-weight:700; color:var(--magenta); line-height:1; letter-spacing:-0.02em; }
-    .floor-content {}
-    .floor-name { font-size:14px; font-weight:700; color:var(--preto); margin-bottom:4px; }
-    .floor-desc { font-size:13px; font-weight:300; color:#444; line-height:1.5; }
-
-    .panel-nav { background:var(--cinza-medio); border-top:1px solid var(--cinza-borda); display:flex; }
-    .nav-link { flex:1; padding:28px clamp(20px,4vw,64px); text-decoration:none; display:flex; align-items:center; gap:16px; border-right:1px solid var(--cinza-borda); transition:background 0.2s; }
-    .nav-link:last-child { border-right:none; justify-content:flex-end; }
-    .nav-link:hover { background:rgba(255,255,255,0.03); }
-    .nav-link.disabled { opacity:0.2; pointer-events:none; }
-    .nav-arrow { width:40px; height:40px; background:var(--cinza-claro); display:flex; align-items:center; justify-content:center; font-size:18px; color:var(--branco); flex-shrink:0; transition:background 0.2s; }
-    .nav-link:hover .nav-arrow { background:var(--magenta); }
-    .nav-text { display:flex; flex-direction:column; gap:4px; }
-    .nav-text-right { text-align:right; }
-    .nav-lbl { font-size:9px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:rgba(255,255,255,0.45); }
-    .nav-name { font-size:14px; font-weight:700; color:var(--preto); }
-
-    footer { background:var(--cinza-medio); border-top:3px solid var(--ciano); padding:32px clamp(20px,4vw,64px); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px; }
-    .footer-name { font-weight:700; font-size:14px; color:var(--branco); margin-bottom:4px; }
-    .footer-inst { font-size:11px; font-weight:300; color:rgba(255,255,255,0.45); }
-    .footer-logo img { height:48px; width:auto; filter:none; }
-
-    .lc { display:none; }
-    .lc.active { display:block; animation:fadeUp 0.3s ease; }
-    @keyframes fadeUp { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
-
-    /* ─────────────────────────────
-       RESPONSIVE
-    ───────────────────────────── */
-    @media (max-width: 768px) {
-      /* topbar */
-      .topbar { height: 64px; }
-      .topbar-logo img { height: 44px; }
-      .topbar-sep, .panel-badge { display: none; }
-
-      /* hero */
-      .panel-hero { min-height: 44vh; }
-      .panel-title { font-size: clamp(28px,10vw,52px); }
-
-      /* conteúdo */
-      .panel-body { padding: 32px 20px; }
-
-      .section-title { font-size: clamp(20px,5vw,28px); }
-
-      .section-text {
-        font-size: 15px;
-        line-height: 1.8;
-        color: #1E1A16;
-      }
-
-      /* highlight box — texto mais legível */
-      .highlight-box { padding: 20px 20px; }
-      .highlight-box p {
-        font-size: 14px;
-        color: rgba(255,255,255,0.82);
-        line-height: 1.75;
-      }
-
-      /* listas */
-      .item-list-row { padding: 14px 16px; }
-      .item-list-row-text { font-size: 14px; color: #1E1A16; }
-
-      /* nav entre painéis */
-      .panel-nav { flex-direction: column; }
-      .nav-link {
-        border-right: none;
-        border-bottom: 1px solid rgba(255,255,255,0.06);
-        padding: 20px;
-      }
-      .nav-link:last-child { border-bottom: none; justify-content: flex-start; }
-      .nav-name { font-size: 13px; }
-    }
-
-    @media (max-width: 400px) {
-      .panel-body { padding: 28px 16px; }
-    }
-  </style>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Painel 03 — Arquitetura em Cena</title>
+<style>
+@font-face{font-family:'BrownStd';src:url('fonts/BrownStd-Regular.otf') format('opentype');font-weight:400;font-display:swap}
+@font-face{font-family:'BrownStd';src:url('fonts/BrownStd-Italic.otf') format('opentype');font-weight:400;font-style:italic;font-display:swap}
+@font-face{font-family:'BrownStd';src:url('fonts/BrownStd-Bold.otf') format('opentype');font-weight:700;font-display:swap}
+@font-face{font-family:'BrownStd';src:url('fonts/BrownStd-BoldItalic.otf') format('opentype');font-weight:700;font-style:italic;font-display:swap}
+:root{--preto:#231f20;--branco:#fff;--magenta:#cd0074;--ciano:#00aeef;--cinza-f:#f1f2f2;--cinza-m:#eaebec;--cinza-t:#6c6e70;--cinza-b:#dbdcde;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'BrownStd',sans-serif;font-weight:400;background:var(--branco);color:var(--preto);overflow-x:hidden}
+.topbar{background:var(--preto);position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(20px,4vw,64px);height:60px;border-bottom:3px solid var(--magenta);}
+.topbar-left{display:flex;align-items:center;gap:18px}
+.topbar-logo img{height:30px;filter:invert(1);display:block}
+.topbar-sep{width:1px;height:22px;background:rgba(255,255,255,.15)}
+.topbar-back{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.45);text-decoration:none;transition:color .2s}
+.topbar-back:hover{color:var(--magenta)}
+.topbar-right{display:flex;align-items:center;gap:14px}
+.panel-badge{font-size:10px;font-weight:700;letter-spacing:2px;color:rgba(255,255,255,.25)}
+.lang-selector{display:flex;gap:4px}
+.lang-btn{padding:5px 12px;font-family:'BrownStd',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;border:1px solid rgba(255,255,255,.2);background:none;color:rgba(255,255,255,.4);cursor:pointer;transition:all .2s;}
+.lang-btn.active,.lang-btn:hover{background:var(--magenta);border-color:var(--magenta);color:#fff}
+.panel-hero{background:var(--preto);padding-top:60px;min-height:48vh;display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden;}
+.panel-hero::before{content:attr(data-num);position:absolute;right:-.04em;bottom:-.14em;font-family:'BrownStd',sans-serif;font-weight:700;font-size:clamp(180px,32vw,480px);color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.055);line-height:1;pointer-events:none;}
+.panel-hero-inner{padding:clamp(28px,4vw,52px) clamp(20px,4vw,64px) clamp(20px,3vw,36px);position:relative;z-index:1;}
+.panel-tag{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+.panel-tag-line{width:28px;height:2px;background:var(--magenta);flex-shrink:0}
+.panel-tag-text{font-size:10px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--magenta)}
+.panel-title{font-weight:700;font-size:clamp(30px,5.5vw,68px);line-height:.9;letter-spacing:-.025em;color:var(--branco);max-width:680px;}
+.panel-hero-bar{background:var(--magenta);padding:12px clamp(20px,4vw,64px);display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.panel-hero-bar span{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.75)}
+.panel-hero-bar strong{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#fff}
+.section-block{padding:clamp(36px,4.5vw,56px) clamp(20px,4vw,64px);border-bottom:1px solid var(--cinza-b);}
+.section-block:last-child{border-bottom:none}
+.section-block.alt{background:var(--cinza-f)}
+.section-label{font-size:9px;font-weight:700;letter-spacing:4.5px;text-transform:uppercase;color:var(--ciano);margin-bottom:12px;}
+.section-title{font-weight:700;font-size:clamp(22px,3vw,36px);color:var(--preto);line-height:.92;letter-spacing:-.025em;margin-bottom:20px;}
+.section-text{font-size:clamp(14px,1.3vw,16px);font-weight:400;color:#3a3530;line-height:1.85;max-width:720px}
+.section-text p+p{margin-top:14px}
+.section-text strong{font-weight:700;color:var(--preto)}
+.highlight-box{background:var(--cinza-f);border-left:5px solid var(--magenta);padding:22px 28px;margin:24px 0 0;max-width:720px;}
+.highlight-box p{font-size:15px;font-weight:400;color:var(--preto);line-height:1.75}
+.highlight-box strong{font-weight:700;color:var(--magenta)}
+.divider{height:1px;background:var(--cinza-b);margin:0}
+.item-list{display:flex;flex-direction:column;gap:2px;margin-top:20px;max-width:720px}
+.item-list-row{background:var(--cinza-f);padding:14px 20px;display:flex;align-items:flex-start;gap:14px;border-left:4px solid var(--cinza-b);transition:all .2s;}
+.item-list-row:hover{border-left-color:var(--ciano);background:var(--cinza-m)}
+.item-list-row-num{font-size:15px;font-weight:700;color:var(--magenta);min-width:18px;line-height:1.55;flex-shrink:0}
+.item-list-row-text{font-size:14px;color:var(--cinza-t);line-height:1.6}
+.item-list-row-text strong{font-weight:700;color:var(--preto)}
+.offices-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:2px;margin-top:20px;max-width:720px}
+.office-card{background:var(--cinza-f);padding:14px 18px;border-left:3px solid var(--cinza-b);transition:border-color .2s}
+.office-card:first-child{border-left-color:var(--ciano)}
+.office-card:hover{border-left-color:var(--ciano)}
+.office-card-name{font-size:13px;font-weight:700;color:var(--preto);margin-bottom:3px}
+.office-card-origin{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--cinza-t)}
+.office-card:first-child .office-card-origin{color:var(--ciano)}
+.panel-nav{background:var(--cinza-f);border-top:1px solid var(--cinza-b);display:flex;}
+.nav-link{flex:1;padding:clamp(18px,2.5vw,32px) clamp(20px,4vw,56px);text-decoration:none;display:flex;align-items:center;gap:18px;border-right:1px solid var(--cinza-b);transition:background .2s;}
+.nav-link:last-child{border-right:none;justify-content:flex-end}
+.nav-link:hover{background:var(--branco)}
+.nav-link.disabled{opacity:.3;pointer-events:none}
+.nav-arrow{width:40px;height:40px;border:1px solid var(--cinza-b);display:flex;align-items:center;justify-content:center;font-size:17px;color:var(--cinza-t);flex-shrink:0;transition:all .2s;}
+.nav-link:hover .nav-arrow{background:var(--magenta);border-color:var(--magenta);color:#fff}
+.nav-text{display:flex;flex-direction:column;gap:4px}
+.nav-text-right{text-align:right}
+.nav-lbl{font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--cinza-b)}
+.nav-name{font-size:13px;font-weight:700;color:var(--preto)}
+footer{background:var(--preto);border-top:4px solid var(--magenta);padding:24px clamp(20px,4vw,64px);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;}
+.footer-name{font-weight:700;font-size:clamp(12px,1.3vw,15px);color:rgba(255,255,255,.9);margin-bottom:3px}
+.footer-inst{font-size:10px;letter-spacing:1.5px;color:rgba(255,255,255,.35)}
+.footer-logo img{height:36px;filter:invert(1)}
+.lc{display:none}.lc.active{display:block}span.lc.active{display:inline}
+@keyframes fadeUp{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+.lc.active{animation:fadeUp .22s ease}
+@media(max-width:600px){.topbar{padding:0 16px}.topbar-sep,.panel-badge{display:none}.panel-nav{flex-direction:column}.nav-link{border-right:none;border-bottom:1px solid var(--cinza-b)}.nav-link:last-child{border-bottom:none;justify-content:flex-start}}
+</style>
 </head>
 <body>
 
-  <nav class="topbar">
-    <div class="topbar-left">
-      <a class="topbar-logo" href="index.html"><img src="mis-logo.png" alt="MIS" /></a>
-      <div class="topbar-sep"></div>
-      <a class="topbar-back" href="index.html">← <span class="lc active" data-lang="pt" style="display:inline">Início</span><span class="lc" data-lang="en" style="display:none">Home</span><span class="lc" data-lang="es" style="display:none">Inicio</span></a>
+<nav class="topbar">
+  <div class="topbar-left">
+    <a class="topbar-logo" href="index.html"><img src="mis-logo.png" alt="MIS"/></a>
+    <div class="topbar-sep"></div>
+    <a class="topbar-back" href="index.html">← <span class="lc active" data-lang="pt">Início</span><span class="lc" data-lang="en" style="display:none">Home</span><span class="lc" data-lang="es" style="display:none">Inicio</span></a>
+  </div>
+  <div class="topbar-right">
+    <span class="panel-badge">03 / 03</span>
+    <div class="lang-selector">
+      <button class="lang-btn active" data-lang="pt">PT</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+      <button class="lang-btn" data-lang="es">ES</button>
     </div>
-    <div class="topbar-right">
-      <span class="panel-badge">03 / 03</span>
-      <div class="lang-selector">
-        <button class="lang-btn active" data-lang="pt">PT</button>
-        <button class="lang-btn" data-lang="en">EN</button>
-        <button class="lang-btn" data-lang="es">ES</button>
+  </div>
+</nav>
+<div class="panel-hero" data-num="03">
+  <div class="panel-hero-inner">
+    <div class="panel-tag">
+      <div class="panel-tag-line"></div>
+      <span class="lc active" data-lang="pt">Painel 03 · Arquitetura em Cena</span><span class="lc" data-lang="en" style="display:none">Panel 03 · Architecture on Stage</span><span class="lc" data-lang="es" style="display:none">Panel 03 · Arquitectura en Escena</span>
+    </div>
+    <h1 class="panel-title">
+      <span class="lc active" data-lang="pt">A Concepção<br>do Museu</span><span class="lc" data-lang="en" style="display:none">The Museum<br>Conception</span><span class="lc" data-lang="es" style="display:none">La Concepción<br>del Museo</span>
+    </h1>
+  </div>
+  <div class="panel-hero-bar">
+    <span class="lc active" data-lang="pt">Exposição Temporária ·</span><span class="lc" data-lang="en" style="display:none">Temporary Exhibition ·</span><span class="lc" data-lang="es" style="display:none">Exposición Temporal ·</span>
+    <strong>Fundação Roberto Marinho · MIS Copacabana</strong>
+  </div>
+</div>
+<main>
+  <!-- PT -->
+  <div class="lc active" data-lang="pt">
+    <div class="section-block">
+      <div class="section-label">A Concepção</div>
+      <h2 class="section-title">Interação das Equipes</h2>
+      <div class="section-text">
+        <p>No MIS, a arquitetura, a curadoria e a comunicação visual foram desenvolvidas de forma simultânea e profundamente integrada. As equipes não trabalharam de forma sequencial, mas em constante diálogo — o que permitiu ao projeto emergir como um todo coerente, desde os primeiros esboços.</p>
+        <p>Essa abordagem colaborativa garantiu que cada decisão de projeto tivesse consciência do impacto nas demais frentes: a arquitetura informou a museografia, que informou a comunicação visual, que retroalimentou a arquitetura.</p>
       </div>
     </div>
-  </nav>
-
-  <div class="panel-hero">
-    <div class="panel-hero-inner">
-      <div class="panel-tag">
-        <div class="panel-tag-line"></div>
-        <span class="panel-tag-text lc active" data-lang="pt">Painel 03 · Arquitetura em Cena</span>
-        <span class="panel-tag-text lc" data-lang="en">Panel 03 · Architecture on Stage</span>
-        <span class="panel-tag-text lc" data-lang="es">Panel 03 · Arquitectura en Escena</span>
+    <div class="section-block alt">
+      <div class="section-label">Museografia e Comunicação Visual</div>
+      <h2 class="section-title">A Curadoria</h2>
+      <div class="section-text">
+        <p>A curadoria do MIS foi concebida pelo ps.2 arquitetura + design em estreita colaboração com as curadoras Ana Paula Pontes e Larissa Graça. O projeto museográfico e de comunicação visual buscou traduzir em espaço e linguagem a complexidade e a riqueza do acervo do MIS.</p>
+        <p>A identidade visual foi desenvolvida a partir da lógica do próprio edifício — a relação entre claro e escuro, entre interior e exterior, entre passado e futuro.</p>
       </div>
-      <h1 class="panel-title">
-        <span class="lc active" data-lang="pt">A Concepção<br>do Museu</span>
-        <span class="lc" data-lang="en">The Museum's<br>Conception</span>
-        <span class="lc" data-lang="es">La Concepción<br>del Museo</span>
-      </h1>
     </div>
-    <div class="panel-hero-bar">
-      <span class="lc active" data-lang="pt">Exposição Temporária ·</span>
-      <span class="lc" data-lang="en">Temporary Exhibition ·</span>
-      <span class="lc" data-lang="es">Exposición Temporal ·</span>
-      <strong>Fundação Roberto Marinho · MIS Copacabana</strong>
+    <div class="divider"></div>
+    <div class="section-block">
+      <div class="section-label">O Museu</div>
+      <h2 class="section-title">Núcleos Expositivos do Novo MIS</h2>
+      <div class="section-text">
+        <p>O novo MIS Copa é organizado em núcleos temáticos que percorrem verticalmente o edifício, integrando o acervo histórico com produções contemporâneas e interativas.</p>
+      </div>
+      <div class="item-list">
+        <div class="item-list-row"><span class="item-list-row-num">1</span><span class="item-list-row-text"><strong>Terraço e Jardim:</strong> espaço de convivência aberto com vista para Copacabana.</span></div>
+        <div class="item-list-row"><span class="item-list-row-num">2</span><span class="item-list-row-text"><strong>Residências:</strong> programas de residência artística e pesquisa.</span></div>
+        <div class="item-list-row"><span class="item-list-row-num">3</span><span class="item-list-row-text"><strong>Espaço do Vinil:</strong> dedicado à memória fonográfica brasileira.</span></div>
+        <div class="item-list-row"><span class="item-list-row-num">4</span><span class="item-list-row-text"><strong>Você é Bicho:</strong> experiência imersiva sobre a natureza e a identidade carioca.</span></div>
+        <div class="item-list-row"><span class="item-list-row-num">5</span><span class="item-list-row-text"><strong>Espírito Carioca:</strong> núcleo dedicado ao culto do corpo e à cultura de praia.</span></div>
+        <div class="item-list-row"><span class="item-list-row-num">6</span><span class="item-list-row-text"><strong>Exposição Temporária:</strong> espaço flexível para mostras temporárias.</span></div>
+        <div class="item-list-row"><span class="item-list-row-num">7</span><span class="item-list-row-text"><strong>Bares e Alimentação:</strong> café e restaurante com vista para o mar.</span></div>
+        <div class="item-list-row"><span class="item-list-row-num">8</span><span class="item-list-row-text"><strong>Noites Cariocas:</strong> cineteatro com programação regular de cinema e shows.</span></div>
+      </div>
+    </div>
+    <div class="section-block alt">
+      <div class="section-label">A Escultura do Som</div>
+      <h2 class="section-title">Painel Cineteatro: Escultura do Som</h2>
+      <div class="section-text">
+        <p>Um dos elementos mais marcantes do novo MIS é o painel escultórico do cineteatro, concebido como uma "escultura do som" — uma composição tridimensional que organiza acusticamente o espaço e ao mesmo tempo funciona como obra de arte.</p>
+        <p>O painel é uma referência direta à tradição das artes visuais integradas à arquitetura moderna brasileira, dialogando com obras como os azulejos de Portinari no MEC e os painéis de Di Cavalcanti.</p>
+      </div>
+      <div class="highlight-box">
+        <p><strong>Miranda: Olhos e Boca do Museu —</strong> a icônica Carmen Miranda ressurge como símbolo da identidade do MIS, com sua imagem integrada à comunicação visual do museu.</p>
+      </div>
     </div>
   </div>
 
-  <main class="panel-body">
-
-    <!-- PT -->
-    <div class="lc active" data-lang="pt">
-      <div class="section-block">
-        <div class="section-label">A Concepção</div>
-        <h2 class="section-title">Arquitetura, Curadoria e Museografia: um só gesto</h2>
-        <div class="section-text">
-          <p>No MIS, a arquitetura, o conteúdo e a museografia nasceram juntos, como partes de um mesmo gesto criativo. Aqui, esses três campos se sobrepõem e se fundem — traduzindo bem o processo vivido ao longo de tantos anos.</p>
-          <p>O conteúdo define a narrativa; a arquitetura oferece o corpo e os espaços; a expografia cria a mediação sensível entre ambos. É essa integração que permite que o visitante deixe de ser espectador passivo e se envolva numa jornada intuitiva e emocional.</p>
-        </div>
-        <div class="highlight-box">
-          <p>No MIS, os guarda-corpos de vidro se transformam em suportes de conteúdo, as lajes que se desdobram em degraus viram arquibancadas, e os cobogós filtram a luz, recortam a paisagem e trazem a cidade para dentro do museu.</p>
-        </div>
-      </div>
-      <div class="section-block">
-        <div class="section-label">As Equipes</div>
-        <h2 class="section-title">Interação das Equipes</h2>
-        <div class="section-text">
-          <p>A integração entre tantos profissionais com funções distintas exigiu um trabalho coletivo e contínuo. Sob a orientação de equipes técnicas e interdisciplinares da Fundação Roberto Marinho e da Secretaria de Cultura do Estado do Rio de Janeiro, pesquisadores, curadores, arquitetos, designers, técnicos e educadores dialogaram desde o início da concepção do Museu.</p>
-        </div>
-        <div class="item-list">
-          <div class="item-list-row">
-            <span class="item-list-row-num">—</span>
-            <span class="item-list-row-text"><strong>Curadoria:</strong> Hugo Sukman (jornalista e crítico de música) e André Weller (diretor de arte).</span>
-          </div>
-          <div class="item-list-row">
-            <span class="item-list-row-num">—</span>
-            <span class="item-list-row-text"><strong>Museografia:</strong> Daniela Thomas (cenógrafa e cineasta) e Felipe Tassara (arquiteto).</span>
-          </div>
-          <div class="item-list-row">
-            <span class="item-list-row-num">—</span>
-            <span class="item-list-row-text"><strong>Identidade Visual:</strong> Flávia Nalon e Fábio Prata (ps.2 arquitetura + design) — sistema tipográfico com letras inclinadas que dialogam com os planos inclinados da fachada.</span>
-          </div>
-        </div>
-      </div>
-      <div class="divider"></div>
-      <div class="section-block">
-        <div class="section-label">O Museu</div>
-        <h2 class="section-title">Núcleos Expositivos do Novo MIS</h2>
-        <div class="section-text">
-          <p>O novo MIS é organizado em núcleos expositivos que percorrem os andares do edifício, cada um dedicado a um aspecto da cultura carioca e fluminense.</p>
-        </div>
-        <div class="floors-grid">
-          <div class="floor-row"><div class="floor-num">T</div><div class="floor-content"><div class="floor-name">Baixo Atlântica</div><div class="floor-desc">Hall de entrada, café, loja e mezanino para exposições temporárias — ponto de encontro da vida carioca.</div></div></div>
-          <div class="floor-row"><div class="floor-num">1</div><div class="floor-content"><div class="floor-name">Espírito Carioca</div><div class="floor-desc">Salões do Humor Carioca, Rio 40 Graus e Salve o Carnaval.</div></div></div>
-          <div class="floor-row"><div class="floor-num">2</div><div class="floor-content"><div class="floor-name">Doce Balanço</div><div class="floor-desc">A Banda, Sala Almirante, Meu Coração, No Ar e Rádio Nacional.</div></div></div>
-          <div class="floor-row"><div class="floor-num">3</div><div class="floor-content"><div class="floor-name">Alegres Trópicos</div><div class="floor-desc">Carmen Miranda, A Tevê, Enquanto Houver Brasil.</div></div></div>
-          <div class="floor-row"><div class="floor-num">4</div><div class="floor-content"><div class="floor-name">É Sal, É Sol, É Sul</div><div class="floor-desc">Rio no Cinema, Cidade em Construção — natureza e paisagem carioca.</div></div></div>
-          <div class="floor-row"><div class="floor-num">5</div><div class="floor-content"><div class="floor-name">Terraço e Jardim</div><div class="floor-desc">Mirante panorâmico, restaurante e cinema ao ar livre.</div></div></div>
-          <div class="floor-row"><div class="floor-num">-1</div><div class="floor-content"><div class="floor-name">Noites Cariocas</div><div class="floor-desc">Cineteatro com 282 lugares e Boate do MIS.</div></div></div>
-        </div>
+  <!-- EN -->
+  <div class="lc" data-lang="en" style="display:none">
+    <div class="section-block">
+      <div class="section-label">The Conception</div>
+      <h2 class="section-title">Team Interaction</h2>
+      <div class="section-text">
+        <p>At MIS, architecture, curatorship and visual communication were developed simultaneously and deeply integrated. The teams did not work sequentially but in constant dialogue — allowing the project to emerge as a coherent whole from the earliest sketches.</p>
+        <p>This collaborative approach ensured that every design decision was aware of its impact on all other fronts: architecture informed museography, which informed visual communication, which fed back into architecture.</p>
       </div>
     </div>
-
-    <!-- EN -->
-    <div class="lc" data-lang="en">
-      <div class="section-block">
-        <div class="section-label">The Conception</div>
-        <h2 class="section-title">Architecture, Curatorship and Museography: one gesture</h2>
-        <div class="section-text">
-          <p>At MIS, architecture, content and museography were born together, as parts of the same creative gesture. Here, these three fields overlap and merge — reflecting the process lived over so many years.</p>
-          <p>Content defines the narrative; architecture provides the body and spaces; expography creates the sensitive mediation between both. This integration allows visitors to move beyond passive spectatorship and engage in an intuitive, emotional journey.</p>
-        </div>
-        <div class="highlight-box">
-          <p>At MIS, glass guardrails become content supports, floor slabs unfolding into steps become grandstands, and cobogós filter light, frame the landscape and bring the city inside the museum.</p>
-        </div>
-      </div>
-      <div class="section-block">
-        <div class="section-label">The Teams</div>
-        <h2 class="section-title">Team Integration</h2>
-        <div class="section-text">
-          <p>The integration of so many professionals with distinct roles required collective and continuous work. Under the guidance of interdisciplinary technical teams from Fundação Roberto Marinho and the Rio de Janeiro State Secretariat of Culture, researchers, curators, architects, designers, technicians and educators collaborated from the very beginning of the Museum's conception.</p>
-        </div>
-        <div class="item-list">
-          <div class="item-list-row">
-            <span class="item-list-row-num">—</span>
-            <span class="item-list-row-text"><strong>Curatorship:</strong> Hugo Sukman (journalist and music critic) and André Weller (art director).</span>
-          </div>
-          <div class="item-list-row">
-            <span class="item-list-row-num">—</span>
-            <span class="item-list-row-text"><strong>Museography:</strong> Daniela Thomas (set designer and filmmaker) and Felipe Tassara (architect).</span>
-          </div>
-          <div class="item-list-row">
-            <span class="item-list-row-num">—</span>
-            <span class="item-list-row-text"><strong>Visual Identity:</strong> Flávia Nalon and Fábio Prata (ps.2 arquitetura + design) — a typographic system with tilted letters echoing the inclined planes of the facade.</span>
-          </div>
-        </div>
-      </div>
-      <div class="divider"></div>
-      <div class="section-block">
-        <div class="section-label">The Museum</div>
-        <h2 class="section-title">Exhibition Nuclei of the New MIS</h2>
-        <div class="section-text">
-          <p>The new MIS is organized into exhibition nuclei spread across the building's floors, each dedicated to an aspect of carioca and fluminense culture.</p>
-        </div>
-        <div class="floors-grid">
-          <div class="floor-row"><div class="floor-num">G</div><div class="floor-content"><div class="floor-name">Baixo Atlântica</div><div class="floor-desc">Entrance hall, café, shop and mezzanine for temporary exhibitions — a meeting point for carioca life.</div></div></div>
-          <div class="floor-row"><div class="floor-num">1</div><div class="floor-content"><div class="floor-name">Carioca Spirit</div><div class="floor-desc">Halls of Carioca Humor, Rio 40 Degrees and Long Live Carnival.</div></div></div>
-          <div class="floor-row"><div class="floor-num">2</div><div class="floor-content"><div class="floor-name">Sweet Swing</div><div class="floor-desc">The Band, Almirante Hall, My Heart, On Air and Rádio Nacional.</div></div></div>
-          <div class="floor-row"><div class="floor-num">3</div><div class="floor-content"><div class="floor-name">Joyful Tropics</div><div class="floor-desc">Carmen Miranda, The TV, While There's Brazil.</div></div></div>
-          <div class="floor-row"><div class="floor-num">4</div><div class="floor-content"><div class="floor-name">Salt, Sun, South</div><div class="floor-desc">Rio in Cinema, City Under Construction — nature and carioca landscape.</div></div></div>
-          <div class="floor-row"><div class="floor-num">5</div><div class="floor-content"><div class="floor-name">Terrace & Garden</div><div class="floor-desc">Panoramic viewpoint, restaurant and open-air cinema.</div></div></div>
-          <div class="floor-row"><div class="floor-num">-1</div><div class="floor-content"><div class="floor-name">Carioca Nights</div><div class="floor-desc">282-seat cinema-theater and MIS nightclub.</div></div></div>
-        </div>
+    <div class="section-block alt">
+      <div class="section-label">Museography and Visual Communication</div>
+      <h2 class="section-title">The Curatorship</h2>
+      <div class="section-text">
+        <p>The MIS curatorship was conceived by ps.2 arquitetura + design in close collaboration with curators Ana Paula Pontes and Larissa Graça. The museographic and visual communication project sought to translate the complexity and richness of the MIS collection into space and language.</p>
+        <p>The visual identity was developed from the logic of the building itself — the relationship between light and dark, interior and exterior, past and future.</p>
       </div>
     </div>
-
-    <!-- ES -->
-    <div class="lc" data-lang="es">
-      <div class="section-block">
-        <div class="section-label">La Concepción</div>
-        <h2 class="section-title">Arquitectura, Curaduría y Museografía: un solo gesto</h2>
-        <div class="section-text">
-          <p>En el MIS, la arquitectura, el contenido y la museografía nacieron juntos, como partes de un mismo gesto creativo. Aquí, estos tres campos se superponen y se fusionan — reflejando el proceso vivido a lo largo de tantos años.</p>
-          <p>El contenido define la narrativa; la arquitectura ofrece el cuerpo y los espacios; la expografía crea la mediación sensible entre ambos. Esta integración permite que el visitante deje de ser espectador pasivo y se involucre en un viaje intuitivo y emocional.</p>
-        </div>
-        <div class="highlight-box">
-          <p>En el MIS, las barandillas de vidrio se convierten en soportes de contenido, las losas que se despliegan en escalones se convierten en gradas, y los cobogós filtran la luz, recortan el paisaje y traen la ciudad al interior del museo.</p>
-        </div>
+    <div class="divider"></div>
+    <div class="section-block">
+      <div class="section-label">The Museum</div>
+      <h2 class="section-title">Exhibition Nuclei of the New MIS</h2>
+      <div class="section-text">
+        <p>The new MIS Copa is organized in thematic nuclei that travel vertically through the building, integrating the historical collection with contemporary and interactive productions.</p>
       </div>
-      <div class="section-block">
-        <div class="section-label">Los Equipos</div>
-        <h2 class="section-title">Interacción de los Equipos</h2>
-        <div class="section-text">
-          <p>La integración de tantos profesionales con funciones distintas exigió un trabajo colectivo y continuo. Bajo la orientación de equipos técnicos e interdisciplinarios de la Fundação Roberto Marinho y de la Secretaría de Cultura del Estado de Río de Janeiro, investigadores, curadores, arquitectos, diseñadores, técnicos y educadores dialogaron desde el inicio de la concepción del Museo.</p>
-        </div>
-        <div class="item-list">
-          <div class="item-list-row">
-            <span class="item-list-row-num">—</span>
-            <span class="item-list-row-text"><strong>Curaduría:</strong> Hugo Sukman (periodista y crítico de música) y André Weller (director de arte).</span>
-          </div>
-          <div class="item-list-row">
-            <span class="item-list-row-num">—</span>
-            <span class="item-list-row-text"><strong>Museografía:</strong> Daniela Thomas (escenógrafa y cineasta) y Felipe Tassara (arquitecto).</span>
-          </div>
-          <div class="item-list-row">
-            <span class="item-list-row-num">—</span>
-            <span class="item-list-row-text"><strong>Identidad Visual:</strong> Flávia Nalon y Fábio Prata (ps.2 arquitetura + design) — sistema tipográfico con letras inclinadas que dialogan con los planos inclinados de la fachada.</span>
-          </div>
-        </div>
-      </div>
-      <div class="divider"></div>
-      <div class="section-block">
-        <div class="section-label">El Museo</div>
-        <h2 class="section-title">Núcleos Expositivos del Nuevo MIS</h2>
-        <div class="section-text">
-          <p>El nuevo MIS está organizado en núcleos expositivos distribuidos en los pisos del edificio, cada uno dedicado a un aspecto de la cultura carioca y fluminense.</p>
-        </div>
-        <div class="floors-grid">
-          <div class="floor-row"><div class="floor-num">PB</div><div class="floor-content"><div class="floor-name">Baixo Atlântica</div><div class="floor-desc">Hall de entrada, café, tienda y mezzanine para exposiciones temporales — punto de encuentro de la vida carioca.</div></div></div>
-          <div class="floor-row"><div class="floor-num">1</div><div class="floor-content"><div class="floor-name">Espíritu Carioca</div><div class="floor-desc">Salones del Humor Carioca, Río 40 Grados y Viva el Carnaval.</div></div></div>
-          <div class="floor-row"><div class="floor-num">2</div><div class="floor-content"><div class="floor-name">Dulce Balance</div><div class="floor-desc">La Banda, Sala Almirante, Mi Corazón, En el Aire y Rádio Nacional.</div></div></div>
-          <div class="floor-row"><div class="floor-num">3</div><div class="floor-content"><div class="floor-name">Alegres Trópicos</div><div class="floor-desc">Carmen Miranda, La Televisión, Mientras Haya Brasil.</div></div></div>
-          <div class="floor-row"><div class="floor-num">4</div><div class="floor-content"><div class="floor-name">Es Sal, Es Sol, Es Sur</div><div class="floor-desc">Río en el Cine, Ciudad en Construcción — naturaleza y paisaje carioca.</div></div></div>
-          <div class="floor-row"><div class="floor-num">5</div><div class="floor-content"><div class="floor-name">Terraza y Jardín</div><div class="floor-desc">Mirador panorámico, restaurante y cine al aire libre.</div></div></div>
-          <div class="floor-row"><div class="floor-num">-1</div><div class="floor-content"><div class="floor-name">Noches Cariocas</div><div class="floor-desc">Cine-teatro con 282 butacas y discoteca del MIS.</div></div></div>
-        </div>
+      <div class="item-list">
+        <div class="item-list-row"><span class="item-list-row-num">1</span><span class="item-list-row-text"><strong>Terrace and Garden:</strong> open social space with views over Copacabana.</span></div>
+        <div class="item-list-row"><span class="item-list-row-num">2</span><span class="item-list-row-text"><strong>Residencies:</strong> artistic residency and research programs.</span></div>
+        <div class="item-list-row"><span class="item-list-row-num">3</span><span class="item-list-row-text"><strong>Vinyl Space:</strong> dedicated to Brazilian phonographic memory.</span></div>
+        <div class="item-list-row"><span class="item-list-row-num">4</span><span class="item-list-row-text"><strong>You Are an Animal:</strong> immersive experience on nature and carioca identity.</span></div>
+        <div class="item-list-row"><span class="item-list-row-num">5</span><span class="item-list-row-text"><strong>Carioca Spirit:</strong> nucleus dedicated to body culture and beach culture.</span></div>
+        <div class="item-list-row"><span class="item-list-row-num">6</span><span class="item-list-row-text"><strong>Temporary Exhibition:</strong> flexible space for temporary shows.</span></div>
+        <div class="item-list-row"><span class="item-list-row-num">7</span><span class="item-list-row-text"><strong>Food and Drinks:</strong> café and restaurant with ocean views.</span></div>
+        <div class="item-list-row"><span class="item-list-row-num">8</span><span class="item-list-row-text"><strong>Carioca Nights:</strong> cinetheater with regular film and show programming.</span></div>
       </div>
     </div>
-
-  </main>
-
-  <nav class="panel-nav">
-    <a class="nav-link" id="nav-prev" href="painel-02.html">
-      <div class="nav-arrow">←</div>
-      <div class="nav-text">
-        <span class="nav-lbl"><span class="lc active" data-lang="pt" style="display:inline">Anterior</span><span class="lc" data-lang="en" style="display:none">Previous</span><span class="lc" data-lang="es" style="display:none">Anterior</span></span>
-        <span class="nav-name"><span class="lc active" data-lang="pt" style="display:inline">Painel 02</span><span class="lc" data-lang="en" style="display:none">Panel 02</span><span class="lc" data-lang="es" style="display:none">Panel 02</span></span>
+    <div class="section-block alt">
+      <div class="section-label">The Sound Sculpture</div>
+      <h2 class="section-title">Cinetheater Panel: Sound Sculpture</h2>
+      <div class="section-text">
+        <p>One of the most striking elements of the new MIS is the cinetheater's sculptural panel, conceived as a "sound sculpture" — a three-dimensional composition that acoustically organizes the space while functioning as a work of art.</p>
+        <p>The panel is a direct reference to the tradition of visual arts integrated into Brazilian modern architecture.</p>
       </div>
-    </a>
-    <a class="nav-link disabled" href="#">
-      <div class="nav-text nav-text-right">
-        <span class="nav-lbl"><span class="lc active" data-lang="pt" style="display:inline">Próximo</span><span class="lc" data-lang="en" style="display:none">Next</span><span class="lc" data-lang="es" style="display:none">Siguiente</span></span>
-        <span class="nav-name">—</span>
+      <div class="highlight-box">
+        <p><strong>Miranda: Eyes and Mouth of the Museum —</strong> the iconic Carmen Miranda resurfaces as a symbol of MIS identity, with her image integrated into the museum's visual communication.</p>
       </div>
-      <div class="nav-arrow">→</div>
-    </a>
-  </nav>
-
-  <footer>
-    <div>
-      <div class="footer-name">Arquitetura em Cena — O MIS Copa antes da Imagem e do Som</div>
-      <div class="footer-inst">Museu da Imagem e do Som · Fundação Roberto Marinho · Rio de Janeiro</div>
     </div>
-    <div class="footer-logo"><img src="mis-logo.png" alt="MIS" /></div>
-  </footer>
+  </div>
+
+  <!-- ES -->
+  <div class="lc" data-lang="es" style="display:none">
+    <div class="section-block">
+      <div class="section-label">La Concepción</div>
+      <h2 class="section-title">Interacción de los Equipos</h2>
+      <div class="section-text">
+        <p>En el MIS, la arquitectura, la curaduría y la comunicación visual fueron desarrolladas de forma simultánea y profundamente integrada. Los equipos no trabajaron de forma secuencial, sino en constante diálogo — lo que permitió que el proyecto emergiera como un todo coherente desde los primeros bocetos.</p>
+      </div>
+    </div>
+    <div class="section-block alt">
+      <div class="section-label">Museografía y Comunicación Visual</div>
+      <h2 class="section-title">La Curaduría</h2>
+      <div class="section-text">
+        <p>La curaduría del MIS fue concebida por ps.2 arquitetura + design en estrecha colaboración con las curadoras Ana Paula Pontes y Larissa Graça. El proyecto museográfico y de comunicación visual buscó traducir en espacio y lenguaje la complejidad y riqueza de la colección del MIS.</p>
+        <p>La identidad visual fue desarrollada a partir de la lógica del propio edificio — la relación entre claro y oscuro, interior y exterior, pasado y futuro.</p>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="section-block">
+      <div class="section-label">El Museo</div>
+      <h2 class="section-title">Núcleos Expositivos del Nuevo MIS</h2>
+      <div class="section-text">
+        <p>El nuevo MIS Copa está organizado en núcleos temáticos que recorren verticalmente el edificio, integrando la colección histórica con producciones contemporáneas e interactivas.</p>
+      </div>
+      <div class="item-list">
+        <div class="item-list-row"><span class="item-list-row-num">1</span><span class="item-list-row-text"><strong>Terraza y Jardín:</strong> espacio de convivencia abierto con vistas a Copacabana.</span></div>
+        <div class="item-list-row"><span class="item-list-row-num">2</span><span class="item-list-row-text"><strong>Residencias:</strong> programas de residencia artística e investigación.</span></div>
+        <div class="item-list-row"><span class="item-list-row-num">3</span><span class="item-list-row-text"><strong>Espacio del Vinilo:</strong> dedicado a la memoria fonográfica brasileña.</span></div>
+        <div class="item-list-row"><span class="item-list-row-num">4</span><span class="item-list-row-text"><strong>Eres un Animal:</strong> experiencia inmersiva sobre la naturaleza y la identidad carioca.</span></div>
+        <div class="item-list-row"><span class="item-list-row-num">5</span><span class="item-list-row-text"><strong>Espíritu Carioca:</strong> núcleo dedicado al culto del cuerpo y la cultura de playa.</span></div>
+        <div class="item-list-row"><span class="item-list-row-num">6</span><span class="item-list-row-text"><strong>Exposición Temporal:</strong> espacio flexible para muestras temporales.</span></div>
+        <div class="item-list-row"><span class="item-list-row-num">7</span><span class="item-list-row-text"><strong>Bares y Alimentación:</strong> café y restaurante con vista al mar.</span></div>
+        <div class="item-list-row"><span class="item-list-row-num">8</span><span class="item-list-row-text"><strong>Noches Cariocas:</strong> cineteatro con programación regular de cine y shows.</span></div>
+      </div>
+    </div>
+    <div class="section-block alt">
+      <div class="section-label">La Escultura del Sonido</div>
+      <h2 class="section-title">Panel Cineteatro: Escultura del Sonido</h2>
+      <div class="section-text">
+        <p>Uno de los elementos más destacados del nuevo MIS es el panel escultórico del cineteatro, concebido como una "escultura del sonido" — una composición tridimensional que organiza acústicamente el espacio y funciona como obra de arte.</p>
+      </div>
+      <div class="highlight-box">
+        <p><strong>Miranda: Ojos y Boca del Museo —</strong> la icónica Carmen Miranda resurge como símbolo de la identidad del MIS, con su imagen integrada en la comunicación visual del museo.</p>
+      </div>
+    </div>
+  </div>
+</main>
+
+<nav class="panel-nav">
+  <a class="nav-link" id="nav-prev" href="painel-02.html">
+    <div class="nav-arrow">←</div>
+    <div class="nav-text">
+      <span class="nav-lbl"><span class="lc active" data-lang="pt">Anterior</span><span class="lc" data-lang="en" style="display:none">Previous</span><span class="lc" data-lang="es" style="display:none">Anterior</span></span>
+      <span class="nav-name"><span class="lc active" data-lang="pt">Painel 02</span><span class="lc" data-lang="en" style="display:none">Panel 02</span><span class="lc" data-lang="es" style="display:none">Panel 02</span></span>
+    </div>
+  </a>
+  <a class="nav-link" id="nav-next" href="index.html">
+    <div class="nav-text nav-text-right">
+      <span class="nav-lbl"><span class="lc active" data-lang="pt">Próximo</span><span class="lc" data-lang="en" style="display:none">Next</span><span class="lc" data-lang="es" style="display:none">Siguiente</span></span>
+      <span class="nav-name"><span class="lc active" data-lang="pt">Início</span><span class="lc" data-lang="en" style="display:none">Home</span><span class="lc" data-lang="es" style="display:none">Inicio</span></span>
+    </div>
+    <div class="nav-arrow">→</div>
+  </a>
+</nav>
+<footer>
+  <div>
+    <div class="footer-name">Arquitetura em Cena — O MIS Copa antes da Imagem e do Som</div>
+    <div class="footer-inst">Museu da Imagem e do Som · Fundação Roberto Marinho · Rio de Janeiro</div>
+  </div>
+  <div class="footer-logo"><img src="mis-logo.png" alt="MIS"/></div>
+</footer>
 
   <script>
-    function getLang() {
-      const p = new URLSearchParams(window.location.search);
-      const u = p.get('lang');
-      if (u && ['pt','en','es'].includes(u)) return u;
-      return localStorage.getItem('mis-lang') || 'pt';
+    function getLang(){const p=new URLSearchParams(location.search);const u=p.get('lang');if(u&&['pt','en','es'].includes(u))return u;try{return localStorage.getItem('mis-lang')||'pt'}catch(e){return 'pt'}}
+    function setLang(lang){
+      localStorage.setItem('mis-lang',lang);
+      document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));
+      document.querySelectorAll('.lc').forEach(el=>{const show=el.dataset.lang===lang;const inl=el.tagName==='SPAN'||el.classList.contains('panel-tag-text');el.style.display=show?(inl?'inline':'block'):'none';el.classList.toggle('active',show);});
+      const pv=document.getElementById('nav-prev');if(pv)pv.href=`painel-02.html?lang=${lang}`;const nx=document.getElementById('nav-next');if(nx)nx.href=`index.html?lang=${lang}`;
+      document.documentElement.lang=lang==='pt'?'pt-BR':lang;
     }
-    function setLang(lang) {
-      localStorage.setItem('mis-lang', lang);
-      document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
-      document.querySelectorAll('.lc').forEach(el => {
-        const show = el.dataset.lang === lang;
-        const inline = el.tagName === 'SPAN' || el.classList.contains('panel-tag-text');
-        el.style.display = show ? (inline ? 'inline' : 'block') : 'none';
-        el.classList.toggle('active', show);
-      });
-      document.getElementById('nav-prev').href = `painel-02.html?lang=${lang}`;
-      document.documentElement.lang = lang === 'pt' ? 'pt-BR' : lang;
-    }
-    document.querySelectorAll('.lang-btn').forEach(b => b.addEventListener('click', () => setLang(b.dataset.lang)));
+    document.querySelectorAll('.lang-btn').forEach(b=>b.addEventListener('click',()=>setLang(b.dataset.lang)));
     setLang(getLang());
   </script>
+
 </body>
 </html>
