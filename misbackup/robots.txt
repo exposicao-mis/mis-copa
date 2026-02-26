@@ -1,0 +1,9 @@
+User-agent: *
+Disallow: /brand-book/
+Disallow: /wp/
+Disallow: /wp-admin/
+Disallow: /wp-includes/
+Disallow: /wp-content/plugins/
+Disallow: /wp-content/themes/
+Disallow: /trackback/
+Disallow: /xmlrpc.php

@@ -1,0 +1,20 @@
+.DS_Store
+.htaccess
+.snapshots/*
+.snapshots/facebook/*
+.snapshots/oembed/*
+!.snapshots/.gitkeep
+!.snapshots/facebook/.gitkeep
+!.snapshots/oembed/.gitkeep
+fala-rio-images/*
+!fala-rio-images/.gitkeep
+# wp-content/plugins/*
+!wp-content/plugins/.gitkeep
+wp-content/mu-plugins/*
+!wp-content/mu-plugins/.gitkeep
+wp-content/upgrade
+wp-content/uploads/*
+!wp-content/uploads/.gitkeep
+wp-content/advanced-cache.php
+wp-content/cache
+wp-content/w3tc-config
