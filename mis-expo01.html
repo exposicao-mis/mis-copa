@@ -17,7 +17,7 @@
     --mghi:    #e0006a;
     --font-d:  'Bebas Neue', sans-serif;
     --font-s:  'DM Sans', sans-serif;
-    --topbar:  54px;
+    --topbar:  64px;
     --nav:     52px;
   }
   *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
@@ -167,8 +167,8 @@
   .cover {
     position: relative;
     width: 100%;
-    height: calc(100vh - var(--topbar) - var(--nav));
-    min-height: 400px;
+    height: 50vh;
+    min-height: 280px;
     overflow: hidden;
     display: flex;
   }
@@ -209,8 +209,10 @@
     display: flex; align-items: flex-start; gap: 8px;
   }
   .cover-logo {
-    height: 36px; width: auto;
+    height: 80px; width: auto;
     filter: brightness(0) invert(1);
+    mix-blend-mode: screen;
+    background: transparent;
   }
   .cover-brand-text {
     font-family: var(--font-d);
@@ -298,7 +300,7 @@
 <!-- TOPBAR -->
 <div class="topbar">
   <a class="tb-brand" href="index.html">
-    <img src="https://exposicao-mis.github.io/mis-copa/images/mis-logo.jpg" alt="MIS" style="height:32px;width:auto;">
+    <img src="https://exposicao-mis.github.io/mis-copa/images/mis-logo.png" alt="MIS" style="height:42px;width:auto;">
     <span class="tb-sub">Arquitetura em Cena</span>
   </a>
   <div class="tb-langs">
@@ -327,25 +329,25 @@
 
 <!-- ══ PÁGINA PRINCIPAL ══ -->
 <div class="page active" id="pg-0">
-  <div class="page-hero no-img" style="height:calc(100vh - var(--topbar) - var(--nav)); min-height:400px;">
+  <div class="page-hero no-img" style="height:50vh; min-height:320px;">
     <img src="https://exposicao-mis.github.io/mis-copa/images/carnaval.jpg" alt="Carnaval" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 30%;filter:grayscale(100%) brightness(.45);display:block;">
-    <div class="page-hero-overlay" style="justify-content:space-between; padding:24px 28px 32px;">
-      <!-- logo topo esquerdo -->
-      <img src="https://exposicao-mis.github.io/mis-copa/images/mis-logo.jpg" alt="MIS" style="height:40px;width:auto;filter:brightness(0) invert(1);align-self:flex-start;">
-      <!-- frase + player no fundo -->
-      <div>
-        <div style="font-family:var(--font-d);font-size:clamp(36px,8vw,80px);line-height:.9;color:var(--magenta);letter-spacing:.02em;text-shadow:0 2px 16px rgba(0,0,0,.5);margin-bottom:12px;">A SORRIR<br>EU PRETENDO<br>LEVAR A VIDA</div>
-        <div style="font-size:10px;font-weight:300;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.65);margin-bottom:24px;">Cartola em "O Sol Nascerá"</div>
-        <!-- player -->
-        <div style="display:flex;align-items:center;gap:12px;">
-          <button class="pbtn" onclick="togglePlay('p0-0')"><svg viewBox="0 0 24 24" id="ico-p0-0"><path d="M8 5v14l11-7z"/></svg></button>
-          <div style="flex:1;">
-            <div style="font-family:var(--font-d);font-size:13px;color:rgba(255,255,255,.8);margin-bottom:6px;letter-spacing:.04em;">Arquitetura em Cena</div>
-            <div class="prog-row"><div class="prog-track" style="background:rgba(255,255,255,.3);" onclick="seekTrack(event,'p0-0')"><div class="prog-fill" id="pf-p0-0" style="background:#fff;"></div></div><span class="prog-time" id="pt-p0-0" style="color:rgba(255,255,255,.6);">0:00</span></div>
-          </div>
-        </div>
-        <audio id="au-p0-0"><source src="audio/00-abertura.mp3" type="audio/mpeg"></audio>
+    <div class="page-hero-overlay" style="justify-content:flex-end; padding:24px 28px 28px;">
+      <!-- frase estilo PDF -->
+      <div style="font-family:var(--font-d);line-height:.88;color:var(--magenta);letter-spacing:.02em;text-shadow:0 2px 16px rgba(0,0,0,.5);margin-bottom:10px;">
+        <div style="font-size:clamp(36px,8vw,80px);font-style:normal;">A SORRIR</div>
+        <div style="font-size:clamp(36px,8vw,80px);font-style:italic;">EU PRETENDO</div>
+        <div style="font-size:clamp(36px,8vw,80px);font-style:italic;">LEVAR A VIDA</div>
       </div>
+      <div style="font-size:10px;font-weight:300;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.65);margin-bottom:20px;">Cartola em "O Sol Nascerá"</div>
+      <!-- player -->
+      <div style="display:flex;align-items:center;gap:12px;">
+        <button class="pbtn" onclick="togglePlay('p0-0')"><svg viewBox="0 0 24 24" id="ico-p0-0"><path d="M8 5v14l11-7z"/></svg></button>
+        <div style="flex:1;min-width:0;">
+          <div style="font-family:var(--font-d);font-size:13px;color:rgba(255,255,255,.8);margin-bottom:6px;letter-spacing:.04em;">Arquitetura em Cena</div>
+          <div class="prog-row"><div class="prog-track" style="background:rgba(255,255,255,.3);" onclick="seekTrack(event,'p0-0')"><div class="prog-fill" id="pf-p0-0" style="background:#fff;"></div></div><span class="prog-time" id="pt-p0-0" style="color:rgba(255,255,255,.6);">0:00</span></div>
+        </div>
+      </div>
+      <audio id="au-p0-0"><source src="audio/00-abertura.mp3" type="audio/mpeg"></audio>
     </div>
   </div>
 </div>
