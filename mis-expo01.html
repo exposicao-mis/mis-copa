@@ -349,17 +349,17 @@
         <div style="font-size:clamp(24px,5.5vw,56px);font-style:italic;">EU PRETENDO</div>
         <div style="font-size:clamp(24px,5.5vw,56px);font-style:italic;">LEVAR A VIDA</div>
       </div>
-      <div style="font-size:10px;font-weight:300;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.65);margin-bottom:20px;">Cartola em "O Sol Nascerá"</div>
-      <!-- player -->
-      <div style="display:flex;align-items:center;gap:12px;">
-        <button class="pbtn" onclick="togglePlay('p0-0')"><svg viewBox="0 0 24 24" id="ico-p0-0"><path d="M8 5v14l11-7z"/></svg></button>
-        <div style="flex:1;min-width:0;">
-          <div style="font-family:var(--font-d);font-size:13px;color:rgba(255,255,255,.8);margin-bottom:6px;letter-spacing:.04em;">Arquitetura em Cena</div>
-          <div class="prog-row"><div class="prog-track" style="background:rgba(255,255,255,.3);" onclick="seekTrack(event,'p0-0')"><div class="prog-fill" id="pf-p0-0" style="background:#fff;"></div></div><span class="prog-time" id="pt-p0-0" style="color:rgba(255,255,255,.6);">0:00</span></div>
-        </div>
-      </div>
-      <audio id="au-p0-0"><source src="audio/00-abertura.mp3" type="audio/mpeg"></audio>
+      <div style="font-size:10px;font-weight:300;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.65);">Cartola em "O Sol Nascerá"</div>
     </div>
+  </div>
+  <!-- player igual às outras páginas -->
+  <div class="a-item" data-id="p0-0">
+    <div class="a-play"><button class="pbtn" onclick="togglePlay('p0-0')"><svg viewBox="0 0 24 24" id="ico-p0-0"><path d="M8 5v14l11-7z"/></svg></button></div>
+    <div class="a-content">
+      <div class="a-title">Arquitetura em Cena — O MIS Copa antes da Imagem e do Som</div>
+      <div class="prog-row"><div class="prog-track" onclick="seekTrack(event,'p0-0')"><div class="prog-fill" id="pf-p0-0"></div></div><span class="prog-time" id="pt-p0-0">0:00</span></div>
+    </div>
+    <audio id="au-p0-0"><source src="audio/00-abertura.mp3" type="audio/mpeg"></audio>
   </div>
 </div>
 
