@@ -17,7 +17,7 @@
     --mghi:    #e0006a;
     --font-d:  'Bebas Neue', sans-serif;
     --font-s:  'DM Sans', sans-serif;
-    --topbar:  64px;
+    --topbar:  80px;
     --nav:     52px;
   }
   *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
@@ -82,18 +82,20 @@
 
   /* PAGE HERO */
   .page-hero {
-    position:relative; width:100%; height:210px;
+    position:relative; width:100%;
     overflow:hidden; border-bottom:4px solid var(--magenta);
+    background: var(--ink);
   }
   .page-hero img {
-    width:100%; height:100%; object-fit:cover; object-position:center;
-    display:block; filter:brightness(.72);
+    width:100%; height:auto;
+    display:block;
+    filter:brightness(.72);
   }
   .page-hero-overlay {
     position:absolute; inset:0;
     display:flex; flex-direction:column; justify-content:flex-end;
     padding:20px 24px;
-    background:linear-gradient(to top, rgba(26,23,20,.65) 0%, transparent 55%);
+    background:linear-gradient(to top, rgba(26,23,20,.65) 0%, transparent 50%);
   }
   .page-hero-eyebrow {
     font-size:9px; font-weight:700; letter-spacing:.28em;
@@ -300,7 +302,7 @@
 <!-- TOPBAR -->
 <div class="topbar">
   <a class="tb-brand" href="index.html">
-    <img src="https://exposicao-mis.github.io/mis-copa/images/mis-logo.png" alt="MIS" style="height:42px;width:auto;">
+    <img src="https://exposicao-mis.github.io/mis-copa/images/mis-logo.png" alt="MIS" style="height:68px;width:auto;">
     <span class="tb-sub">Arquitetura em Cena</span>
   </a>
   <div class="tb-langs">
