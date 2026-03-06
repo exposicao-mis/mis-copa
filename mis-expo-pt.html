@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MIS — Arquitetura em Cena</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:      #f2efea;
+    --bg2:     #eae6e0;
+    --white:   #ffffff;
+    --ink:     #1a1714;
+    --ink2:    #4a4642;
+    --rule:    #d4cfc9;
+    --magenta: #c8005a;
+    --mghi:    #e0006a;
+    --font-d:  'Bebas Neue', sans-serif;
+    --font-s:  'DM Sans', sans-serif;
+    --topbar:  80px;
+    --nav:     52px;
+  }
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--bg); color:var(--ink); font-family:var(--font-s); overflow-x:hidden; }
+
+  /* TOPBAR */
+  .topbar {
+    position:fixed; top:0; left:0; right:0; z-index:200;
+    height:var(--topbar);
+    display:flex; align-items:center; justify-content:space-between;
+    padding:0 24px;
+    background:rgba(242,239,234,.97); backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--rule);
+  }
+  .tb-brand { display:flex; align-items:center; gap:14px; text-decoration:none; }
+  .tb-mis { font-family:var(--font-d); font-size:21px; letter-spacing:.07em; color:var(--ink); }
+  .tb-sub { font-size:9px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:var(--ink2); border-left:1px solid var(--rule); padding-left:14px; }
+  .tb-langs { display:flex; gap:3px; }
+  .tb-langs a {
+    font-size:10px; font-weight:700; letter-spacing:.12em; text-transform:uppercase;
+    text-decoration:none; color:var(--ink2);
+    padding:4px 10px; border:1px solid var(--rule); border-radius:2px; transition:all .15s;
+  }
+  .tb-langs a:hover { border-color:var(--ink2); color:var(--ink); }
+  .tb-langs a.active { background:var(--magenta); border-color:var(--magenta); color:#fff; }
+
+  /* PAGE NAV */
+  .page-nav {
+    position:fixed; top:var(--topbar); left:0; right:0; z-index:190;
+    height:var(--nav);
+    display:flex; align-items:center; justify-content:center; gap:6px;
+    background:rgba(242,239,234,.97); backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--rule);
+    padding:0 12px;
+  }
+  .pn-arrow {
+    width:34px; height:34px; border-radius:50%;
+    border:1px solid var(--rule); background:transparent;
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer; font-size:18px; color:var(--ink2);
+    transition:all .15s; flex-shrink:0; line-height:1;
+  }
+  .pn-arrow:hover:not(:disabled) { border-color:var(--magenta); color:var(--magenta); }
+  .pn-arrow:disabled { opacity:.2; cursor:default; }
+  .pn-dots { display:flex; gap:4px; align-items:center; }
+  .pn-dot {
+    width:30px; height:30px; border-radius:50%;
+    border:1px solid var(--rule); background:transparent;
+    cursor:pointer; font-family:var(--font-d); font-size:13px;
+    letter-spacing:.02em; color:var(--ink2);
+    display:flex; align-items:center; justify-content:center;
+    transition:all .15s; flex-shrink:0;
+  }
+  .pn-dot:hover { border-color:var(--ink2); color:var(--ink); }
+  .pn-dot.active { background:var(--magenta); border-color:var(--magenta); color:#fff; }
+
+  /* PAGES */
+  .pages-wrap { padding-top:calc(var(--topbar) + var(--nav)); }
+  .page { display:none; }
+  .page.active { display:block; animation: fadeIn .3s ease; }
+  @keyframes fadeIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:none} }
+
+  /* PAGE HERO */
+  .page-hero {
+    position:relative; width:100%;
+    height:240px;
+    overflow:hidden; border-bottom:4px solid var(--magenta);
+    background: var(--ink);
+  }
+  .page-hero img {
+    width:100%; height:100%;
+    object-fit:cover; object-position:center;
+    display:block;
+    filter:brightness(.72);
+  }
+  .page-hero-overlay {
+    position:absolute; inset:0;
+    display:flex; flex-direction:column; justify-content:flex-end;
+    padding:20px 24px;
+    background:linear-gradient(to top, rgba(26,23,20,.65) 0%, transparent 50%);
+  }
+  .page-hero-eyebrow {
+    font-size:9px; font-weight:700; letter-spacing:.28em;
+    text-transform:uppercase; color:var(--magenta); margin-bottom:5px;
+  }
+  .page-hero-title {
+    font-family:var(--font-d);
+    font-size:clamp(28px,6vw,54px);
+    line-height:.95; letter-spacing:.015em; color:#fff;
+  }
+  .page-hero.no-img { background:var(--ink); height:180px; }
+  .page-hero.no-img .page-hero-overlay {
+    background:linear-gradient(to top, rgba(200,0,90,.35) 0%, transparent 70%);
+  }
+
+  /* QUOTE BLOCK */
+  .quote-block {
+    padding:24px 24px 20px;
+    border-bottom:1px solid var(--rule);
+    background:var(--white);
+  }
+  .q-text { font-family:var(--font-d); font-size:clamp(16px,3vw,26px); letter-spacing:.06em; color:var(--ink); margin-bottom:5px; }
+  .q-attr { font-size:9px; font-weight:300; letter-spacing:.22em; text-transform:uppercase; color:var(--magenta); }
+
+  /* SECTION LABEL */
+  .sec-label {
+    padding:16px 24px;
+    font-family:var(--font-d); font-size:clamp(16px,2.8vw,26px);
+    letter-spacing:.02em; color:var(--ink2);
+    border-bottom:1px solid var(--rule);
+    background:var(--bg2);
+  }
+
+  
+
+  /* FOOTER */
+  footer { padding:28px 24px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; border-top:1px solid var(--rule); }
+  .ft-brand { font-family:var(--font-d); font-size:18px; letter-spacing:.06em; color:var(--ink); }
+  .ft-brand span { display:block; font-family:var(--font-s); font-size:9px; font-weight:300; letter-spacing:.2em; text-transform:uppercase; color:var(--ink2); margin-top:3px; }
+  .ft-info { font-size:10px; font-weight:300; color:var(--ink2); text-align:right; line-height:1.9; }
+
+  @media(max-width:520px){
+    .topbar { padding:0 14px; }
+    .tb-sub { display:none; }
+    .pn-dot { width:26px; height:26px; font-size:11px; }
+    .page-hero { height:160px; }
+    .page-hero.no-img { height:90px; }
+    footer { flex-direction:column; align-items:flex-start; }
+    .ft-info { text-align:left; }
+  }
+  @media(min-width:521px) and (max-width:900px){
+    .page-hero { height:200px; }
+  }
+  @media(min-width:901px){
+    .page-hero { height:280px; }
+  }
+
+  /* ═══ ITEM CARD ═══ */
+  audio { display:none; }
+  .item-card {
+    background:#fff; border-radius:10px; overflow:hidden;
+    margin:0 12px 10px;
+    box-shadow:0 1px 5px rgba(0,0,0,.08);
+  }
+  .item-main { display:flex; align-items:center; min-height:72px; }
+  .play-col {
+    flex-shrink:0; width:68px; height:72px;
+    display:flex; align-items:center; justify-content:center;
+    border-right:1px solid #f0ece6;
+  }
+  .pbtn {
+    width:42px; height:42px; border-radius:50%;
+    border:none; background:var(--magenta); cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    transition:transform .15s, filter .15s;
+    box-shadow:0 2px 8px rgba(200,0,90,.25);
+  }
+  .pbtn:hover { transform:scale(1.08); filter:brightness(1.1); }
+  .pbtn:active { transform:scale(.95); }
+  .pbtn svg { width:14px; height:14px; fill:#fff; margin-left:2px; display:block; }
+  .info-col { flex:1; min-width:0; padding:12px 16px 12px 14px; }
+  .a-title {
+    font-family:var(--font-d); font-size:15px;
+    letter-spacing:.03em; color:var(--ink);
+    line-height:1.15; margin-bottom:8px;
+  }
+  .prog-row { display:flex; align-items:center; gap:8px; }
+  .prog-track {
+    flex:1; height:3px; background:#e8e2da;
+    border-radius:2px; cursor:pointer; position:relative; overflow:hidden;
+  }
+  .prog-fill { height:100%; background:var(--magenta); border-radius:2px; width:0%; }
+  .prog-time { font-size:10px; color:#aaa; font-weight:500; letter-spacing:.04em; flex-shrink:0; }
+  .item-divider { height:1px; background:#f0ece6; margin:0 14px; }
+  .item-cap { display:flex; align-items:center; min-height:50px; background:#faf8f5; }
+  .cap-col {
+    flex-shrink:0; width:68px; height:50px;
+    display:flex; align-items:center; justify-content:center;
+    border-right:1px solid #f0ece6;
+  }
+  .cbtn {
+    width:32px; height:32px; border-radius:50%;
+    border:1.5px solid #9b7355; background:transparent; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    transition:background .15s, transform .12s;
+  }
+  .cbtn:hover, .cbtn.playing { background:#9b7355; }
+  .cbtn:hover svg, .cbtn.playing svg { fill:#fff; }
+  .cbtn:active { transform:scale(.93); }
+  .cbtn svg { width:10px; height:10px; fill:#9b7355; margin-left:1px; display:block; }
+  .cap-info {
+    flex:1; min-width:0; padding:0 14px 0 12px;
+    display:flex; align-items:center; gap:8px; flex-wrap:wrap;
+  }
+  .cap-badge {
+    flex-shrink:0; font-size:8px; font-weight:700;
+    letter-spacing:.15em; text-transform:uppercase;
+    color:#9b7355; border:1px solid #c8b09a;
+    border-radius:3px; padding:3px 6px; white-space:nowrap;
+  }
+  .cap-todo {
+    flex-shrink:0; font-size:8px; font-weight:700;
+    letter-spacing:.1em; text-transform:uppercase;
+    color:#e68000; background:#fff3e0;
+    border-radius:3px; padding:3px 6px; white-space:nowrap;
+  }
+  .cap-prog { flex:1; min-width:60px; }
+  .cap-prog .prog-track { background:#e4d9ce; }
+  .cap-prog .prog-fill  { background:#9b7355; }
+  .cap-prog .prog-time  { color:#9b7355; }
+  /* video item */
+  .v-item {
+    display:flex; align-items:center; background:#fff;
+    border-radius:10px; margin:0 12px 10px;
+    box-shadow:0 1px 5px rgba(0,0,0,.08); min-height:58px;
+  }
+  .v-play { flex-shrink:0; width:68px; height:58px; display:flex; align-items:center; justify-content:center; border-right:1px solid #f0ece6; }
+  .vid-icon { width:32px; height:32px; border-radius:50%; border:1.5px solid #ccc; display:flex; align-items:center; justify-content:center; }
+  .vid-icon svg { width:12px; height:12px; fill:#bbb; }
+  .v-content { flex:1; min-width:0; padding:0 18px 0 14px; }
+  .v-title { font-family:var(--font-d); font-size:14px; line-height:1.1; letter-spacing:.015em; color:var(--ink2); }
+  .sec-label { font-size:9px; font-weight:700; letter-spacing:.22em; text-transform:uppercase; color:var(--ink2); padding:18px 24px 10px; }
+  @media(max-width:520px){
+    .item-card { margin:0 8px 8px; }
+    .v-item { margin:0 8px 8px; }
+    .play-col { width:56px; }
+    .cap-col  { width:56px; }
+    .pbtn { width:36px; height:36px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <a class="tb-brand" href="index.html">
+    <img src="https://exposicao-mis.github.io/mis-copa/images/mis-logo.png" alt="MIS" style="height:68px;width:auto;">
+    <span class="tb-sub">Arquitetura em Cena</span>
+  </a>
+  <div class="tb-langs">
+    <a href="mis-expo-pt.html" class="active">PT</a>
+    <a href="mis-expo-en.html">EN</a>
+    <a href="mis-expo-es.html">ES</a>
+  </div>
+</div>
+
+<!-- PAGE NAV -->
+<div class="page-nav">
+  <button class="pn-arrow" id="btn-prev" onclick="goTo(cur-1)" disabled>&#8249;</button>
+  <div class="pn-dots">
+    <button class="pn-dot active" onclick="goTo(0)">⌂</button>
+    <button class="pn-dot" onclick="goTo(1)">1</button>
+    <button class="pn-dot" onclick="goTo(2)">2</button>
+    <button class="pn-dot" onclick="goTo(3)">3</button>
+    <button class="pn-dot" onclick="goTo(4)">4</button>
+    <button class="pn-dot" onclick="goTo(5)">5</button>
+    <button class="pn-dot" onclick="goTo(6)">6</button>
+  </div>
+  <button class="pn-arrow" id="btn-next" onclick="goTo(cur+1)">&#8250;</button>
+</div>
+
+<div class="pages-wrap">
+
+<!-- PRINCIPAL -->
+<div class="page active" id="pg-0">
+  <div class="page-hero no-img" style="height:50vh;min-height:320px;">
+    <img src="https://exposicao-mis.github.io/mis-copa/images/carnaval.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 30%;filter:grayscale(100%) brightness(.45);display:block;">
+    <div class="page-hero-overlay" style="justify-content:flex-end;padding:24px 28px 28px;">
+      <div style="font-family:var(--font-d);line-height:.88;color:var(--magenta);letter-spacing:.02em;text-shadow:0 2px 16px rgba(0,0,0,.5);margin-bottom:10px;">
+        <div style="font-size:clamp(24px,5.5vw,56px);font-style:normal;">A SORRIR</div>
+        <div style="font-size:clamp(24px,5.5vw,56px);font-style:italic;">EU PRETENDO</div>
+        <div style="font-size:clamp(24px,5.5vw,56px);font-style:italic;">LEVAR A VIDA</div>
+      </div>
+      <div style="font-size:10px;font-weight:300;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.65);">Cartola em "O Sol Nascerá"</div>
+    </div>
+  </div>
+  <div class="item-card">
+    <div class="item-main">
+      <div class="play-col"><button class="pbtn" onclick="togglePlay('p0-0')"><svg viewBox="0 0 24 24" id="ico-p0-0"><path d="M8 5v14l11-7z"/></svg></button></div>
+      <div class="info-col">
+        <div class="a-title">O MIS Copa antes da Imagem e do Som</div>
+        <div class="prog-row"><div class="prog-track" onclick="seekTrack(event,'p0-0')"><div class="prog-fill" id="pf-p0-0"></div></div><span class="prog-time" id="pt-p0-0">0:00</span></div>
+      </div>
+    </div>
+    <audio id="au-p0-0"><source src="audio/00-abertura.mp3" type="audio/mpeg"></audio>
+  </div>
+</div>
+<!-- PG1 -->
+<div class="page" id="pg-1">
+  <div class="page-hero">
+    <img src="https://exposicao-mis.github.io/mis-copa/images/lapa.jpg" alt="">
+    <div class="page-hero-overlay"><div class="page-hero-title">O Que É o MIS</div></div>
+  </div>
+  <div class="item-card">
+    <div class="item-main">
+      <div class="play-col"><button class="pbtn" onclick="togglePlay('p1-0')"><svg viewBox="0 0 24 24" id="ico-p1-0"><path d="M8 5v14l11-7z"/></svg></button></div>
+      <div class="info-col">
+        <div class="a-title">A Instituição: Guardião da Alma Carioca</div>
+        <div class="prog-row"><div class="prog-track" onclick="seekTrack(event,'p1-0')"><div class="prog-fill" id="pf-p1-0"></div></div><span class="prog-time" id="pt-p1-0">0:00</span></div>
+      </div>
+    </div>
+    <audio id="au-p1-0"><source src="audio/01-instituicao.mp3" type="audio/mpeg"></audio>
+  </div>
+  <div class="item-card">
+    <div class="item-main">
+      <div class="play-col"><button class="pbtn" onclick="togglePlay('p1-1')"><svg viewBox="0 0 24 24" id="ico-p1-1"><path d="M8 5v14l11-7z"/></svg></button></div>
+      <div class="info-col">
+        <div class="a-title">O Acervo: Imagens, Sons e Depoimentos para a Posteridade</div>
+        <div class="prog-row"><div class="prog-track" onclick="seekTrack(event,'p1-1')"><div class="prog-fill" id="pf-p1-1"></div></div><span class="prog-time" id="pt-p1-1">0:00</span></div>
+      </div>
+    </div>
+    <audio id="au-p1-1"><source src="audio/02-acervo.mp3" type="audio/mpeg"></audio>
+  </div>
+  <div class="item-card">
+    <div class="item-main">
+      <div class="play-col"><button class="pbtn" onclick="togglePlay('p1-2')"><svg viewBox="0 0 24 24" id="ico-p1-2"><path d="M8 5v14l11-7z"/></svg></button></div>
+      <div class="info-col">
+        <div class="a-title">A Necessidade de uma Nova Sede</div>
+        <div class="prog-row"><div class="prog-track" onclick="seekTrack(event,'p1-2')"><div class="prog-fill" id="pf-p1-2"></div></div><span class="prog-time" id="pt-p1-2">0:00</span></div>
+      </div>
+    </div>
+    <audio id="au-p1-2"><source src="audio/03-nova-sede.mp3" type="audio/mpeg"></audio>
+  </div>
+</div>
+<!-- PG2 -->
+<div class="page" id="pg-2">
+  <div class="page-hero">
+    <img src="https://exposicao-mis.github.io/mis-copa/images/mis-render.jpg" alt="">
+    <div class="page-hero-overlay"><div class="page-hero-title">O Concurso</div></div>
+  </div>
+  <div class="item-card">
+    <div class="item-main">
+      <div class="play-col"><button class="pbtn" onclick="togglePlay('p2-0')"><svg viewBox="0 0 24 24" id="ico-p2-0"><path d="M8 5v14l11-7z"/></svg></button></div>
+      <div class="info-col">
+        <div class="a-title">O Contexto e as Ambições Institucionais</div>
+        <div class="prog-row"><div class="prog-track" onclick="seekTrack(event,'p2-0')"><div class="prog-fill" id="pf-p2-0"></div></div><span class="prog-time" id="pt-p2-0">0:00</span></div>
+      </div>
+    </div>
+    <audio id="au-p2-0"><source src="audio/04-contexto.mp3" type="audio/mpeg"></audio>
+  </div>
+  <div class="item-card">
+    <div class="item-main">
+      <div class="play-col"><button class="pbtn" onclick="togglePlay('p2-1')"><svg viewBox="0 0 24 24" id="ico-p2-1"><path d="M8 5v14l11-7z"/></svg></button></div>
+      <div class="info-col">
+        <div class="a-title">Um Debate Internacional</div>
+        <div class="prog-row"><div class="prog-track" onclick="seekTrack(event,'p2-1')"><div class="prog-fill" id="pf-p2-1"></div></div><span class="prog-time" id="pt-p2-1">0:00</span></div>
+      </div>
+    </div>
+    <audio id="au-p2-1"><source src="audio/05-debate.mp3" type="audio/mpeg"></audio>
+  </div>
+  <div class="item-card">
+    <div class="item-main">
+      <div class="play-col"><button class="pbtn" onclick="togglePlay('p2-2')"><svg viewBox="0 0 24 24" id="ico-p2-2"><path d="M8 5v14l11-7z"/></svg></button></div>
+      <div class="info-col">
+        <div class="a-title">Da Ideia ao Projeto</div>
+        <div class="prog-row"><div class="prog-track" onclick="seekTrack(event,'p2-2')"><div class="prog-fill" id="pf-p2-2"></div></div><span class="prog-time" id="pt-p2-2">0:00</span></div>
+      </div>
+    </div>
+    <audio id="au-p2-2"><source src="audio/06-ideia-projeto.mp3" type="audio/mpeg"></audio>
+  </div>
+  <div class="item-card">
+    <div class="item-main">
+      <div class="play-col"><button class="pbtn" onclick="togglePlay('p2-3')"><svg viewBox="0 0 24 24" id="ico-p2-3"><path d="M8 5v14l11-7z"/></svg></button></div>
+      <div class="info-col">
+        <div class="a-title">Diller Scofidio + Renfro</div>
+        <div class="prog-row"><div class="prog-track" onclick="seekTrack(event,'p2-3')"><div class="prog-fill" id="pf-p2-3"></div></div><span class="prog-time" id="pt-p2-3">0:00</span></div>
+      </div>
+    </div>
+    <audio id="au-p2-3"><source src="audio/07-dsr.mp3" type="audio/mpeg"></audio>
+  </div>
+</div>
+<!-- PG3 -->
+<div class="page" id="pg-3">
+  <div class="page-hero">
+    <img src="https://exposicao-mis.github.io/mis-copa/images/dsr-calcada.jpg" alt="">
+    <div class="page-hero-overlay"><div class="page-hero-title">O Projeto</div></div>
+  </div>
+  <div class="item-card">
+    <div class="item-main">
+      <div class="play-col"><button class="pbtn" onclick="togglePlay('p3-0')"><svg viewBox="0 0 24 24" id="ico-p3-0"><path d="M8 5v14l11-7z"/></svg></button></div>
+      <div class="info-col">
+        <div class="a-title">Partido do Projeto: o Boulevard Vertical</div>
+        <div class="prog-row"><div class="prog-track" onclick="seekTrack(event,'p3-0')"><div class="prog-fill" id="pf-p3-0"></div></div><span class="prog-time" id="pt-p3-0">0:00</span></div>
+      </div>
+    </div>
+    <audio id="au-p3-0"><source src="audio/08-boulevard.mp3" type="audio/mpeg"></audio>
+  </div>
+  <div class="item-card">
+    <div class="item-main">
+      <div class="play-col"><button class="pbtn" onclick="togglePlay('p3-1')"><svg viewBox="0 0 24 24" id="ico-p3-1"><path d="M8 5v14l11-7z"/></svg></button></div>
+      <div class="info-col">
+        <div class="a-title">Curadoria da Paisagem</div>
+        <div class="prog-row"><div class="prog-track" onclick="seekTrack(event,'p3-1')"><div class="prog-fill" id="pf-p3-1"></div></div><span class="prog-time" id="pt-p3-1">0:00</span></div>
+      </div>
+    </div>
+    <audio id="au-p3-1"><source src="audio/09-paisagem.mp3" type="audio/mpeg"></audio>
+  </div>
+  <div class="item-card">
+    <div class="item-main">
+      <div class="play-col"><button class="pbtn" onclick="togglePlay('p3-2')"><svg viewBox="0 0 24 24" id="ico-p3-2"><path d="M8 5v14l11-7z"/></svg></button></div>
+      <div class="info-col">
+        <div class="a-title">Claro-Escuro: o Protagonismo do Contraste</div>
+        <div class="prog-row"><div class="prog-track" onclick="seekTrack(event,'p3-2')"><div class="prog-fill" id="pf-p3-2"></div></div><span class="prog-time" id="pt-p3-2">0:00</span></div>
+      </div>
+    </div>
+    <audio id="au-p3-2"><source src="audio/10-claro-escuro.mp3" type="audio/mpeg"></audio>
+  </div>
+</div>
+<!-- PG4 -->
+<div class="page" id="pg-4">
+  <div class="page-hero">
+    <img src="https://exposicao-mis.github.io/mis-copa/images/burle-marx.jpg" alt="">
+    <div class="page-hero-overlay"><div class="page-hero-title">A Concepção</div></div>
+  </div>
+  <div class="item-card">
+    <div class="item-main">
+      <div class="play-col"><button class="pbtn" onclick="togglePlay('p4-0')"><svg viewBox="0 0 24 24" id="ico-p4-0"><path d="M8 5v14l11-7z"/></svg></button></div>
+      <div class="info-col">
+        <div class="a-title">Integração das Equipes: Arquitetura, Curadoria, Museografia e Comunicação Visual</div>
+        <div class="prog-row"><div class="prog-track" onclick="seekTrack(event,'p4-0')"><div class="prog-fill" id="pf-p4-0"></div></div><span class="prog-time" id="pt-p4-0">0:00</span></div>
+      </div>
+    </div>
+    <audio id="au-p4-0"><source src="audio/11-equipes.mp3" type="audio/mpeg"></audio>
+  </div>
+  <div class="item-card">
+    <div class="item-main">
+      <div class="play-col"><button class="pbtn" onclick="togglePlay('p4-1')"><svg viewBox="0 0 24 24" id="ico-p4-1"><path d="M8 5v14l11-7z"/></svg></button></div>
+      <div class="info-col">
+        <div class="a-title">Articulação no Espaço</div>
+        <div class="prog-row"><div class="prog-track" onclick="seekTrack(event,'p4-1')"><div class="prog-fill" id="pf-p4-1"></div></div><span class="prog-time" id="pt-p4-1">0:00</span></div>
+      </div>
+    </div>
+    <audio id="au-p4-1"><source src="audio/12-articulacao.mp3" type="audio/mpeg"></audio>
+  </div>
+</div>
+<!-- PG5 -->
+<div class="page" id="pg-5">
+  <div class="page-hero no-img">
+    <div class="page-hero-overlay"><div class="page-hero-title">O Museu</div></div>
+  </div>
+  <div class="sec-label">Núcleos Expositivos no Novo MIS</div>
+  <div class="item-card">
+    <div class="item-main">
+      <div class="play-col"><button class="pbtn" onclick="togglePlay('p5-0')"><svg viewBox="0 0 24 24" id="ico-p5-0"><path d="M8 5v14l11-7z"/></svg></button></div>
+      <div class="info-col">
+        <div class="a-title">Baixo Atlântica — Térreo e Mezanino</div>
+        <div class="prog-row"><div class="prog-track" onclick="seekTrack(event,'p5-0')"><div class="prog-fill" id="pf-p5-0"></div></div><span class="prog-time" id="pt-p5-0">0:00</span></div>
+      </div>
+    </div>
+    <audio id="au-p5-0"><source src="audio/13-baixo-atlantica.mp3" type="audio/mpeg"></audio>
+  </div>
+  <div class="item-card">
+    <div class="item-main">
+      <div class="play-col"><button class="pbtn" onclick="togglePlay('p5-1')"><svg viewBox="0 0 24 24" id="ico-p5-1"><path d="M8 5v14l11-7z"/></svg></button></div>
+      <div class="info-col">
+        <div class="a-title">Espírito Carioca — Salões do Humor Carioca, Rio 40 Graus e Salve o Carnaval</div>
+        <div class="prog-row"><div class="prog-track" onclick="seekTrack(event,'p5-1')"><div class="prog-fill" id="pf-p5-1"></div></div><span class="prog-time" id="pt-p5-1">0:00</span></div>
+      </div>
+    </div>
+    <audio id="au-p5-1"><source src="audio/14-espirito-carioca.mp3" type="audio/mpeg"></audio>
+  </div>
+  <div class="item-card">
+    <div class="item-main">
+      <div class="play-col"><button class="pbtn" onclick="togglePlay('p5-2')"><svg viewBox="0 0 24 24" id="ico-p5-2"><path d="M8 5v14l11-7z"/></svg></button></div>
+      <div class="info-col">
+        <div class="a-title">Doce Balanço — A Banda, Meu Coração, Sala Almirante, No Ar e Rádio Nacional</div>
+        <div class="prog-row"><div class="prog-track" onclick="seekTrack(event,'p5-2')"><div class="prog-fill" id="pf-p5-2"></div></div><span class="prog-time" id="pt-p5-2">0:00</span></div>
+      </div>
+    </div>
+    <audio id="au-p5-2"><source src="audio/15-doce-balanco.mp3" type="audio/mpeg"></audio>
+  </div>
+  <div class="item-card">
+    <div class="item-main">
+      <div class="play-col"><button class="pbtn" onclick="togglePlay('p5-3')"><svg viewBox="0 0 24 24" id="ico-p5-3"><path d="M8 5v14l11-7z"/></svg></button></div>
+      <div class="info-col">
+        <div class="a-title">Alegres Trópicos — Enquanto Houver Brasil, Carmen a Cantora, Carmen o Ícone, A Tevê</div>
+        <div class="prog-row"><div class="prog-track" onclick="seekTrack(event,'p5-3')"><div class="prog-fill" id="pf-p5-3"></div></div><span class="prog-time" id="pt-p5-3">0:00</span></div>
+      </div>
+    </div>
+    <audio id="au-p5-3"><source src="audio/16-alegres-tropicos.mp3" type="audio/mpeg"></audio>
+  </div>
+  <div class="item-card">
+    <div class="item-main">
+      <div class="play-col"><button class="pbtn" onclick="togglePlay('p5-4')"><svg viewBox="0 0 24 24" id="ico-p5-4"><path d="M8 5v14l11-7z"/></svg></button></div>
+      <div class="info-col">
+        <div class="a-title">É Sal, É Sol, É Sul — Cidade em Construção, Rio no Cinema</div>
+        <div class="prog-row"><div class="prog-track" onclick="seekTrack(event,'p5-4')"><div class="prog-fill" id="pf-p5-4"></div></div><span class="prog-time" id="pt-p5-4">0:00</span></div>
+      </div>
+    </div>
+    <audio id="au-p5-4"><source src="audio/17-sal-sol-sul.mp3" type="audio/mpeg"></audio>
+  </div>
+  <div class="item-card">
+    <div class="item-main">
+      <div class="play-col"><button class="pbtn" onclick="togglePlay('p5-5')"><svg viewBox="0 0 24 24" id="ico-p5-5"><path d="M8 5v14l11-7z"/></svg></button></div>
+      <div class="info-col">
+        <div class="a-title">Terraço e Jardim — Cinema ao Ar Livre</div>
+        <div class="prog-row"><div class="prog-track" onclick="seekTrack(event,'p5-5')"><div class="prog-fill" id="pf-p5-5"></div></div><span class="prog-time" id="pt-p5-5">0:00</span></div>
+      </div>
+    </div>
+    <audio id="au-p5-5"><source src="audio/18-terraco.mp3" type="audio/mpeg"></audio>
+  </div>
+  <div class="item-card">
+    <div class="item-main">
+      <div class="play-col"><button class="pbtn" onclick="togglePlay('p5-6')"><svg viewBox="0 0 24 24" id="ico-p5-6"><path d="M8 5v14l11-7z"/></svg></button></div>
+      <div class="info-col">
+        <div class="a-title">Noites Cariocas — Boate, Hall da Fama, Auditório</div>
+        <div class="prog-row"><div class="prog-track" onclick="seekTrack(event,'p5-6')"><div class="prog-fill" id="pf-p5-6"></div></div><span class="prog-time" id="pt-p5-6">0:00</span></div>
+      </div>
+    </div>
+    <audio id="au-p5-6"><source src="audio/19-noites-cariocas.mp3" type="audio/mpeg"></audio>
+  </div>
+</div>
+<!-- PG6 -->
+<div class="page" id="pg-6">
+  <div class="page-hero">
+    <img src="https://exposicao-mis.github.io/mis-copa/images/carmen.jpg" alt="">
+    <div class="page-hero-overlay"><div class="page-hero-title">Os Desafios da Construção</div></div>
+  </div>
+  <div class="v-item"><div class="v-play"><div class="vid-icon"><svg viewBox="0 0 24 24"><path d="M17 10.5V7a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-3.5l4 4v-11l-4 4z"/></svg></div></div><div class="v-content"><div class="v-title">A Conquista do Subsolo</div></div></div>
+  <div class="v-item"><div class="v-play"><div class="vid-icon"><svg viewBox="0 0 24 24"><path d="M17 10.5V7a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-3.5l4 4v-11l-4 4z"/></svg></div></div><div class="v-content"><div class="v-title">Em Busca do Concreto Perfeito</div></div></div>
+  <div class="v-item"><div class="v-play"><div class="vid-icon"><svg viewBox="0 0 24 24"><path d="M17 10.5V7a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-3.5l4 4v-11l-4 4z"/></svg></div></div><div class="v-content"><div class="v-title">Paleta Conceitual Preto e Branco</div></div></div>
+  <div class="v-item"><div class="v-play"><div class="vid-icon"><svg viewBox="0 0 24 24"><path d="M17 10.5V7a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-3.5l4 4v-11l-4 4z"/></svg></div></div><div class="v-content"><div class="v-title">Cobogó e a Curadoria da Paisagem</div></div></div>
+  <div class="v-item"><div class="v-play"><div class="vid-icon"><svg viewBox="0 0 24 24"><path d="M17 10.5V7a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-3.5l4 4v-11l-4 4z"/></svg></div></div><div class="v-content"><div class="v-title">Fachada Carmen Miranda: Olhos e Boca do Museu</div></div></div>
+  <div class="v-item"><div class="v-play"><div class="vid-icon"><svg viewBox="0 0 24 24"><path d="M17 10.5V7a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-3.5l4 4v-11l-4 4z"/></svg></div></div><div class="v-content"><div class="v-title">Painel Cineteatro: Escultura do Som</div></div></div>
+  <div class="v-item"><div class="v-play"><div class="vid-icon"><svg viewBox="0 0 24 24"><path d="M17 10.5V7a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-3.5l4 4v-11l-4 4z"/></svg></div></div><div class="v-content"><div class="v-title">Esquadrias: Cocriação sob Medida</div></div></div>
+  <div class="v-item"><div class="v-play"><div class="vid-icon"><svg viewBox="0 0 24 24"><path d="M17 10.5V7a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-3.5l4 4v-11l-4 4z"/></svg></div></div><div class="v-content"><div class="v-title">Luminotécnica: a Arquitetura da Luz</div></div></div>
+  <div class="v-item"><div class="v-play"><div class="vid-icon"><svg viewBox="0 0 24 24"><path d="M17 10.5V7a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-3.5l4 4v-11l-4 4z"/></svg></div></div><div class="v-content"><div class="v-title">Uma História Construída a Muitas Mãos</div></div></div>
+</div>
+</div><!-- /pages-wrap -->
+
+<footer>
+  <div class="ft-brand">MIS<span>Museu da Imagem e do Som</span></div>
+  <div class="ft-info">Rio de Janeiro</div>
+</footer>
+
+<script>
+let cur = 0;
+const TOTAL = 7;
+
+function goTo(n) {
+  if (n < 0 || n >= TOTAL) return;
+  stopAll();
+  document.getElementById('pg-' + cur).classList.remove('active');
+  document.querySelectorAll('.pn-dot')[cur].classList.remove('active');
+  cur = n;
+  document.getElementById('pg-' + cur).classList.add('active');
+  document.querySelectorAll('.pn-dot')[cur].classList.add('active');
+  document.getElementById('btn-prev').disabled = cur === 0;
+  document.getElementById('btn-next').disabled = cur === TOTAL - 1;
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+const timers = {};
+const PAUSE = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
+const PLAY  = '<path d="M8 5v14l11-7z"/>';
+
+function fmt(s) {
+  if (!s || isNaN(s)) return '0:00';
+  return `${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,'0')}`;
+}
+function stopAll() {
+  document.querySelectorAll('audio').forEach(a => {
+    if (!a.paused) {
+      const id = a.id.replace('au-','');
+      a.pause(); clearInterval(timers[id]);
+      const ico = document.getElementById('ico-' + id);
+      const btn = document.querySelector(`button[onclick="togglePlay('${id}')"]`);
+      if (ico) ico.innerHTML = PLAY;
+      if (btn) { btn.classList.remove('playing'); }
+    }
+  });
+}
+function togglePlay(id) {
+  const a    = document.getElementById('au-' + id);
+  const icon = document.getElementById('ico-' + id);
+  const btn  = document.querySelector(`button[onclick="togglePlay('${id}')"]`);
+  const isCap = btn && btn.classList.contains('cbtn');
+  if (a.paused) {
+    stopAll();
+    a.play().catch(() => {});
+    if (icon) icon.innerHTML = isCap
+      ? '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>'
+      : '<path fill="#fff" d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
+    if (btn) btn.classList.add('playing');
+    clearInterval(timers[id]);
+    timers[id] = setInterval(() => {
+      if (a.duration > 0) {
+        const pf = document.getElementById('pf-' + id);
+        const pt = document.getElementById('pt-' + id);
+        if (pf) pf.style.width = (a.currentTime / a.duration * 100) + '%';
+        if (pt) pt.textContent = fmt(a.currentTime);
+      }
+    }, 200);
+    a.onended = () => {
+      clearInterval(timers[id]);
+      if (icon) icon.innerHTML = isCap ? PLAY : PLAY;
+      if (btn) btn.classList.remove('playing');
+      const pf = document.getElementById('pf-' + id);
+      const pt = document.getElementById('pt-' + id);
+      if (pf) pf.style.width = '0%';
+      if (pt) pt.textContent = '0:00';
+    };
+  } else {
+    a.pause(); clearInterval(timers[id]);
+    if (icon) icon.innerHTML = PLAY;
+    if (btn) btn.classList.remove('playing');
+  }
+}
+function seekTrack(e, id) {
+  const a = document.getElementById('au-' + id);
+  if (!a.duration) return;
+  const r = e.currentTarget.getBoundingClientRect();
+  a.currentTime = ((e.clientX - r.left) / r.width) * a.duration;
+}
+</script>
+</body>
+</html>

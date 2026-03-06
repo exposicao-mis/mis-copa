@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MIS — Arquitetura em Cena</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  html, body { height:100%; }
+  body {
+    background:#1a1714;
+    font-family:'DM Sans', sans-serif;
+    display:flex; flex-direction:column;
+    align-items:center; justify-content:center;
+    min-height:100vh;
+    overflow:hidden;
+  }
+
+  /* fundo com foto carnaval */
+  .bg {
+    position:fixed; inset:0; z-index:0;
+    background: url('https://exposicao-mis.github.io/mis-copa/images/carnaval.jpg') center/cover no-repeat;
+    filter: grayscale(100%) brightness(.35);
+  }
+
+  .wrap {
+    position:relative; z-index:1;
+    display:flex; flex-direction:column;
+    align-items:center;
+    padding:40px 32px;
+    width:100%; max-width:400px;
+  }
+
+  /* Logo */
+  .logo {
+    width:140px; margin-bottom:36px;
+    filter: brightness(0) invert(1);
+    opacity:.9;
+  }
+
+  /* Título exposição */
+  .expo-label {
+    font-size:9px; font-weight:700;
+    letter-spacing:.28em; text-transform:uppercase;
+    color:rgba(255,255,255,.45);
+    margin-bottom:8px;
+    text-align:center;
+  }
+  .expo-title {
+    font-family:'Bebas Neue', sans-serif;
+    font-size:clamp(28px, 8vw, 44px);
+    letter-spacing:.04em;
+    color:#c8005a;
+    text-align:center;
+    line-height:1;
+    margin-bottom:48px;
+  }
+
+  /* Botões de idioma */
+  .lang-label {
+    font-size:9px; font-weight:700;
+    letter-spacing:.22em; text-transform:uppercase;
+    color:rgba(255,255,255,.35);
+    margin-bottom:16px;
+    text-align:center;
+  }
+  .lang-buttons {
+    display:flex; gap:12px;
+    width:100%;
+  }
+  .lang-btn {
+    flex:1;
+    display:flex; flex-direction:column;
+    align-items:center; justify-content:center;
+    gap:6px;
+    padding:20px 12px;
+    background:rgba(255,255,255,.07);
+    border:1px solid rgba(255,255,255,.15);
+    border-radius:8px;
+    text-decoration:none;
+    transition:background .2s, border-color .2s, transform .15s;
+    cursor:pointer;
+  }
+  .lang-btn:hover {
+    background:rgba(200,0,90,.25);
+    border-color:#c8005a;
+    transform:translateY(-2px);
+  }
+  .lang-btn:active { transform:scale(.97); }
+  .lang-code {
+    font-family:'Bebas Neue', sans-serif;
+    font-size:32px; letter-spacing:.08em;
+    color:#fff;
+    line-height:1;
+  }
+  .lang-name {
+    font-size:9px; font-weight:400;
+    letter-spacing:.15em; text-transform:uppercase;
+    color:rgba(255,255,255,.5);
+  }
+  .lang-btn:hover .lang-code { color:#fff; }
+  .lang-btn:hover .lang-name { color:rgba(255,255,255,.8); }
+
+  /* Crédito */
+  .credit {
+    position:fixed; bottom:20px;
+    font-size:9px; font-weight:300;
+    letter-spacing:.18em; text-transform:uppercase;
+    color:rgba(255,255,255,.25);
+    text-align:center;
+  }
+</style>
+</head>
+<body>
+
+<div class="bg"></div>
+
+<div class="wrap">
+  <img class="logo" src="https://exposicao-mis.github.io/mis-copa/images/mis-logo.png" alt="MIS">
+
+  <div class="expo-label">Guia de Acessibilidade</div>
+  <div class="expo-title">Arquitetura em Cena</div>
+
+  <div class="lang-label">Selecione o idioma · Choose your language · Elige el idioma</div>
+
+  <div class="lang-buttons">
+    <a class="lang-btn" href="mis-expo-pt.html">
+      <span class="lang-code">PT</span>
+      <span class="lang-name">Português</span>
+    </a>
+    <a class="lang-btn" href="mis-expo-en.html">
+      <span class="lang-code">EN</span>
+      <span class="lang-name">English</span>
+    </a>
+    <a class="lang-btn" href="mis-expo-es.html">
+      <span class="lang-code">ES</span>
+      <span class="lang-name">Español</span>
+    </a>
+  </div>
+</div>
+
+<div class="credit">Museu da Imagem e do Som · Rio de Janeiro</div>
+
+</body>
+</html>
