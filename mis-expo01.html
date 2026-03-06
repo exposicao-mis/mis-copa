@@ -163,6 +163,105 @@
   .prog-fill { position:absolute; top:0; left:0; height:100%; background:var(--magenta); border-radius:2px; width:0%; pointer-events:none; transition:width .12s linear; }
   .prog-time { font-size:10px; color:var(--ink2); font-variant-numeric:tabular-nums; white-space:nowrap; min-width:28px; text-align:right; }
 
+  /* COVER — página principal estilo PDF */
+  .cover {
+    position: relative;
+    width: 100%;
+    height: calc(100vh - var(--topbar) - var(--nav));
+    min-height: 400px;
+    overflow: hidden;
+    display: flex;
+  }
+  .cover-img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center 30%;
+    filter: grayscale(100%) brightness(.75);
+    display: block;
+  }
+
+  /* frase magenta — canto inferior esquerdo */
+  .cover-quote {
+    position: absolute;
+    bottom: 28px; left: 20px;
+    z-index: 2;
+  }
+  .cq-text {
+    font-family: var(--font-d);
+    font-size: clamp(32px, 7vw, 72px);
+    line-height: .92;
+    color: var(--magenta);
+    letter-spacing: .02em;
+    text-shadow: 0 2px 12px rgba(0,0,0,.4);
+  }
+  .cq-attr {
+    margin-top: 8px;
+    font-size: 10px; font-weight: 300;
+    letter-spacing: .18em; text-transform: uppercase;
+    color: rgba(255,255,255,.7);
+  }
+
+  /* logo MIS — canto superior direito da foto */
+  .cover-brand {
+    position: absolute;
+    top: 18px; right: 130px; /* fica à esquerda do painel */
+    z-index: 2;
+    display: flex; align-items: flex-start; gap: 8px;
+  }
+  .cover-logo {
+    height: 36px; width: auto;
+    filter: brightness(0) invert(1);
+  }
+  .cover-brand-text {
+    font-family: var(--font-d);
+    font-size: 11px; line-height: 1.15;
+    letter-spacing: .08em;
+    color: #fff;
+  }
+
+  /* painel magenta — faixa vertical direita */
+  .cover-panel {
+    position: absolute;
+    top: 0; right: 0; bottom: 0;
+    width: clamp(100px, 18vw, 160px);
+    background: var(--magenta);
+    z-index: 3;
+    display: flex; flex-direction: column;
+    justify-content: center;
+    padding: 24px 16px;
+    gap: 16px;
+  }
+  .cover-panel-title {
+    font-family: var(--font-d);
+    font-size: clamp(20px, 3.5vw, 36px);
+    line-height: .92; letter-spacing: .03em;
+    color: #fff;
+  }
+  .cover-panel-sub {
+    font-size: 9px; font-weight: 700;
+    letter-spacing: .12em; text-transform: uppercase;
+    color: rgba(255,255,255,.75);
+    line-height: 1.5;
+  }
+  .cover-panel-player {
+    display: flex; flex-direction: column; gap: 10px;
+    margin-top: 8px;
+  }
+  .cover-panel-player .pbtn {
+    background: rgba(255,255,255,.2);
+    border: 1px solid rgba(255,255,255,.4);
+  }
+  .cover-panel-player .pbtn:hover { background: rgba(255,255,255,.35); }
+  .cover-panel-prog { width: 100%; }
+  .cover-panel-prog .prog-track { background: rgba(255,255,255,.3); }
+  .cover-panel-prog .prog-fill { background: #fff; }
+
+  @media(max-width:520px){
+    .cover-brand { right: 90px; }
+    .cover-panel { width: 88px; padding: 16px 10px; }
+    .cq-text { font-size: clamp(24px, 9vw, 44px); }
+  }
+
   audio { display:none; }
 
   /* VIDEO ITEM */
@@ -199,7 +298,7 @@
 <!-- TOPBAR -->
 <div class="topbar">
   <a class="tb-brand" href="index.html">
-    <span class="tb-mis">MIS</span>
+    <img src="https://exposicao-mis.github.io/mis-copa/images/mis-logo.jpg" alt="MIS" style="height:32px;width:auto;">
     <span class="tb-sub">Arquitetura em Cena</span>
   </a>
   <div class="tb-langs">
@@ -228,23 +327,26 @@
 
 <!-- ══ PÁGINA PRINCIPAL ══ -->
 <div class="page active" id="pg-0">
-  <div class="page-hero no-img">
-    <div class="page-hero-overlay">
-      <span class="page-hero-eyebrow">Exposição · Rio de Janeiro · 2026</span>
-      <div class="page-hero-title">Arquitetura em Cena</div>
+  <div class="page-hero no-img" style="height:calc(100vh - var(--topbar) - var(--nav)); min-height:400px;">
+    <img src="https://exposicao-mis.github.io/mis-copa/images/carnaval.jpg" alt="Carnaval" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 30%;filter:grayscale(100%) brightness(.45);display:block;">
+    <div class="page-hero-overlay" style="justify-content:space-between; padding:24px 28px 32px;">
+      <!-- logo topo esquerdo -->
+      <img src="https://exposicao-mis.github.io/mis-copa/images/mis-logo.jpg" alt="MIS" style="height:40px;width:auto;filter:brightness(0) invert(1);align-self:flex-start;">
+      <!-- frase + player no fundo -->
+      <div>
+        <div style="font-family:var(--font-d);font-size:clamp(36px,8vw,80px);line-height:.9;color:var(--magenta);letter-spacing:.02em;text-shadow:0 2px 16px rgba(0,0,0,.5);margin-bottom:12px;">A SORRIR<br>EU PRETENDO<br>LEVAR A VIDA</div>
+        <div style="font-size:10px;font-weight:300;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.65);margin-bottom:24px;">Cartola em "O Sol Nascerá"</div>
+        <!-- player -->
+        <div style="display:flex;align-items:center;gap:12px;">
+          <button class="pbtn" onclick="togglePlay('p0-0')"><svg viewBox="0 0 24 24" id="ico-p0-0"><path d="M8 5v14l11-7z"/></svg></button>
+          <div style="flex:1;">
+            <div style="font-family:var(--font-d);font-size:13px;color:rgba(255,255,255,.8);margin-bottom:6px;letter-spacing:.04em;">Arquitetura em Cena</div>
+            <div class="prog-row"><div class="prog-track" style="background:rgba(255,255,255,.3);" onclick="seekTrack(event,'p0-0')"><div class="prog-fill" id="pf-p0-0" style="background:#fff;"></div></div><span class="prog-time" id="pt-p0-0" style="color:rgba(255,255,255,.6);">0:00</span></div>
+          </div>
+        </div>
+        <audio id="au-p0-0"><source src="audio/00-abertura.mp3" type="audio/mpeg"></audio>
+      </div>
     </div>
-  </div>
-  <div class="quote-block">
-    <div class="q-text">A SORRIR EU PRETENDO LEVAR A VIDA</div>
-    <div class="q-attr">Cartola em "O Sol Nascerá"</div>
-  </div>
-  <div class="a-item" data-id="p0-0">
-    <div class="a-play"><button class="pbtn" onclick="togglePlay('p0-0')"><svg viewBox="0 0 24 24" id="ico-p0-0"><path d="M8 5v14l11-7z"/></svg></button></div>
-    <div class="a-content">
-      <div class="a-title">Arquitetura em Cena — O MIS Copa antes da Imagem e do Som</div>
-      <div class="prog-row"><div class="prog-track" onclick="seekTrack(event,'p0-0')"><div class="prog-fill" id="pf-p0-0"></div></div><span class="prog-time" id="pt-p0-0">0:00</span></div>
-    </div>
-    <audio id="au-p0-0"><source src="audio/00-abertura.mp3" type="audio/mpeg"></audio>
   </div>
 </div>
 
@@ -253,7 +355,7 @@
   <div class="page-hero">
     <img src="https://exposicao-mis.github.io/mis-copa/images/mis-render.jpg" alt="MIS">
     <div class="page-hero-overlay">
-      <span class="page-hero-eyebrow">Página 1</span>
+      
       <div class="page-hero-title">O Que É o MIS</div>
     </div>
   </div>
@@ -288,7 +390,7 @@
   <div class="page-hero">
     <img src="https://exposicao-mis.github.io/mis-copa/images/dsr-calcada.jpg" alt="DS+R">
     <div class="page-hero-overlay">
-      <span class="page-hero-eyebrow">Página 2</span>
+      
       <div class="page-hero-title">O Concurso</div>
     </div>
   </div>
@@ -331,7 +433,7 @@
   <div class="page-hero">
     <img src="https://exposicao-mis.github.io/mis-copa/images/burle-marx.jpg" alt="Burle Marx">
     <div class="page-hero-overlay">
-      <span class="page-hero-eyebrow">Página 3</span>
+      
       <div class="page-hero-title">O Projeto</div>
     </div>
   </div>
@@ -366,7 +468,7 @@
   <div class="page-hero">
     <img src="https://exposicao-mis.github.io/mis-copa/images/mis-render.jpg" alt="MIS">
     <div class="page-hero-overlay">
-      <span class="page-hero-eyebrow">Página 4</span>
+      
       <div class="page-hero-title">A Concepção</div>
     </div>
   </div>
@@ -393,7 +495,7 @@
   <div class="page-hero">
     <img src="https://exposicao-mis.github.io/mis-copa/images/carnaval.jpg" alt="Carnaval">
     <div class="page-hero-overlay">
-      <span class="page-hero-eyebrow">Página 5</span>
+      
       <div class="page-hero-title">O Museu</div>
     </div>
   </div>
@@ -461,7 +563,7 @@
   <div class="page-hero">
     <img src="https://exposicao-mis.github.io/mis-copa/images/lapa.jpg" alt="Lapa">
     <div class="page-hero-overlay">
-      <span class="page-hero-eyebrow">Página 6</span>
+      
       <div class="page-hero-title">Os Desafios da Construção</div>
     </div>
   </div>
@@ -478,7 +580,6 @@
 
 <footer>
   <div class="ft-brand">MIS<span>Museu da Imagem e do Som · Rio de Janeiro</span></div>
-  <div class="ft-info">Exposição: Arquitetura em Cena<br>Curadoria: Ana Paula Pontes e Larissa Graça<br>© 2026</div>
 </footer>
 
 </div><!-- /pages-wrap -->
