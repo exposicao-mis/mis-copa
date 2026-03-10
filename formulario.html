@@ -97,11 +97,22 @@
     overflow: hidden;
   }
 
+  .form-card {
+    overflow: hidden;
+  }
+  .iframe-clip {
+    overflow: hidden;
+    /* altura da janela visível — ajuste se necessário */
+    height: 720px;
+    position: relative;
+  }
   .form-card iframe {
     width: 100%;
-    min-height: 820px;
+    height: 1100px;
     border: none;
     display: block;
+    /* empurra para cima para esconder o header do Google Forms (~60px) */
+    margin-top: -62px;
   }
 
   /* FOOTER */
@@ -158,12 +169,14 @@
 
 <div class="form-wrap">
   <div class="form-card">
+    <div class="iframe-clip">
     <iframe
       src="https://docs.google.com/forms/d/e/1FAIpQLScjGcxYj_JJTVshsz6pcZsWGbSk9VyvlYCJ6C3HKi2-bdVvSA/viewform?embedded=true"
       frameborder="0"
       marginheight="0"
       marginwidth="0"
       title="Formulário MIS">Carregando…</iframe>
+    </div>
   </div>
 </div>
 
