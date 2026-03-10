@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MIS — Formulário</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+<title>MIS — Arquitetura em Cena · Formulário</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
   :root {
@@ -40,9 +40,7 @@
     display: flex; align-items: center; gap: 14px;
     text-decoration: none;
   }
-  .tb-logo {
-    height: 52px; width: auto;
-  }
+  .tb-logo { height: 52px; width: auto; }
   .tb-sub {
     font-size: 9px; font-weight: 700;
     letter-spacing: .2em; text-transform: uppercase;
@@ -77,42 +75,115 @@
     font-size: clamp(26px, 6vw, 40px);
     letter-spacing: .04em; color: #fff;
     line-height: 1;
+    margin-bottom: 8px;
+  }
+  .hero-desc {
+    font-size: 13px; font-weight: 300;
+    color: rgba(255,255,255,.75);
+    max-width: 480px; margin: 0 auto;
+    line-height: 1.6;
   }
 
-  /* FORM WRAP */
+  /* FORM AREA */
   .form-wrap {
     flex: 1;
-    padding: 32px 16px 48px;
+    padding: 32px 16px 56px;
     display: flex;
     flex-direction: column;
     align-items: center;
   }
-
   .form-card {
     background: #fff;
     border-radius: 12px;
     box-shadow: 0 2px 16px rgba(0,0,0,.07);
     width: 100%;
-    max-width: 660px;
-    overflow: hidden;
+    max-width: 580px;
+    padding: 36px 32px 40px;
+    animation: rise .4s ease both;
+  }
+  @keyframes rise {
+    from { opacity:0; transform:translateY(12px); }
+    to   { opacity:1; transform:none; }
   }
 
-  .form-card {
-    overflow: hidden;
+  /* FIELDS */
+  .field {
+    margin-bottom: 24px;
   }
-  .iframe-clip {
-    overflow: hidden;
-    /* altura da janela visível — ajuste se necessário */
-    height: 720px;
-    position: relative;
-  }
-  .form-card iframe {
-    width: 100%;
-    height: 1100px;
-    border: none;
+  .field:last-of-type { margin-bottom: 32px; }
+
+  label {
     display: block;
-    /* empurra para cima para esconder o header do Google Forms (~60px) */
-    margin-top: -62px;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: .14em; text-transform: uppercase;
+    color: var(--ink2);
+    margin-bottom: 8px;
+  }
+  label .req { color: var(--magenta); margin-left: 2px; }
+
+  input[type="text"],
+  textarea {
+    width: 100%;
+    background: #faf8f5;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 12px 14px;
+    font-family: var(--font-s);
+    font-size: 14px; font-weight: 300;
+    color: var(--ink);
+    outline: none;
+    transition: border-color .15s, box-shadow .15s;
+    resize: none;
+    -webkit-appearance: none;
+  }
+  input[type="text"]:focus,
+  textarea:focus {
+    border-color: var(--magenta);
+    box-shadow: 0 0 0 3px rgba(200,0,90,.08);
+    background: #fff;
+  }
+  textarea { min-height: 120px; line-height: 1.6; }
+
+  /* SUBMIT */
+  .btn-submit {
+    width: 100%;
+    background: var(--magenta);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 15px 24px;
+    font-family: var(--font-d);
+    font-size: 18px;
+    letter-spacing: .1em;
+    cursor: pointer;
+    transition: background .15s, transform .1s;
+  }
+  .btn-submit:hover { background: #a8004c; }
+  .btn-submit:active { transform: scale(.98); }
+
+  /* SUCCESS */
+  .success-msg {
+    display: none;
+    text-align: center;
+    padding: 48px 24px;
+  }
+  .success-msg.show { display: block; }
+  .success-icon {
+    width: 56px; height: 56px;
+    background: var(--magenta);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 20px;
+  }
+  .success-icon svg { fill: #fff; width: 28px; height: 28px; }
+  .success-title {
+    font-family: var(--font-d);
+    font-size: 28px; letter-spacing: .06em;
+    color: var(--ink); margin-bottom: 10px;
+  }
+  .success-sub {
+    font-size: 13px; font-weight: 300; color: var(--ink2);
+    line-height: 1.6;
   }
 
   /* FOOTER */
@@ -144,7 +215,7 @@
 
   @media(max-width: 520px) {
     .tb-sub { display: none; }
-    .hero { padding: 24px 16px 20px; }
+    .form-card { padding: 24px 20px 28px; }
     footer { flex-direction: column; align-items: flex-start; }
     .ft-info { text-align: left; }
   }
@@ -163,20 +234,49 @@
 </div>
 
 <div class="hero">
-  <div class="hero-label">Arquitetura em Cena · MIS Copa</div>
-  <div class="hero-title">Formulário</div>
+  <div class="hero-label">MIS Copa · Exposição</div>
+  <div class="hero-title">Sua participação no MIS</div>
+  <div class="hero-desc">Conte-nos sobre o seu envolvimento neste projeto. As informações serão usadas exclusivamente pela equipe da exposição.</div>
 </div>
 
 <div class="form-wrap">
   <div class="form-card">
-    <div class="iframe-clip">
-    <iframe
-      src="https://docs.google.com/forms/d/e/1FAIpQLScjGcxYj_JJTVshsz6pcZsWGbSk9VyvlYCJ6C3HKi2-bdVvSA/viewform?embedded=true"
-      frameborder="0"
-      marginheight="0"
-      marginwidth="0"
-      title="Formulário MIS">Carregando…</iframe>
+
+    <!-- Formulário real -->
+    <form id="misForm" novalidate>
+
+      <div class="field">
+        <label for="f-nome">Nome completo<span class="req">*</span></label>
+        <input type="text" id="f-nome" name="entry.3929110" placeholder="Seu nome" required autocomplete="name">
+      </div>
+
+      <div class="field">
+        <label for="f-empresa">Empresa</label>
+        <input type="text" id="f-empresa" name="entry.1050530241" placeholder="Empresa ou instituição" autocomplete="organization">
+      </div>
+
+      <div class="field">
+        <label for="f-papel">Papel ou função no projeto</label>
+        <textarea id="f-papel" name="entry.1623135801" placeholder="Ex: arquiteto, curador, museógrafo…"></textarea>
+      </div>
+
+      <div class="field">
+        <label for="f-historia">Sua história no MIS<span class="req">*</span></label>
+        <textarea id="f-historia" name="entry.237517155" placeholder="Conte-nos uma breve história da sua participação no MIS" style="min-height:150px;" required></textarea>
+      </div>
+
+      <button type="submit" class="btn-submit">ENVIAR</button>
+    </form>
+
+    <!-- Mensagem de sucesso -->
+    <div class="success-msg" id="successMsg">
+      <div class="success-icon">
+        <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+      </div>
+      <div class="success-title">Enviado!</div>
+      <div class="success-sub">Obrigado pela sua participação.<br>Suas informações foram registradas com sucesso.</div>
     </div>
+
   </div>
 </div>
 
@@ -184,6 +284,54 @@
   <div class="ft-brand">MIS<span>Museu da Imagem e do Som</span></div>
   <div class="ft-info">Arquitetura em Cena<br>Rio de Janeiro · 2026</div>
 </footer>
+
+<script>
+const FORM_ACTION = 'https://docs.google.com/forms/d/e/1FAIpQLScjGcxYj_JJTVshsz6pcZsWGbSk9VyvlYCJ6C3HKi2-bdVvSA/formResponse';
+
+document.getElementById('misForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+
+  const nome    = document.getElementById('f-nome').value.trim();
+  const historia = document.getElementById('f-historia').value.trim();
+
+  if (!nome) {
+    document.getElementById('f-nome').focus();
+    document.getElementById('f-nome').style.borderColor = '#c8005a';
+    return;
+  }
+  if (!historia) {
+    document.getElementById('f-historia').focus();
+    document.getElementById('f-historia').style.borderColor = '#c8005a';
+    return;
+  }
+
+  const data = new FormData(this);
+
+  try {
+    // Google Forms não aceita CORS — usa fetch no-cors (não dá para ler a resposta, mas envia)
+    await fetch(FORM_ACTION, {
+      method: 'POST',
+      mode: 'no-cors',
+      body: data
+    });
+  } catch(err) {
+    // no-cors sempre gera erro de opaque response, ignoramos
+  }
+
+  // Mostrar sucesso
+  document.getElementById('misForm').style.display = 'none';
+  const msg = document.getElementById('successMsg');
+  msg.classList.add('show');
+  msg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+});
+
+// Reset cor ao digitar
+['f-nome','f-historia'].forEach(id => {
+  document.getElementById(id).addEventListener('input', function() {
+    this.style.borderColor = '';
+  });
+});
+</script>
 
 </body>
 </html>
