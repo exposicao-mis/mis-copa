@@ -14,7 +14,7 @@
     display:flex; flex-direction:column;
     align-items:center; justify-content:center;
     min-height:100vh;
-    overflow:hidden;
+    overflow-x:hidden;
   }
 
   /* fundo com foto carnaval */
@@ -110,6 +110,14 @@
     color:rgba(255,255,255,.25);
     text-align:center;
   }
+  /* Barra patrocinadores */
+  .barra-wrap {
+    position:relative; z-index:1;
+    width:100%; background:#fff;
+    padding:16px 8px 12px;
+    margin-top:24px;
+  }
+  .barra-wrap img { display:block; width:100%; height:auto; }
 </style>
 </head>
 <body>
@@ -138,6 +146,10 @@
       <span class="lang-name">Español</span>
     </a>
   </div>
+</div>
+
+<div class="barra-wrap">
+  <img src="https://exposicao-mis.github.io/mis-copa/images/Barra-logos-MIS_2026_2-linhas%20colorida.png" alt="Patrocinadores">
 </div>
 
 <div class="credit">Museu da Imagem e do Som · Rio de Janeiro</div>
