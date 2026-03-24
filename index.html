@@ -11,128 +11,94 @@
   body {
     background:#1a1714;
     font-family:'DM Sans', sans-serif;
+    min-height:100vh;
     display:flex; flex-direction:column;
     align-items:center; justify-content:center;
-    min-height:100vh;
     overflow-x:hidden;
   }
-
-  /* fundo com foto carnaval */
   .bg {
     position:fixed; inset:0; z-index:0;
     background: url('https://exposicao-mis.github.io/mis-copa/images/carnaval.jpg') center/cover no-repeat;
     filter: grayscale(100%) brightness(.35);
   }
-
-  .wrap {
+  .container {
     position:relative; z-index:1;
+    width:100%; max-width:420px;
     display:flex; flex-direction:column;
     align-items:center;
-    padding:24px 24px 8px;
-    width:100%; max-width:400px;
+    padding:clamp(16px,4vh,36px) 24px 0;
   }
-
-  /* Logo */
   .logo {
-    width:110px; margin-bottom:20px;
+    width:clamp(80px,22vw,120px);
+    margin-bottom:clamp(12px,2.5vh,24px);
     filter: brightness(0) invert(1);
     opacity:.9;
   }
-
-  /* Título exposição */
   .expo-label {
     font-size:9px; font-weight:700;
     letter-spacing:.28em; text-transform:uppercase;
     color:rgba(255,255,255,.45);
-    margin-bottom:6px;
-    text-align:center;
+    margin-bottom:5px; text-align:center;
   }
   .expo-title {
     font-family:'Bebas Neue', sans-serif;
-    font-size:clamp(24px, 7vw, 40px);
-    letter-spacing:.04em;
-    color:#c8005a;
-    text-align:center;
-    line-height:1;
-    margin-bottom:24px;
+    font-size:clamp(22px,6vw,40px);
+    letter-spacing:.04em; color:#c8005a;
+    text-align:center; line-height:1;
+    margin-bottom:clamp(16px,3vh,28px);
   }
-
-  /* Botões de idioma */
   .lang-label {
     font-size:9px; font-weight:700;
-    letter-spacing:.22em; text-transform:uppercase;
+    letter-spacing:.18em; text-transform:uppercase;
     color:rgba(255,255,255,.35);
-    margin-bottom:10px;
-    text-align:center;
+    margin-bottom:10px; text-align:center;
   }
-  .lang-buttons {
-    display:flex; gap:10px;
-    width:100%;
-  }
+  .lang-buttons { display:flex; gap:10px; width:100%; }
   .lang-btn {
-    flex:1;
-    display:flex; flex-direction:column;
+    flex:1; display:flex; flex-direction:column;
     align-items:center; justify-content:center;
-    gap:4px;
-    padding:14px 12px;
+    gap:4px; padding:clamp(10px,2vh,16px) 12px;
     background:rgba(255,255,255,.07);
     border:1px solid rgba(255,255,255,.15);
-    border-radius:8px;
-    text-decoration:none;
+    border-radius:8px; text-decoration:none;
     transition:background .2s, border-color .2s, transform .15s;
-    cursor:pointer;
   }
-  .lang-btn:hover {
-    background:rgba(200,0,90,.25);
-    border-color:#c8005a;
-    transform:translateY(-2px);
-  }
+  .lang-btn:hover { background:rgba(200,0,90,.25); border-color:#c8005a; transform:translateY(-2px); }
   .lang-btn:active { transform:scale(.97); }
   .lang-code {
     font-family:'Bebas Neue', sans-serif;
-    font-size:28px; letter-spacing:.08em;
-    color:#fff;
-    line-height:1;
+    font-size:clamp(22px,6vw,30px);
+    letter-spacing:.08em; color:#fff; line-height:1;
   }
   .lang-name {
     font-size:9px; font-weight:400;
     letter-spacing:.15em; text-transform:uppercase;
     color:rgba(255,255,255,.5);
   }
-  .lang-btn:hover .lang-code { color:#fff; }
   .lang-btn:hover .lang-name { color:rgba(255,255,255,.8); }
-
-  /* Crédito */
+  .barra-wrap {
+    position:relative; z-index:1;
+    width:100vw; background:#fff;
+    padding:clamp(8px,1.5vh,14px) 8px clamp(6px,1vh,10px);
+    margin-top:clamp(12px,2.5vh,20px);
+  }
+  .barra-wrap img { display:block; width:100%; height:auto; }
   .credit {
-    position:fixed; bottom:12px;
+    position:relative; z-index:1;
     font-size:9px; font-weight:300;
     letter-spacing:.18em; text-transform:uppercase;
     color:rgba(255,255,255,.25);
-    text-align:center;
+    text-align:center; padding:10px 0 14px;
   }
-  /* Barra patrocinadores */
-  .barra-wrap {
-    position:relative; z-index:1;
-    width:100vw;
-    background:#fff;
-    padding:12px 8px 8px;
-    margin-top:16px;
-  }
-  .barra-wrap img { display:block; width:100%; height:auto; }
 </style>
 </head>
 <body>
-
 <div class="bg"></div>
-
-<div class="wrap">
+<div class="container">
   <img class="logo" src="https://exposicao-mis.github.io/mis-copa/images/mis-logo.png" alt="MIS">
-
   <div class="expo-label">Guia de Acessibilidade</div>
   <div class="expo-title">Arquitetura em Cena</div>
-
   <div class="lang-label">Selecione o idioma · Choose your language · Elige el idioma</div>
-
   <div class="lang-buttons">
     <a class="lang-btn" href="mis-expo-pt.html">
       <span class="lang-code">PT</span>
@@ -148,12 +114,9 @@
     </a>
   </div>
 </div>
-
 <div class="barra-wrap">
   <img src="https://exposicao-mis.github.io/mis-copa/images/Barra-logos-MIS_2026_2-linhas%20colorida.png" alt="Patrocinadores">
 </div>
-
 <div class="credit">Museu da Imagem e do Som · Rio de Janeiro</div>
-
 </body>
 </html>
