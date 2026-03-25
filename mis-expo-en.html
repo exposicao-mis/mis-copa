@@ -862,9 +862,20 @@ function togglePlay(id) {
     return;
   }
   stopAll();
-  if (a.readyState === 0) {
+  if (a.readyState < 3) {
     a.load();
-    a.addEventListener('canplay', () => startPlaying(id), { once: true });
+    let played = false;
+    const tryPlay = () => {
+      if (played) return;
+      played = true;
+      a.removeEventListener('canplay', tryPlay);
+      a.removeEventListener('canplaythrough', tryPlay);
+      startPlaying(id);
+    };
+    a.addEventListener('canplay', tryPlay, { once: true });
+    a.addEventListener('canplaythrough', tryPlay, { once: true });
+    // fallback: tenta depois de 800ms mesmo sem evento
+    setTimeout(() => { if (!played) { played = true; startPlaying(id); } }, 800);
   } else {
     startPlaying(id);
   }
