@@ -708,15 +708,96 @@
     <div class="page-hero-overlay"><div class="page-hero-title">Los Desafíos de la Construcción</div></div>
   </div>
 
-  <div class="v-item"><div class="v-play"><div class="vid-icon"><svg viewBox="0 0 24 24"><path d="M17 10.5V7a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-3.5l4 4v-11l-4 4z"/></svg></div></div><div class="v-content"><div class="v-title">La Conquista del Subsuelo</div></div></div>
-  <div class="v-item"><div class="v-play"><div class="vid-icon"><svg viewBox="0 0 24 24"><path d="M17 10.5V7a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-3.5l4 4v-11l-4 4z"/></svg></div></div><div class="v-content"><div class="v-title">En Busca del Hormigón Perfecto</div></div></div>
-  <div class="v-item"><div class="v-play"><div class="vid-icon"><svg viewBox="0 0 24 24"><path d="M17 10.5V7a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-3.5l4 4v-11l-4 4z"/></svg></div></div><div class="v-content"><div class="v-title">Paleta Conceptual Blanco y Negro</div></div></div>
-  <div class="v-item"><div class="v-play"><div class="vid-icon"><svg viewBox="0 0 24 24"><path d="M17 10.5V7a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-3.5l4 4v-11l-4 4z"/></svg></div></div><div class="v-content"><div class="v-title">Cobogó y la Curaduría del Paisaje</div></div></div>
-  <div class="v-item"><div class="v-play"><div class="vid-icon"><svg viewBox="0 0 24 24"><path d="M17 10.5V7a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-3.5l4 4v-11l-4 4z"/></svg></div></div><div class="v-content"><div class="v-title">Fachada Carmen Miranda: Ojos y Boca del Museo</div></div></div>
-  <div class="v-item"><div class="v-play"><div class="vid-icon"><svg viewBox="0 0 24 24"><path d="M17 10.5V7a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-3.5l4 4v-11l-4 4z"/></svg></div></div><div class="v-content"><div class="v-title">Panel Cineteatro: Escultura del Sonido</div></div></div>
-  <div class="v-item"><div class="v-play"><div class="vid-icon"><svg viewBox="0 0 24 24"><path d="M17 10.5V7a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-3.5l4 4v-11l-4 4z"/></svg></div></div><div class="v-content"><div class="v-title">Herrajes: Cocreación a Medida</div></div></div>
-  <div class="v-item"><div class="v-play"><div class="vid-icon"><svg viewBox="0 0 24 24"><path d="M17 10.5V7a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-3.5l4 4v-11l-4 4z"/></svg></div></div><div class="v-content"><div class="v-title">Luminotecnia: la Arquitectura de la Luz</div></div></div>
-  <div class="v-item"><div class="v-play"><div class="vid-icon"><svg viewBox="0 0 24 24"><path d="M17 10.5V7a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-3.5l4 4v-11l-4 4z"/></svg></div></div><div class="v-content"><div class="v-title">Una Historia Construida a Muchas Manos</div></div></div>
+  <div class="item-card">
+    <div class="item-main">
+      <div class="play-col"><button class="pbtn" onclick="togglePlay('p6-0')"><svg viewBox="0 0 24 24" id="ico-p6-0"><path d="M8 5v14l11-7z"/></svg></button></div>
+      <div class="info-col">
+        <div class="a-title">La Conquista del Subsuelo</div>
+        <div class="prog-row"><div class="prog-track" onclick="seekTrack(event,'p6-0')"><div class="prog-fill" id="pf-p6-0"></div></div><span class="prog-time" id="pt-p6-0">0:00</span></div>
+      </div>
+    </div>
+    <audio crossorigin="anonymous" id="au-p6-0"><source src="https://archive.org/download/esp601/esp601.mp3" type="audio/mpeg"></audio>
+  </div>
+  <div class="item-card">
+    <div class="item-main">
+      <div class="play-col"><button class="pbtn" onclick="togglePlay('p6-1')"><svg viewBox="0 0 24 24" id="ico-p6-1"><path d="M8 5v14l11-7z"/></svg></button></div>
+      <div class="info-col">
+        <div class="a-title">En Busca del Concreto Perfecto</div>
+        <div class="prog-row"><div class="prog-track" onclick="seekTrack(event,'p6-1')"><div class="prog-fill" id="pf-p6-1"></div></div><span class="prog-time" id="pt-p6-1">0:00</span></div>
+      </div>
+    </div>
+    <audio crossorigin="anonymous" id="au-p6-1"><source src="https://archive.org/download/esp602/esp602.mp3" type="audio/mpeg"></audio>
+  </div>
+  <div class="item-card">
+    <div class="item-main">
+      <div class="play-col"><button class="pbtn" onclick="togglePlay('p6-2')"><svg viewBox="0 0 24 24" id="ico-p6-2"><path d="M8 5v14l11-7z"/></svg></button></div>
+      <div class="info-col">
+        <div class="a-title">Paleta Conceptual Blanco y Negro</div>
+        <div class="prog-row"><div class="prog-track" onclick="seekTrack(event,'p6-2')"><div class="prog-fill" id="pf-p6-2"></div></div><span class="prog-time" id="pt-p6-2">0:00</span></div>
+      </div>
+    </div>
+    <audio crossorigin="anonymous" id="au-p6-2"><source src="https://archive.org/download/esp603/esp603.mp3" type="audio/mpeg"></audio>
+  </div>
+  <div class="item-card">
+    <div class="item-main">
+      <div class="play-col"><button class="pbtn" onclick="togglePlay('p6-3')"><svg viewBox="0 0 24 24" id="ico-p6-3"><path d="M8 5v14l11-7z"/></svg></button></div>
+      <div class="info-col">
+        <div class="a-title">Cobogó y la Curaduría del Paisaje</div>
+        <div class="prog-row"><div class="prog-track" onclick="seekTrack(event,'p6-3')"><div class="prog-fill" id="pf-p6-3"></div></div><span class="prog-time" id="pt-p6-3">0:00</span></div>
+      </div>
+    </div>
+    <audio crossorigin="anonymous" id="au-p6-3"><source src="https://archive.org/download/esp604/esp604.mp3" type="audio/mpeg"></audio>
+  </div>
+  <div class="item-card">
+    <div class="item-main">
+      <div class="play-col"><button class="pbtn" onclick="togglePlay('p6-4')"><svg viewBox="0 0 24 24" id="ico-p6-4"><path d="M8 5v14l11-7z"/></svg></button></div>
+      <div class="info-col">
+        <div class="a-title">Fachada Carmen Miranda: Ojos y Boca del Museo</div>
+        <div class="prog-row"><div class="prog-track" onclick="seekTrack(event,'p6-4')"><div class="prog-fill" id="pf-p6-4"></div></div><span class="prog-time" id="pt-p6-4">0:00</span></div>
+      </div>
+    </div>
+    <audio crossorigin="anonymous" id="au-p6-4"><source src="https://archive.org/download/esp605/esp605.mp3" type="audio/mpeg"></audio>
+  </div>
+  <div class="item-card">
+    <div class="item-main">
+      <div class="play-col"><button class="pbtn" onclick="togglePlay('p6-5')"><svg viewBox="0 0 24 24" id="ico-p6-5"><path d="M8 5v14l11-7z"/></svg></button></div>
+      <div class="info-col">
+        <div class="a-title">Panel Cineteatro: Escultura del Sonido</div>
+        <div class="prog-row"><div class="prog-track" onclick="seekTrack(event,'p6-5')"><div class="prog-fill" id="pf-p6-5"></div></div><span class="prog-time" id="pt-p6-5">0:00</span></div>
+      </div>
+    </div>
+    <audio crossorigin="anonymous" id="au-p6-5"><source src="https://archive.org/download/esp606/esp606.mp3" type="audio/mpeg"></audio>
+  </div>
+  <div class="item-card">
+    <div class="item-main">
+      <div class="play-col"><button class="pbtn" onclick="togglePlay('p6-6')"><svg viewBox="0 0 24 24" id="ico-p6-6"><path d="M8 5v14l11-7z"/></svg></button></div>
+      <div class="info-col">
+        <div class="a-title">Carpinterías: Cocreación a Medida</div>
+        <div class="prog-row"><div class="prog-track" onclick="seekTrack(event,'p6-6')"><div class="prog-fill" id="pf-p6-6"></div></div><span class="prog-time" id="pt-p6-6">0:00</span></div>
+      </div>
+    </div>
+    <audio crossorigin="anonymous" id="au-p6-6"><source src="https://archive.org/download/esp607/esp607.mp3" type="audio/mpeg"></audio>
+  </div>
+  <div class="item-card">
+    <div class="item-main">
+      <div class="play-col"><button class="pbtn" onclick="togglePlay('p6-7')"><svg viewBox="0 0 24 24" id="ico-p6-7"><path d="M8 5v14l11-7z"/></svg></button></div>
+      <div class="info-col">
+        <div class="a-title">Museografía y Comunicación Visual</div>
+        <div class="prog-row"><div class="prog-track" onclick="seekTrack(event,'p6-7')"><div class="prog-fill" id="pf-p6-7"></div></div><span class="prog-time" id="pt-p6-7">0:00</span></div>
+      </div>
+    </div>
+    <audio crossorigin="anonymous" id="au-p6-7"><source src="https://archive.org/download/esp608/esp608.mp3" type="audio/mpeg"></audio>
+  </div>
+  <div class="item-card">
+    <div class="item-main">
+      <div class="play-col"><button class="pbtn" onclick="togglePlay('p6-8')"><svg viewBox="0 0 24 24" id="ico-p6-8"><path d="M8 5v14l11-7z"/></svg></button></div>
+      <div class="info-col">
+        <div class="a-title">Luminotecnia: la Arquitectura de la Luz</div>
+        <div class="prog-row"><div class="prog-track" onclick="seekTrack(event,'p6-8')"><div class="prog-fill" id="pf-p6-8"></div></div><span class="prog-time" id="pt-p6-8">0:00</span></div>
+      </div>
+    </div>
+    <audio crossorigin="anonymous" id="au-p6-8"><source src="https://archive.org/download/esp609/esp609.mp3" type="audio/mpeg"></audio>
+  </div>
 </div>
 </div><!-- /pages-wrap -->
 
