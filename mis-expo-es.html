@@ -269,7 +269,7 @@
       <div class="play-col"><button class="pbtn" onclick="togglePlay('p0-0')"><svg viewBox="0 0 24 24" id="ico-p0-0"><path d="M8 5v14l11-7z"/></svg></button></div>
       <div class="info-col">
         <div class="a-title">Arquitectura en Escena — El MIS Copa antes de la Imagen y del Sonido</div>
-        <div class="prog-row"><div class="prog-track" onclick="seekTrack(event,'p0-0')"><div class="prog-fill" id="pf-p0-0"></div></div><span class="prog-time" id="pt-p0-0">0:00</span></div>
+        <div class="prog-row"><div class="prog-track" onmousedown="initSeek(event,'p0-0')" ontouchstart="initSeek(event,'p0-0')"><div class="prog-fill" id="pf-p0-0"></div></div><span class="prog-time" id="pt-p0-0">0:00</span></div>
       </div>
     </div>
     <audio crossorigin="anonymous" id="au-p0-0"><source src="https://archive.org/download/esp001_202603/esp001.mp3" type="audio/mpeg"></audio>
@@ -287,7 +287,7 @@
       <div class="play-col"><button class="pbtn" onclick="togglePlay('p1-0')"><svg viewBox="0 0 24 24" id="ico-p1-0"><path d="M8 5v14l11-7z"/></svg></button></div>
       <div class="info-col">
         <div class="a-title">El Museo: Guardián del Alma Carioca</div>
-        <div class="prog-row"><div class="prog-track" onclick="seekTrack(event,'p1-0')"><div class="prog-fill" id="pf-p1-0"></div></div><span class="prog-time" id="pt-p1-0">0:00</span></div>
+        <div class="prog-row"><div class="prog-track" onmousedown="initSeek(event,'p1-0')" ontouchstart="initSeek(event,'p1-0')"><div class="prog-fill" id="pf-p1-0"></div></div><span class="prog-time" id="pt-p1-0">0:00</span></div>
       </div>
     </div>
     <div class="item-divider"></div>
@@ -332,7 +332,7 @@
       <div class="play-col"><button class="pbtn" onclick="togglePlay('p1-1')"><svg viewBox="0 0 24 24" id="ico-p1-1"><path d="M8 5v14l11-7z"/></svg></button></div>
       <div class="info-col">
         <div class="a-title">La Colección: Imágenes, Sonidos y Testimonios para la Posteridad</div>
-        <div class="prog-row"><div class="prog-track" onclick="seekTrack(event,'p1-1')"><div class="prog-fill" id="pf-p1-1"></div></div><span class="prog-time" id="pt-p1-1">0:00</span></div>
+        <div class="prog-row"><div class="prog-track" onmousedown="initSeek(event,'p1-1')" ontouchstart="initSeek(event,'p1-1')"><div class="prog-fill" id="pf-p1-1"></div></div><span class="prog-time" id="pt-p1-1">0:00</span></div>
       </div>
     </div>
     <div class="item-divider"></div>
@@ -384,7 +384,7 @@
       <div class="play-col"><button class="pbtn" onclick="togglePlay('p1-2')"><svg viewBox="0 0 24 24" id="ico-p1-2"><path d="M8 5v14l11-7z"/></svg></button></div>
       <div class="info-col">
         <div class="a-title">La Necesidad de una Nueva Sede</div>
-        <div class="prog-row"><div class="prog-track" onclick="seekTrack(event,'p1-2')"><div class="prog-fill" id="pf-p1-2"></div></div><span class="prog-time" id="pt-p1-2">0:00</span></div>
+        <div class="prog-row"><div class="prog-track" onmousedown="initSeek(event,'p1-2')" ontouchstart="initSeek(event,'p1-2')"><div class="prog-fill" id="pf-p1-2"></div></div><span class="prog-time" id="pt-p1-2">0:00</span></div>
       </div>
     </div>
     <div class="item-divider"></div>
@@ -430,7 +430,7 @@
       <div class="play-col"><button class="pbtn" onclick="togglePlay('p2-0')"><svg viewBox="0 0 24 24" id="ico-p2-0"><path d="M8 5v14l11-7z"/></svg></button></div>
       <div class="info-col">
         <div class="a-title">El Contexto y las Ambiciones Institucionales</div>
-        <div class="prog-row"><div class="prog-track" onclick="seekTrack(event,'p2-0')"><div class="prog-fill" id="pf-p2-0"></div></div><span class="prog-time" id="pt-p2-0">0:00</span></div>
+        <div class="prog-row"><div class="prog-track" onmousedown="initSeek(event,'p2-0')" ontouchstart="initSeek(event,'p2-0')"><div class="prog-fill" id="pf-p2-0"></div></div><span class="prog-time" id="pt-p2-0">0:00</span></div>
       </div>
     </div>
     <audio crossorigin="anonymous" id="au-p2-0"><source src="https://archive.org/download/esp201/esp201.mp3" type="audio/mpeg"></audio>
@@ -440,7 +440,7 @@
       <div class="play-col"><button class="pbtn" onclick="togglePlay('p2-1')"><svg viewBox="0 0 24 24" id="ico-p2-1"><path d="M8 5v14l11-7z"/></svg></button></div>
       <div class="info-col">
         <div class="a-title">Un Debate Internacional</div>
-        <div class="prog-row"><div class="prog-track" onclick="seekTrack(event,'p2-1')"><div class="prog-fill" id="pf-p2-1"></div></div><span class="prog-time" id="pt-p2-1">0:00</span></div>
+        <div class="prog-row"><div class="prog-track" onmousedown="initSeek(event,'p2-1')" ontouchstart="initSeek(event,'p2-1')"><div class="prog-fill" id="pf-p2-1"></div></div><span class="prog-time" id="pt-p2-1">0:00</span></div>
       </div>
     </div>
     <div class="item-divider"></div>
@@ -499,7 +499,7 @@
       <div class="play-col"><button class="pbtn" onclick="togglePlay('p2-2')"><svg viewBox="0 0 24 24" id="ico-p2-2"><path d="M8 5v14l11-7z"/></svg></button></div>
       <div class="info-col">
         <div class="a-title">De la Idea al Proyecto</div>
-        <div class="prog-row"><div class="prog-track" onclick="seekTrack(event,'p2-2')"><div class="prog-fill" id="pf-p2-2"></div></div><span class="prog-time" id="pt-p2-2">0:00</span></div>
+        <div class="prog-row"><div class="prog-track" onmousedown="initSeek(event,'p2-2')" ontouchstart="initSeek(event,'p2-2')"><div class="prog-fill" id="pf-p2-2"></div></div><span class="prog-time" id="pt-p2-2">0:00</span></div>
       </div>
     </div>
     <div class="item-divider"></div>
@@ -523,7 +523,7 @@
       <div class="play-col"><button class="pbtn" onclick="togglePlay('p2-3')"><svg viewBox="0 0 24 24" id="ico-p2-3"><path d="M8 5v14l11-7z"/></svg></button></div>
       <div class="info-col">
         <div class="a-title">El Ganador: Diller Scofidio + Renfro</div>
-        <div class="prog-row"><div class="prog-track" onclick="seekTrack(event,'p2-3')"><div class="prog-fill" id="pf-p2-3"></div></div><span class="prog-time" id="pt-p2-3">0:00</span></div>
+        <div class="prog-row"><div class="prog-track" onmousedown="initSeek(event,'p2-3')" ontouchstart="initSeek(event,'p2-3')"><div class="prog-fill" id="pf-p2-3"></div></div><span class="prog-time" id="pt-p2-3">0:00</span></div>
       </div>
     </div>
     <div class="item-divider"></div>
@@ -569,7 +569,7 @@
       <div class="play-col"><button class="pbtn" onclick="togglePlay('p3-0')"><svg viewBox="0 0 24 24" id="ico-p3-0"><path d="M8 5v14l11-7z"/></svg></button></div>
       <div class="info-col">
         <div class="a-title">Partido del Proyecto: el Boulevard Vertical</div>
-        <div class="prog-row"><div class="prog-track" onclick="seekTrack(event,'p3-0')"><div class="prog-fill" id="pf-p3-0"></div></div><span class="prog-time" id="pt-p3-0">0:00</span></div>
+        <div class="prog-row"><div class="prog-track" onmousedown="initSeek(event,'p3-0')" ontouchstart="initSeek(event,'p3-0')"><div class="prog-fill" id="pf-p3-0"></div></div><span class="prog-time" id="pt-p3-0">0:00</span></div>
       </div>
     </div>
     <audio crossorigin="anonymous" id="au-p3-0"><source src="https://archive.org/download/esp301/esp301.mp3" type="audio/mpeg"></audio>
@@ -579,7 +579,7 @@
       <div class="play-col"><button class="pbtn" onclick="togglePlay('p3-1')"><svg viewBox="0 0 24 24" id="ico-p3-1"><path d="M8 5v14l11-7z"/></svg></button></div>
       <div class="info-col">
         <div class="a-title">Curaduría del Paisaje</div>
-        <div class="prog-row"><div class="prog-track" onclick="seekTrack(event,'p3-1')"><div class="prog-fill" id="pf-p3-1"></div></div><span class="prog-time" id="pt-p3-1">0:00</span></div>
+        <div class="prog-row"><div class="prog-track" onmousedown="initSeek(event,'p3-1')" ontouchstart="initSeek(event,'p3-1')"><div class="prog-fill" id="pf-p3-1"></div></div><span class="prog-time" id="pt-p3-1">0:00</span></div>
       </div>
     </div>
     <audio crossorigin="anonymous" id="au-p3-1"><source src="https://archive.org/download/esp302/esp302.mp3" type="audio/mpeg"></audio>
@@ -589,7 +589,7 @@
       <div class="play-col"><button class="pbtn" onclick="togglePlay('p3-2')"><svg viewBox="0 0 24 24" id="ico-p3-2"><path d="M8 5v14l11-7z"/></svg></button></div>
       <div class="info-col">
         <div class="a-title">Claro-Oscuro: el Protagonismo del Contraste</div>
-        <div class="prog-row"><div class="prog-track" onclick="seekTrack(event,'p3-2')"><div class="prog-fill" id="pf-p3-2"></div></div><span class="prog-time" id="pt-p3-2">0:00</span></div>
+        <div class="prog-row"><div class="prog-track" onmousedown="initSeek(event,'p3-2')" ontouchstart="initSeek(event,'p3-2')"><div class="prog-fill" id="pf-p3-2"></div></div><span class="prog-time" id="pt-p3-2">0:00</span></div>
       </div>
     </div>
     <audio crossorigin="anonymous" id="au-p3-2"><source src="https://archive.org/download/esp303_202603/esp303.mp3" type="audio/mpeg"></audio>
@@ -607,7 +607,7 @@
       <div class="play-col"><button class="pbtn" onclick="togglePlay('p4-0')"><svg viewBox="0 0 24 24" id="ico-p4-0"><path d="M8 5v14l11-7z"/></svg></button></div>
       <div class="info-col">
         <div class="a-title">La Integración de los Equipos: Arquitectura, Curaduría, Museografía y Comunicación Visual</div>
-        <div class="prog-row"><div class="prog-track" onclick="seekTrack(event,'p4-0')"><div class="prog-fill" id="pf-p4-0"></div></div><span class="prog-time" id="pt-p4-0">0:00</span></div>
+        <div class="prog-row"><div class="prog-track" onmousedown="initSeek(event,'p4-0')" ontouchstart="initSeek(event,'p4-0')"><div class="prog-fill" id="pf-p4-0"></div></div><span class="prog-time" id="pt-p4-0">0:00</span></div>
       </div>
     </div>
     <audio crossorigin="anonymous" id="au-p4-0"><source src="https://archive.org/download/esp401/esp401.mp3" type="audio/mpeg"></audio>
@@ -617,7 +617,7 @@
       <div class="play-col"><button class="pbtn" onclick="togglePlay('p4-1')"><svg viewBox="0 0 24 24" id="ico-p4-1"><path d="M8 5v14l11-7z"/></svg></button></div>
       <div class="info-col">
         <div class="a-title">Articulación en el Espacio</div>
-        <div class="prog-row"><div class="prog-track" onclick="seekTrack(event,'p4-1')"><div class="prog-fill" id="pf-p4-1"></div></div><span class="prog-time" id="pt-p4-1">0:00</span></div>
+        <div class="prog-row"><div class="prog-track" onmousedown="initSeek(event,'p4-1')" ontouchstart="initSeek(event,'p4-1')"><div class="prog-fill" id="pf-p4-1"></div></div><span class="prog-time" id="pt-p4-1">0:00</span></div>
       </div>
     </div>
     <audio crossorigin="anonymous" id="au-p4-1"><source src="https://archive.org/download/esp402/esp402.mp3" type="audio/mpeg"></audio>
@@ -635,7 +635,7 @@
       <div class="play-col"><button class="pbtn" onclick="togglePlay('p5-0')"><svg viewBox="0 0 24 24" id="ico-p5-0"><path d="M8 5v14l11-7z"/></svg></button></div>
       <div class="info-col">
         <div class="a-title">Baixo Atlântica – Planta Baja y Entrepiso</div>
-        <div class="prog-row"><div class="prog-track" onclick="seekTrack(event,'p5-0')"><div class="prog-fill" id="pf-p5-0"></div></div><span class="prog-time" id="pt-p5-0">0:00</span></div>
+        <div class="prog-row"><div class="prog-track" onmousedown="initSeek(event,'p5-0')" ontouchstart="initSeek(event,'p5-0')"><div class="prog-fill" id="pf-p5-0"></div></div><span class="prog-time" id="pt-p5-0">0:00</span></div>
       </div>
     </div>
     <audio crossorigin="anonymous" id="au-p5-0"><source src="https://archive.org/download/esp501/esp501.mp3" type="audio/mpeg"></audio>
@@ -645,7 +645,7 @@
       <div class="play-col"><button class="pbtn" onclick="togglePlay('p5-1')"><svg viewBox="0 0 24 24" id="ico-p5-1"><path d="M8 5v14l11-7z"/></svg></button></div>
       <div class="info-col">
         <div class="a-title">Espíritu Carioca – Salones del Humor Carioca, Río 40 Grados, Viva el Carnaval</div>
-        <div class="prog-row"><div class="prog-track" onclick="seekTrack(event,'p5-1')"><div class="prog-fill" id="pf-p5-1"></div></div><span class="prog-time" id="pt-p5-1">0:00</span></div>
+        <div class="prog-row"><div class="prog-track" onmousedown="initSeek(event,'p5-1')" ontouchstart="initSeek(event,'p5-1')"><div class="prog-fill" id="pf-p5-1"></div></div><span class="prog-time" id="pt-p5-1">0:00</span></div>
       </div>
     </div>
     <audio crossorigin="anonymous" id="au-p5-1"><source src="https://archive.org/download/esp502/esp502.mp3" type="audio/mpeg"></audio>
@@ -655,7 +655,7 @@
       <div class="play-col"><button class="pbtn" onclick="togglePlay('p5-2')"><svg viewBox="0 0 24 24" id="ico-p5-2"><path d="M8 5v14l11-7z"/></svg></button></div>
       <div class="info-col">
         <div class="a-title">Doce Balanço (Dulce Balanceo) – A Banda (La Banda), Meu Coração (Mi Corazón), Sala Almirante</div>
-        <div class="prog-row"><div class="prog-track" onclick="seekTrack(event,'p5-2')"><div class="prog-fill" id="pf-p5-2"></div></div><span class="prog-time" id="pt-p5-2">0:00</span></div>
+        <div class="prog-row"><div class="prog-track" onmousedown="initSeek(event,'p5-2')" ontouchstart="initSeek(event,'p5-2')"><div class="prog-fill" id="pf-p5-2"></div></div><span class="prog-time" id="pt-p5-2">0:00</span></div>
       </div>
     </div>
     <audio crossorigin="anonymous" id="au-p5-2"><source src="https://archive.org/download/esp503/esp503.mp3" type="audio/mpeg"></audio>
@@ -665,7 +665,7 @@
       <div class="play-col"><button class="pbtn" onclick="togglePlay('p5-3')"><svg viewBox="0 0 24 24" id="ico-p5-3"><path d="M8 5v14l11-7z"/></svg></button></div>
       <div class="info-col">
         <div class="a-title">Alegres Trópicos – TV Surpresa (TV Sorpresa), TV Game, Carmen Cantora (Carmen Cantante), Carmen Hollywood</div>
-        <div class="prog-row"><div class="prog-track" onclick="seekTrack(event,'p5-3')"><div class="prog-fill" id="pf-p5-3"></div></div><span class="prog-time" id="pt-p5-3">0:00</span></div>
+        <div class="prog-row"><div class="prog-track" onmousedown="initSeek(event,'p5-3')" ontouchstart="initSeek(event,'p5-3')"><div class="prog-fill" id="pf-p5-3"></div></div><span class="prog-time" id="pt-p5-3">0:00</span></div>
       </div>
     </div>
     <audio crossorigin="anonymous" id="au-p5-3"><source src="https://archive.org/download/esp504/esp504.mp3" type="audio/mpeg"></audio>
@@ -675,7 +675,7 @@
       <div class="play-col"><button class="pbtn" onclick="togglePlay('p5-4')"><svg viewBox="0 0 24 24" id="ico-p5-4"><path d="M8 5v14l11-7z"/></svg></button></div>
       <div class="info-col">
         <div class="a-title">Es Sal, Es Sol, Es Sur – Paisaje Carioca, Río en el Cine</div>
-        <div class="prog-row"><div class="prog-track" onclick="seekTrack(event,'p5-4')"><div class="prog-fill" id="pf-p5-4"></div></div><span class="prog-time" id="pt-p5-4">0:00</span></div>
+        <div class="prog-row"><div class="prog-track" onmousedown="initSeek(event,'p5-4')" ontouchstart="initSeek(event,'p5-4')"><div class="prog-fill" id="pf-p5-4"></div></div><span class="prog-time" id="pt-p5-4">0:00</span></div>
       </div>
     </div>
     <audio crossorigin="anonymous" id="au-p5-4"><source src="https://archive.org/download/esp505/esp505.mp3" type="audio/mpeg"></audio>
@@ -685,7 +685,7 @@
       <div class="play-col"><button class="pbtn" onclick="togglePlay('p5-5')"><svg viewBox="0 0 24 24" id="ico-p5-5"><path d="M8 5v14l11-7z"/></svg></button></div>
       <div class="info-col">
         <div class="a-title">Terraza y Jardín – Mirador, Cine al Aire Libre</div>
-        <div class="prog-row"><div class="prog-track" onclick="seekTrack(event,'p5-5')"><div class="prog-fill" id="pf-p5-5"></div></div><span class="prog-time" id="pt-p5-5">0:00</span></div>
+        <div class="prog-row"><div class="prog-track" onmousedown="initSeek(event,'p5-5')" ontouchstart="initSeek(event,'p5-5')"><div class="prog-fill" id="pf-p5-5"></div></div><span class="prog-time" id="pt-p5-5">0:00</span></div>
       </div>
     </div>
     <audio crossorigin="anonymous" id="au-p5-5"><source src="https://archive.org/download/esp506/esp506.mp3" type="audio/mpeg"></audio>
@@ -695,7 +695,7 @@
       <div class="play-col"><button class="pbtn" onclick="togglePlay('p5-6')"><svg viewBox="0 0 24 24" id="ico-p5-6"><path d="M8 5v14l11-7z"/></svg></button></div>
       <div class="info-col">
         <div class="a-title">Noches Cariocas – Discoteca, Hall de la Fama, Cineteatro</div>
-        <div class="prog-row"><div class="prog-track" onclick="seekTrack(event,'p5-6')"><div class="prog-fill" id="pf-p5-6"></div></div><span class="prog-time" id="pt-p5-6">0:00</span></div>
+        <div class="prog-row"><div class="prog-track" onmousedown="initSeek(event,'p5-6')" ontouchstart="initSeek(event,'p5-6')"><div class="prog-fill" id="pf-p5-6"></div></div><span class="prog-time" id="pt-p5-6">0:00</span></div>
       </div>
     </div>
     <audio crossorigin="anonymous" id="au-p5-6"><source src="https://archive.org/download/esp507/esp507.mp3" type="audio/mpeg"></audio>
@@ -713,7 +713,7 @@
       <div class="play-col"><button class="pbtn" onclick="togglePlay('p6-0')"><svg viewBox="0 0 24 24" id="ico-p6-0"><path d="M8 5v14l11-7z"/></svg></button></div>
       <div class="info-col">
         <div class="a-title">La Conquista del Subsuelo</div>
-        <div class="prog-row"><div class="prog-track" onclick="seekTrack(event,'p6-0')"><div class="prog-fill" id="pf-p6-0"></div></div><span class="prog-time" id="pt-p6-0">0:00</span></div>
+        <div class="prog-row"><div class="prog-track" onmousedown="initSeek(event,'p6-0')" ontouchstart="initSeek(event,'p6-0')"><div class="prog-fill" id="pf-p6-0"></div></div><span class="prog-time" id="pt-p6-0">0:00</span></div>
       </div>
     </div>
     <audio crossorigin="anonymous" id="au-p6-0"><source src="https://archive.org/download/esp601/esp601.mp3" type="audio/mpeg"></audio>
@@ -723,7 +723,7 @@
       <div class="play-col"><button class="pbtn" onclick="togglePlay('p6-1')"><svg viewBox="0 0 24 24" id="ico-p6-1"><path d="M8 5v14l11-7z"/></svg></button></div>
       <div class="info-col">
         <div class="a-title">En Busca del Concreto Perfecto</div>
-        <div class="prog-row"><div class="prog-track" onclick="seekTrack(event,'p6-1')"><div class="prog-fill" id="pf-p6-1"></div></div><span class="prog-time" id="pt-p6-1">0:00</span></div>
+        <div class="prog-row"><div class="prog-track" onmousedown="initSeek(event,'p6-1')" ontouchstart="initSeek(event,'p6-1')"><div class="prog-fill" id="pf-p6-1"></div></div><span class="prog-time" id="pt-p6-1">0:00</span></div>
       </div>
     </div>
     <audio crossorigin="anonymous" id="au-p6-1"><source src="https://archive.org/download/esp602/esp602.mp3" type="audio/mpeg"></audio>
@@ -733,7 +733,7 @@
       <div class="play-col"><button class="pbtn" onclick="togglePlay('p6-2')"><svg viewBox="0 0 24 24" id="ico-p6-2"><path d="M8 5v14l11-7z"/></svg></button></div>
       <div class="info-col">
         <div class="a-title">Paleta Conceptual Blanco y Negro</div>
-        <div class="prog-row"><div class="prog-track" onclick="seekTrack(event,'p6-2')"><div class="prog-fill" id="pf-p6-2"></div></div><span class="prog-time" id="pt-p6-2">0:00</span></div>
+        <div class="prog-row"><div class="prog-track" onmousedown="initSeek(event,'p6-2')" ontouchstart="initSeek(event,'p6-2')"><div class="prog-fill" id="pf-p6-2"></div></div><span class="prog-time" id="pt-p6-2">0:00</span></div>
       </div>
     </div>
     <audio crossorigin="anonymous" id="au-p6-2"><source src="https://archive.org/download/esp603/esp603.mp3" type="audio/mpeg"></audio>
@@ -743,7 +743,7 @@
       <div class="play-col"><button class="pbtn" onclick="togglePlay('p6-3')"><svg viewBox="0 0 24 24" id="ico-p6-3"><path d="M8 5v14l11-7z"/></svg></button></div>
       <div class="info-col">
         <div class="a-title">Cobogó y la Curaduría del Paisaje</div>
-        <div class="prog-row"><div class="prog-track" onclick="seekTrack(event,'p6-3')"><div class="prog-fill" id="pf-p6-3"></div></div><span class="prog-time" id="pt-p6-3">0:00</span></div>
+        <div class="prog-row"><div class="prog-track" onmousedown="initSeek(event,'p6-3')" ontouchstart="initSeek(event,'p6-3')"><div class="prog-fill" id="pf-p6-3"></div></div><span class="prog-time" id="pt-p6-3">0:00</span></div>
       </div>
     </div>
     <audio crossorigin="anonymous" id="au-p6-3"><source src="https://archive.org/download/esp604/esp604.mp3" type="audio/mpeg"></audio>
@@ -753,7 +753,7 @@
       <div class="play-col"><button class="pbtn" onclick="togglePlay('p6-4')"><svg viewBox="0 0 24 24" id="ico-p6-4"><path d="M8 5v14l11-7z"/></svg></button></div>
       <div class="info-col">
         <div class="a-title">Fachada Carmen Miranda: Ojos y Boca del Museo</div>
-        <div class="prog-row"><div class="prog-track" onclick="seekTrack(event,'p6-4')"><div class="prog-fill" id="pf-p6-4"></div></div><span class="prog-time" id="pt-p6-4">0:00</span></div>
+        <div class="prog-row"><div class="prog-track" onmousedown="initSeek(event,'p6-4')" ontouchstart="initSeek(event,'p6-4')"><div class="prog-fill" id="pf-p6-4"></div></div><span class="prog-time" id="pt-p6-4">0:00</span></div>
       </div>
     </div>
     <audio crossorigin="anonymous" id="au-p6-4"><source src="https://archive.org/download/esp605/esp605.mp3" type="audio/mpeg"></audio>
@@ -763,7 +763,7 @@
       <div class="play-col"><button class="pbtn" onclick="togglePlay('p6-5')"><svg viewBox="0 0 24 24" id="ico-p6-5"><path d="M8 5v14l11-7z"/></svg></button></div>
       <div class="info-col">
         <div class="a-title">Panel Cineteatro: Escultura del Sonido</div>
-        <div class="prog-row"><div class="prog-track" onclick="seekTrack(event,'p6-5')"><div class="prog-fill" id="pf-p6-5"></div></div><span class="prog-time" id="pt-p6-5">0:00</span></div>
+        <div class="prog-row"><div class="prog-track" onmousedown="initSeek(event,'p6-5')" ontouchstart="initSeek(event,'p6-5')"><div class="prog-fill" id="pf-p6-5"></div></div><span class="prog-time" id="pt-p6-5">0:00</span></div>
       </div>
     </div>
     <audio crossorigin="anonymous" id="au-p6-5"><source src="https://archive.org/download/esp606/esp606.mp3" type="audio/mpeg"></audio>
@@ -773,7 +773,7 @@
       <div class="play-col"><button class="pbtn" onclick="togglePlay('p6-6')"><svg viewBox="0 0 24 24" id="ico-p6-6"><path d="M8 5v14l11-7z"/></svg></button></div>
       <div class="info-col">
         <div class="a-title">Carpinterías: Cocreación a Medida</div>
-        <div class="prog-row"><div class="prog-track" onclick="seekTrack(event,'p6-6')"><div class="prog-fill" id="pf-p6-6"></div></div><span class="prog-time" id="pt-p6-6">0:00</span></div>
+        <div class="prog-row"><div class="prog-track" onmousedown="initSeek(event,'p6-6')" ontouchstart="initSeek(event,'p6-6')"><div class="prog-fill" id="pf-p6-6"></div></div><span class="prog-time" id="pt-p6-6">0:00</span></div>
       </div>
     </div>
     <audio crossorigin="anonymous" id="au-p6-6"><source src="https://archive.org/download/esp607/esp607.mp3" type="audio/mpeg"></audio>
@@ -783,7 +783,7 @@
       <div class="play-col"><button class="pbtn" onclick="togglePlay('p6-7')"><svg viewBox="0 0 24 24" id="ico-p6-7"><path d="M8 5v14l11-7z"/></svg></button></div>
       <div class="info-col">
         <div class="a-title">Museografía y Comunicación Visual</div>
-        <div class="prog-row"><div class="prog-track" onclick="seekTrack(event,'p6-7')"><div class="prog-fill" id="pf-p6-7"></div></div><span class="prog-time" id="pt-p6-7">0:00</span></div>
+        <div class="prog-row"><div class="prog-track" onmousedown="initSeek(event,'p6-7')" ontouchstart="initSeek(event,'p6-7')"><div class="prog-fill" id="pf-p6-7"></div></div><span class="prog-time" id="pt-p6-7">0:00</span></div>
       </div>
     </div>
     <audio crossorigin="anonymous" id="au-p6-7"><source src="https://archive.org/download/esp608/esp608.mp3" type="audio/mpeg"></audio>
@@ -793,7 +793,7 @@
       <div class="play-col"><button class="pbtn" onclick="togglePlay('p6-8')"><svg viewBox="0 0 24 24" id="ico-p6-8"><path d="M8 5v14l11-7z"/></svg></button></div>
       <div class="info-col">
         <div class="a-title">Luminotecnia: la Arquitectura de la Luz</div>
-        <div class="prog-row"><div class="prog-track" onclick="seekTrack(event,'p6-8')"><div class="prog-fill" id="pf-p6-8"></div></div><span class="prog-time" id="pt-p6-8">0:00</span></div>
+        <div class="prog-row"><div class="prog-track" onmousedown="initSeek(event,'p6-8')" ontouchstart="initSeek(event,'p6-8')"><div class="prog-fill" id="pf-p6-8"></div></div><span class="prog-time" id="pt-p6-8">0:00</span></div>
       </div>
     </div>
     <audio crossorigin="anonymous" id="au-p6-8"><source src="https://archive.org/download/esp609/esp609.mp3" type="audio/mpeg"></audio>
@@ -907,6 +907,27 @@ function seekTrack(e, id) {
   if (!a.duration) return;
   const r = e.currentTarget.getBoundingClientRect();
   a.currentTime = ((e.clientX - r.left) / r.width) * a.duration;
+}
+function initSeek(e, id) {
+  const a = document.getElementById('au-' + id);
+  if (!a.duration) return;
+  seekTrack(e, id);
+  const track = e.currentTarget;
+  function onMove(ev) {
+    const r = track.getBoundingClientRect();
+    const x = (ev.touches ? ev.touches[0].clientX : ev.clientX);
+    a.currentTime = Math.max(0, Math.min(1, (x - r.left) / r.width)) * a.duration;
+  }
+  function onUp() {
+    document.removeEventListener('mousemove', onMove);
+    document.removeEventListener('touchmove', onMove);
+    document.removeEventListener('mouseup', onUp);
+    document.removeEventListener('touchend', onUp);
+  }
+  document.addEventListener('mousemove', onMove);
+  document.addEventListener('touchmove', onMove, { passive: true });
+  document.addEventListener('mouseup', onUp);
+  document.addEventListener('touchend', onUp);
 }
 </script>
 </body>
